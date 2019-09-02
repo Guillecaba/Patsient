@@ -44,10 +44,11 @@ import { AppComponent } from './app.component';
 
 
 
-
+import { HttpClientModule } from '@angular/common/http'
 import { AppRoutes } from './app.routing';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
+import { ServiceModule } from './services/service.module';
 
 @NgModule({
   exports: [
@@ -94,11 +95,12 @@ export class MaterialModule {}
         RouterModule.forRoot(AppRoutes,{
           useHash: true
         }),
-        HttpModule,
+        HttpClientModule,
         MaterialModule,
         MatNativeDateModule,
         
-        PagesModule
+        PagesModule,
+        ServiceModule
         
     ],
     declarations: [

@@ -1,0 +1,81 @@
+
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-icon card-header-rose">
+                  <div class="card-icon">
+                    <i class="material-icons">assignment</i>
+                  </div>
+                  <h4 class="card-title ">Pacientes de la Clinica</h4>
+                </div>
+                  <div class="card-body">
+                    <div class ="row">
+                      <div class="col-md-8">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ordenado por
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="ordenadoPor('nombre')" >Nombre</a>
+                                <a class="dropdown-item" (click)="ordenadoPor('apellido')" >Apellido</a>
+                                
+                              </div>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 En direccion
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" (click)="ordenDireccion('asc')" >Ascendente</a>
+                                  <a class="dropdown-item" (click)="ordenDireccion('desc')" >Descendente</a>
+                                </div>
+                              </div>
+                      </div>
+                      <div class="col-md-4">
+                          <form class="form-inline">
+                              <input class="form-control mr-sm-2" type="search" [(ngModel)]='nombre' placeholder="Search" aria-label="Search" name="nombre">
+                              <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarNombre()" type="submit">Search</button>
+                            </form>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        
+                            
+                    </div>
+                     
+                         
+                      <div class="table-responsive">
+                        <table class="table">
+                                <thead class="text-primary">
+                                    <tr>
+                                      <th *ngFor="let cell of tableData1.headerRow" (click)="order($event)">{{ cell }}</th>
+                                    </tr>
+                                </thead>
+                              <tbody>
+                                  <tr *ngFor="let row of tableData1.dataRows">
+                                      <td>{{row.idPersona}}</td>
+                                      <td>{{row.nombre}}</td>
+                                      <td>{{row.apellido}}</td>
+                                      <td>{{row.telefono}}</td>
+                                      <td>{{row.email}}</td>
+                                      <td>{{row.ruc}}</td>
+                                      <td>{{row.cedula}}</td>
+                                      <td>{{row.tipoPersona}}</td>
+                                      <td>{{row.fechaNacimiento}}</td>
+                                      
+                                     
+
+                                  </tr>
+                              </tbody>
+                        </table>
+
+                      </div>
+                  </div>
+              </div>
+             
+          </div>
+      </div>
+  </div>
+</div>

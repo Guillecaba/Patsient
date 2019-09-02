@@ -27,6 +27,13 @@ export const ROUTES: RouteInfo[] = [{
         type: 'link',
         icontype: 'dashboard'
     },
+    {
+        path: '/paciente',
+        title: 'Paciente',
+        type: 'link',
+        icontype: 'dashboard'
+    },
+    
 ];
 @Component({
     selector: 'app-sidebar-cmp',
