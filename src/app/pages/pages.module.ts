@@ -15,6 +15,7 @@ import { NavbarModule } from '../shared/navbar/navbar.module';
 import { FooterModule } from '../shared/footer/footer.module';
 import { SidebarModule } from '../shared/sidebar/sidebar.module';
 import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
+import { CategoriaComponent } from './categoria/categoria.component';
 
 
 
@@ -32,7 +33,8 @@ import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
   ],
   declarations: [
     DashboardComponent,
-    PagesComponent
+    PagesComponent,
+    CategoriaComponent
   ]
 })
 
