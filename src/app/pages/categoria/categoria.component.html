@@ -1,5 +1,131 @@
 <div class="main-content">
   <div class="container-fluid">
-   Hola Categorias
+    <div class="row justify-content-between">
+      <div class="col-4">
+        Categorías
+      </div>
+      <div class="col-4">
+        <button type="button" class="btn btn-primary" 
+          data-toggle="modal" data-target="#addModal">
+          <i class="material-icons">
+            add_circle_outline
+          </i>
+          Agregar Categoría
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr colspan="5" *ngIf="count<=0" style="text-align: center">
+              No hay registros
+            </tr>
+            <tr *ngFor="let d of data; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ d.descripcion }}</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-light btn-sm" (click)="openEdit(d)">
+                      <i class="material-icons">
+                        edit
+                      </i>
+                      Editar
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(d)">
+                      <i class="material-icons">
+                        delete
+                      </i>
+                      Borrar
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="addModal" tabindex="-1" 
+  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Categoría</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <input class="form-control" placeholder="Descripcion" [(ngModel)]="nueva_categoria" >
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="closeAdd(true)" 
+          [disabled]="nueva_categoria == null || nueva_categoria.length == 0">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" 
+  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Categoría</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEdit(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <input class="form-control" placeholder="Descripcion" [(ngModel)]="edit_categoria.descripcion" >
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="closeEdit(true)" 
+          [disabled]="edit_categoria.descripcion == null || edit_categoria.descripcion.length == 0">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1"
+  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrar Categoría</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            Esta seguro de querer borrar la categoría {{delete_categoria.descripcion}}
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Delete</button>
+      </div>
+    </div>
   </div>
 </div>
