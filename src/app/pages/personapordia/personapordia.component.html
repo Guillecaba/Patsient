@@ -1,0 +1,74 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title ">Doctores por día</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Filtrar por día
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" (click)="mostrarDia(null)">Todos</a>
+                    <a class="dropdown-item" (click)="mostrarDia(0)">Domingo</a>
+                    <a class="dropdown-item" (click)="mostrarDia(1)">Lunes</a>
+                    <a class="dropdown-item" (click)="mostrarDia(2)">Martes</a>
+                    <a class="dropdown-item" (click)="mostrarDia(3)">Miércoles</a>
+                    <a class="dropdown-item" (click)="mostrarDia(4)">Jueves</a>
+                    <a class="dropdown-item" (click)="mostrarDia(5)">Viernes</a>
+                    <a class="dropdown-item" (click)="mostrarDia(6)">Sábado</a>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-4">
+                          <form class="form-inline">
+                              <input class="form-control mr-sm-2" type="search" [(ngModel)]='nombre' placeholder="Search" aria-label="Search" name="nombre">
+                              <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarNombre()" type="submit">Search</button>
+                            </form>
+                      </div> -->
+            </div>
+            <div class="d-flex justify-content-end">
+
+
+            </div>
+
+
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th *ngFor="let cell of tableData1.headerRow" (click)="order($event)">{{ cell }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of tableData1.dataRows">
+                    <td>{{row.idPersonaHorarioAgenda}}</td>
+                    <td>{{row.diaCadena}}</td>
+                    <td>{{row.horaApertura}}</td>
+                    <td>{{row.horaCierre}}</td>
+                    <td>{{row.idLocal.nombre}}</td>
+                    <td>{{row.idEmpleado.nombreCompleto}}</td>
+
+
+
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

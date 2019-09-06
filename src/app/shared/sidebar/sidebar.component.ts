@@ -22,18 +22,24 @@ export interface ChildrenItems {
 
 //Menu Items
 export const ROUTES: RouteInfo[] = [{
-        path: '/',
-        title: 'Dashboard',
-        type: 'link',
-        icontype: 'dashboard'
-    },
-    {
-        path: '/paciente',
-        title: 'Paciente',
-        type: 'link',
-        icontype: 'dashboard'
-    },
-    
+    path: '/',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+},
+{
+    path: '/paciente',
+    title: 'Paciente',
+    type: 'link',
+    icontype: 'dashboard'
+},
+{
+    path: '/doctores',
+    title: 'Doctores',
+    type: 'link',
+    icontype: 'dashboard'
+},
+
 ];
 @Component({
     selector: 'app-sidebar-cmp',
@@ -57,7 +63,7 @@ export class SidebarComponent implements OnInit {
             this.ps = new PerfectScrollbar(elemSidebar);
         }
     }
-    updatePS(): void  {
+    updatePS(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();
         }

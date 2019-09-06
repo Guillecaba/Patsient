@@ -16,6 +16,7 @@ import { FooterModule } from '../shared/footer/footer.module';
 import { SidebarModule } from '../shared/sidebar/sidebar.module';
 import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { PacienteComponent } from './paciente/paciente.component';
+import { PersonaPorDiaComponent } from './personapordia/personapordia.component';
 
 
 
@@ -25,17 +26,18 @@ import { PacienteComponent } from './paciente/paciente.component';
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
-        NavbarModule,
-        FooterModule,
-        FixedpluginModule,
+    NavbarModule,
+    FooterModule,
+    FixedpluginModule,
     ReactiveFormsModule,
     MdModule
   ],
   declarations: [
     DashboardComponent,
     PagesComponent,
-    PacienteComponent
+    PacienteComponent,
+    PersonaPorDiaComponent
   ]
 })
 
-export class PagesModule {}
+export class PagesModule { }
