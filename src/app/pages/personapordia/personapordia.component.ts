@@ -9,53 +9,62 @@ import { DoctorService } from 'src/app/services/doctor.service';
 })
 export class PersonaPorDiaComponent implements OnInit {
   public tableData1: TableData;
-  public nombre = '';
+  public empleado = '';
+  public dia: String;
   constructor(public _doctorService: DoctorService) { }
 
   ngOnInit() {
 
     this._doctorService.getPersona().subscribe(data => {
       this.tableData1 = {
-        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'Empleado'],
+        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado'],
         dataRows: data['lista']
       };
       console.log(this.tableData1)
-    })
-  }
-
-  mostrarDia(dia) {
-    console.log(dia);
-    this._doctorService.getPersona(dia, null).subscribe(data => {
-      this.tableData1.dataRows = data['lista'];
-      console.log(data['lista']);
     });
   }
 
-  /* ordenDireccion(valor) {
-    this._pacienteService.getPersona(null, valor).subscribe(data => {
+  mostrarDia(dia) {
+    this.dia = this.definirDia(dia);
+    this._doctorService.getPersona(dia, this.empleado).subscribe(data => {
       this.tableData1.dataRows = data['lista'];
-      console.log(data['lista'])
-    })
-    console.log(valor);
+    });
   }
 
-  buscarNombre() {
-    console.log(this.nombre)
-    if (this.nombre.length > 0) {
-      console.log(this.nombre.length > 0)
-
-      this._pacienteService.getPersona(null, null, this.nombre).subscribe(data => {
+  buscarEmpleado() {
+    console.log(this.empleado)
+    if (this.empleado.length > 0) {
+      this._doctorService.getPersona(null, this.empleado).subscribe(data => {
+        this.dia = null;
         this.tableData1.dataRows = data['lista'];
-        console.log(data['lista'])
-      })
+        console.log(data['lista']);
+      });
     } else {
-      console.log(this.nombre.length > 0)
-      this._pacienteService.getPersona(null, null, null).subscribe(data => {
+      this._doctorService.getPersona(null, null).subscribe(data => {
+        this.dia = null;
         this.tableData1.dataRows = data['lista'];
-        console.log(data['lista'])
-      })
-    } 
+        console.log(data['lista']);
+      });
+    }
+  }
 
-  }*/
-
+  definirDia(idDia): String {
+    if (idDia === 0) {
+      return 'Domingo';
+    } else if (idDia === 1) {
+      return 'Lunes';
+    } else if (idDia === 2) {
+      return 'Martes';
+    } else if (idDia === 3) {
+      return 'Miércoles';
+    } else if (idDia === 4) {
+      return 'Jueves';
+    } else if (idDia === 5) {
+      return 'Viernes';
+    } else if (idDia === 6) {
+      return 'Sábado';
+    } else {
+      return '';
+    }
+  }
 }

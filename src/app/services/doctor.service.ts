@@ -20,10 +20,8 @@ export class DoctorService {
 
 
   getPersona(dia?, empleado?) {
-    /* this.dia=null
-    this.ordenPor=null 
-    this.empleado=null*/
     this.dia = null;
+    this.empleado = null;
     if (dia != null) {
       this.dia = dia;
     }

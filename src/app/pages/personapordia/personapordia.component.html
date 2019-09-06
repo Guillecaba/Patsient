@@ -28,13 +28,16 @@
                     <a class="dropdown-item" (click)="mostrarDia(6)">Sábado</a>
                   </div>
                 </div>
+                <a style="margin-left: 10px"> {{this.dia}} </a>
               </div>
-              <!-- <div class="col-md-4">
-                          <form class="form-inline">
-                              <input class="form-control mr-sm-2" type="search" [(ngModel)]='nombre' placeholder="Search" aria-label="Search" name="nombre">
-                              <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarNombre()" type="submit">Search</button>
-                            </form>
-                      </div> -->
+              <div class="col-md-4">
+                <form class="form-inline">
+                  <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado'
+                    placeholder="Inserte el ID del Doctor" aria-label="Search" name="empleado">
+                  <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarEmpleado()"
+                    type="submit">Buscar</button>
+                </form>
+              </div>
             </div>
             <div class="d-flex justify-content-end">
 
@@ -56,6 +59,7 @@
                     <td>{{row.horaApertura}}</td>
                     <td>{{row.horaCierre}}</td>
                     <td>{{row.idLocal.nombre}}</td>
+                    <td>{{row.idEmpleado.idPersona}}</td>
                     <td>{{row.idEmpleado.nombreCompleto}}</td>
 
 
