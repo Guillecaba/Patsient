@@ -14,6 +14,17 @@ export class CategoriaService {
     return this.http.get(url)
   }
 
+  public get(filters){
+    let separator = '?'
+    let url = this.url_base + "categoria"
+    for(let k in filters){
+      if(filters[k] == null)continue
+      url= url + separator + k + "=" +filters[k]
+      separator = "&"
+    }
+    return this.http.get(url)
+  }
+
   public post(data){
     let url = this.url_base + "categoria"
     return this.http.post(url,data)

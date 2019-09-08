@@ -16,12 +16,15 @@ import { FooterModule } from '../shared/footer/footer.module';
 import { SidebarModule } from '../shared/sidebar/sidebar.module';
 import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { CategoriaComponent } from './categoria/categoria.component';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
+    MatPaginatorModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
@@ -35,6 +38,12 @@ import { CategoriaComponent } from './categoria/categoria.component';
     DashboardComponent,
     PagesComponent,
     CategoriaComponent
+  ],
+  providers:[
+    { 
+      provide: MatPaginatorIntl, 
+      useClass: MatPaginatorIntlCro
+    },
   ]
 })
 

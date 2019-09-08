@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from 'src/app/services/categoria.service';
+import { PageEvent } from '@angular/material/paginator'; 
 
 declare const $: any;
 
@@ -12,6 +13,30 @@ export class CategoriaComponent implements OnInit {
 
   private data : any[] = [];
   private count : Number = 0;
+  
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  pageEvent: PageEvent;
+  private pagination = {
+    inicio: 0,
+    cantidad: 10,
+  }
+  private orderBy = null;
+  private orderDir = null;
+  private columns = [
+    {
+      label:'Id',
+      value:'idCategoria',
+      width:'10%'
+    },
+    {
+      label:'Categoría',
+      value:'descripcion',
+      width:'45%',
+    },
+  ]
   private nueva_categoria: String = null;
   private edit_categoria: any = {
     descripcion : null
@@ -31,10 +56,35 @@ export class CategoriaComponent implements OnInit {
   }
 
   getData(){
-    this.service.all().subscribe((response)=>{
+    this.service.get({
+      ...this.pagination,
+      orderBy:this.orderBy,
+      orderDir:this.orderDir,
+    })
+    .subscribe((response)=>{
       this.data = response['lista']
       this.count = response['totalDatos']
     })
+  }
+
+  get_page(event){
+    this.pagination.cantidad = event.pageSize
+    this.pagination.inicio = event.pageSize * event.pageIndex
+    this.getData()
+  }
+
+  sortBy(orderBy){
+    if(this.orderBy != orderBy || this.orderDir == 'null'){
+      this.orderBy = orderBy;
+      this.orderDir = 'asc';
+    }else if(this.orderDir == 'asc'){
+      this.orderDir = 'desc'
+    }else if(this.orderDir == 'desc'){
+      this.orderBy = null
+      this.orderDir = null
+    }
+
+    this.getData()
   }
 
   closeAdd(send){
