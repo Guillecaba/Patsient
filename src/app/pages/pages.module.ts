@@ -29,27 +29,24 @@ import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
-        NavbarModule,
-        FooterModule,
-        FixedpluginModule,
+    NavbarModule,
+    FooterModule,
+    FixedpluginModule,
     ReactiveFormsModule,
     MdModule
   ],
   declarations: [
     DashboardComponent,
     PagesComponent,
-<<<<<<< HEAD
-    PacienteComponent
-=======
+    PacienteComponent,
     CategoriaComponent
   ],
-  providers:[
-    { 
-      provide: MatPaginatorIntl, 
+  providers: [
+    {
+      provide: MatPaginatorIntl,
       useClass: MatPaginatorIntlCro
     },
->>>>>>> 5956d4416b219fd044e6d65c357f778a3dff5bb8
   ]
 })
 
-export class PagesModule {}
+export class PagesModule { }
