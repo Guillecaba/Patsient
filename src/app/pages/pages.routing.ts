@@ -3,7 +3,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
 import { PacienteComponent } from './paciente/paciente.component';
 import { PersonaPorDiaComponent } from './personapordia/personapordia.component';
-
+import { ExcepcionesComponent } from './excepciones/excepciones.component';
 
 
 
@@ -14,7 +14,8 @@ export const PagesRoutes: Routes = [
         children: [
             { path: '', component: DashboardComponent },
             { path: 'paciente', component: PacienteComponent },
-            { path: 'doctores', component: PersonaPorDiaComponent }
+            { path: 'doctores', component: PersonaPorDiaComponent },
+            { path: 'excepciones', component: ExcepcionesComponent }
         ]
     },
 ];

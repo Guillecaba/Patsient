@@ -39,7 +39,12 @@ export const ROUTES: RouteInfo[] = [{
     type: 'link',
     icontype: 'dashboard'
 },
-
+{
+    path: '/excepciones',
+    title: 'Excepciones',
+    type: 'link',
+    icontype: 'dashboard'
+},
 ];
 @Component({
     selector: 'app-sidebar-cmp',

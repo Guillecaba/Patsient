@@ -17,7 +17,7 @@ import { SidebarModule } from '../shared/sidebar/sidebar.module';
 import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { PacienteComponent } from './paciente/paciente.component';
 import { PersonaPorDiaComponent } from './personapordia/personapordia.component';
-
+import { ExcepcionesComponent } from './excepciones/excepciones.component';
 
 
 @NgModule({
@@ -36,7 +36,8 @@ import { PersonaPorDiaComponent } from './personapordia/personapordia.component'
     DashboardComponent,
     PagesComponent,
     PacienteComponent,
-    PersonaPorDiaComponent
+    PersonaPorDiaComponent,
+    ExcepcionesComponent
   ]
 })
 
