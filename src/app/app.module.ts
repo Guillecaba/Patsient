@@ -48,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutes } from './app.routing';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
-import { ServiceModule } from './services/service.module';
+import { ServicesModule } from './services/services.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   exports: [
@@ -100,7 +101,7 @@ export class MaterialModule {}
         MatNativeDateModule,
         
         PagesModule,
-        ServiceModule
+        ServicesModule
         
     ],
     declarations: [
