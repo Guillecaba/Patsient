@@ -17,6 +17,12 @@
                     aria-haspopup="true" aria-expanded="false">
                     Filtrar por día
                   </button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                    <i class="material-icons">
+                      add_circle_outline
+                    </i>
+                    Agregar Horario
+                  </button>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" (click)="mostrarDia(null)">Todos</a>
                     <a class="dropdown-item" (click)="mostrarDia(0)">Domingo</a>
@@ -69,6 +75,107 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Horario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input class="form-control" placeholder="Día" [(ngModel)]="nuevo_horario.dia">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de apertura" [(ngModel)]="nuevo_horario.horaAperturaCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de cierre" [(ngModel)]="nuevo_horario.horaCierreCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Intérvalo minutos" [(ngModel)]="nuevo_horario.intervaloMinutos">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="ID del empleado" [(ngModel)]="nuevo_horario.idEmpleado.idPersona">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="closeAdd(true)" [disabled]="nuevo_horario.dia == null || nuevo_horario.dia.length == 0 || 
+          nuevo_horario.horaAperturaCadena == null || nuevo_horario.horaAperturaCadena.length == 0 ||
+          nuevo_horario.horaCierreCadena == null || nuevo_horario.horaCierreCadena.length == 0 ||
+          nuevo_horario.intervaloMinutos == null || nuevo_horario.intervaloMinutos.length == 0 ||
+          nuevo_horario.idEmpleado.idPersona == null || nuevo_horario.idEmpleado.idPersona.length == 0">Save
+          changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Horario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEdit(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input class="form-control" placeholder="Día" [(ngModel)]="edit_horario.dia">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de apertura" [(ngModel)]="edit_horario.horaAperturaCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de cierre" [(ngModel)]="edit_horario.horaCierreCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Intérvalo minutos" [(ngModel)]="edit_horario.intervaloMinutos">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="ID del empleado" [(ngModel)]="edit_horario.idEmpleado.idPersona">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="closeEdit(true)" [disabled]="edit_horario.dia == null || edit_horario.dia.length == 0 || 
+          edit_horario.horaAperturaCadena == null || edit_horario.horaAperturaCadena.length == 0 ||
+          edit_horario.horaCierreCadena == null || edit_horario.horaCierreCadena.length == 0 ||
+          edit_horario.intervaloMinutos == null || edit_horario.intervaloMinutos.length == 0 ||
+          edit_horario.idEmpleado.idPersona == null || edit_horario.idEmpleado.idPersona.length == 0">Save
+          changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrar Horario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          Esta seguro de querer borrar el horario {{delete_horario.id}}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Delete</button>
       </div>
     </div>
   </div>
