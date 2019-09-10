@@ -42,7 +42,11 @@ export class DoctorService {
   }
 
   public put(datos) {
-    return this.http.put(this.URL, datos);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'usuario': 'gustavo'
+    });
+    return this.http.put(this.URL, datos, { headers });
   }
 
   public delete(id) {

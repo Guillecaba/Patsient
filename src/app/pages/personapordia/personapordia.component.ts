@@ -23,6 +23,7 @@ export class PersonaPorDiaComponent implements OnInit {
     }
   };
   private edit_horario: any = {
+    idPersonaHorarioAgenda: null,
     dia: null,
     horaAperturaCadena: null,
     horaCierreCadena: null,
@@ -32,6 +33,7 @@ export class PersonaPorDiaComponent implements OnInit {
     }
   };
   private delete_horario: any = {
+    idPersonaHorarioAgenda: null,
     dia: null,
     horaAperturaCadena: null,
     horaCierreCadena: null,
@@ -46,7 +48,7 @@ export class PersonaPorDiaComponent implements OnInit {
 
     this._doctorService.getPersona().subscribe(data => {
       this.tableData1 = {
-        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado'],
+        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado', 'Acciones'],
         dataRows: data['lista']
       };
       console.log(this.tableData1);
@@ -137,6 +139,7 @@ export class PersonaPorDiaComponent implements OnInit {
       });
     }
     this.edit_horario = {
+      idPersonaHorarioAgenda: null,
       dia: null,
       horaAperturaCadena: null,
       horaCierreCadena: null,
@@ -160,6 +163,7 @@ export class PersonaPorDiaComponent implements OnInit {
       })
     }
     this.delete_horario = {
+      idPersonaHorarioAgenda: null,
       dia: null,
       horaAperturaCadena: null,
       horaCierreCadena: null,

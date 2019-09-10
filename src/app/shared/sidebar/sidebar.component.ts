@@ -34,8 +34,8 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'dashboard'
 },
 {
-    path: '/doctores',
-    title: 'Doctores',
+    path: '/horarios',
+    title: 'Horarios',
     type: 'link',
     icontype: 'dashboard'
 },

@@ -7,7 +7,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title ">Doctores por día</h4>
+            <h4 class="card-title ">Horarios de doctores por día</h4>
           </div>
           <div class="card-body">
             <div class="row">
@@ -67,6 +67,22 @@
                     <td>{{row.idLocal.nombre}}</td>
                     <td>{{row.idEmpleado.idPersona}}</td>
                     <td>{{row.idEmpleado.nombreCompleto}}</td>
+                    <td>
+                      <!-- <div class="btn-group"> -->
+                      <!-- <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
+                          <i class="material-icons">
+                            edit
+                          </i>
+                          Editar
+                        </button> -->
+                      <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(row)">
+                        <i class="material-icons">
+                          delete
+                        </i>
+                        Borrar
+                      </button>
+                      <!-- </div> -->
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -107,13 +123,13 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="closeAdd(true)" [disabled]="nuevo_horario.dia == null || nuevo_horario.dia.length == 0 || 
           nuevo_horario.horaAperturaCadena == null || nuevo_horario.horaAperturaCadena.length == 0 ||
           nuevo_horario.horaCierreCadena == null || nuevo_horario.horaCierreCadena.length == 0 ||
           nuevo_horario.intervaloMinutos == null || nuevo_horario.intervaloMinutos.length == 0 ||
-          nuevo_horario.idEmpleado.idPersona == null || nuevo_horario.idEmpleado.idPersona.length == 0">Save
-          changes</button>
+          nuevo_horario.idEmpleado.idPersona == null || nuevo_horario.idEmpleado.idPersona.length == 0">Guardar
+          Cambios</button>
       </div>
     </div>
   </div>
@@ -146,13 +162,13 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="closeEdit(true)" [disabled]="edit_horario.dia == null || edit_horario.dia.length == 0 || 
           edit_horario.horaAperturaCadena == null || edit_horario.horaAperturaCadena.length == 0 ||
           edit_horario.horaCierreCadena == null || edit_horario.horaCierreCadena.length == 0 ||
           edit_horario.intervaloMinutos == null || edit_horario.intervaloMinutos.length == 0 ||
-          edit_horario.idEmpleado.idPersona == null || edit_horario.idEmpleado.idPersona.length == 0">Save
-          changes</button>
+          edit_horario.idEmpleado.idPersona == null || edit_horario.idEmpleado.idPersona.length == 0">Guardar
+          Cambios</button>
       </div>
     </div>
   </div>
@@ -170,7 +186,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          Esta seguro de querer borrar el horario {{delete_horario.id}}
+          ¿Está seguro de querer borrar el horario {{delete_horario.idPersonaHorarioAgenda}}?
         </div>
       </div>
       <div class="modal-footer">

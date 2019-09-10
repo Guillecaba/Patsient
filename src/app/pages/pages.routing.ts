@@ -16,7 +16,7 @@ export const PagesRoutes: Routes = [
         children: [
             { path: '', component: DashboardComponent },
             { path: 'paciente', component: PacienteComponent },
-            { path: 'doctores', component: PersonaPorDiaComponent },
+            { path: 'horarios', component: PersonaPorDiaComponent },
             { path: 'excepciones', component: ExcepcionesComponent },
             { path: 'categorias', component: CategoriaComponent },
         ]
