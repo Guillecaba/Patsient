@@ -18,11 +18,16 @@ import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { PacienteComponent } from './paciente/paciente.component';
 import { PersonaPorDiaComponent } from './personapordia/personapordia.component';
 import { ExcepcionesComponent } from './excepciones/excepciones.component';
+import { CategoriaComponent } from './categoria/categoria.component';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
+
 
 
 @NgModule({
   imports: [
     CommonModule,
+    MatPaginatorModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
@@ -37,7 +42,14 @@ import { ExcepcionesComponent } from './excepciones/excepciones.component';
     PagesComponent,
     PacienteComponent,
     PersonaPorDiaComponent,
-    ExcepcionesComponent
+    ExcepcionesComponent,
+    CategoriaComponent
+  ],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: MatPaginatorIntlCro
+    },
   ]
 })
 

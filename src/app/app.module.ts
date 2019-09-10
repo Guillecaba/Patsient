@@ -48,7 +48,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutes } from './app.routing';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
-import { ServiceModule } from './services/service.module';
+import { ServicesModule } from './services/services.module';
 
 @NgModule({
   exports: [
@@ -85,30 +85,30 @@ import { ServiceModule } from './services/service.module';
     MatTooltipModule
   ]
 })
-export class MaterialModule {}
+export class MaterialModule { }
 
 @NgModule({
-    imports:      [
-        CommonModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        RouterModule.forRoot(AppRoutes,{
-          useHash: true
-        }),
-        HttpClientModule,
-        MaterialModule,
-        MatNativeDateModule,
-        
-        PagesModule,
-        ServiceModule
-        
-    ],
-    declarations: [
-        AppComponent,
-        NopagefoundComponent
-        
-      
-    ],
-    bootstrap:    [ AppComponent ]
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    RouterModule.forRoot(AppRoutes, {
+      useHash: true
+    }),
+    HttpClientModule,
+    MaterialModule,
+    MatNativeDateModule,
+
+    PagesModule,
+    ServicesModule
+
+  ],
+  declarations: [
+    AppComponent,
+    NopagefoundComponent
+
+
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
