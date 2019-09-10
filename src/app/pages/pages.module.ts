@@ -18,6 +18,8 @@ import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
+import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
+import { MatAutocompleteModule } from '@angular/material';
 
 
 
@@ -32,12 +34,14 @@ import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
         FooterModule,
         FixedpluginModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MdModule
   ],
   declarations: [
     DashboardComponent,
     PagesComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    SubcategoriaComponent
   ],
   providers:[
     { 

@@ -31,7 +31,13 @@ export const ROUTES: RouteInfo[] = [{
         path: '/categorias',
         title: 'Categorías',
         type: 'link',
-        icontype: 'dashboard'
+        icontype: 'bookmark'
+    },
+    {
+        path: '/subcategorias',
+        title: 'Subcategorías',
+        type: 'link',
+        icontype: 'bookmarks'
     },
 ];
 @Component({
