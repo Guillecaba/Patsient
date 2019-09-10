@@ -45,23 +45,16 @@ export class PersonaPorDiaComponent implements OnInit {
   constructor(public _doctorService: DoctorService) { }
 
   ngOnInit() {
-
-    this._doctorService.getPersona().subscribe(data => {
-      this.tableData1 = {
-        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado', 'Acciones'],
-        dataRows: data['lista']
-      };
-      console.log(this.tableData1);
-    });
+    this.getData();
   }
 
   getData() {
     this._doctorService.getPersona().subscribe(data => {
       this.tableData1 = {
-        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado'],
+        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado', 'Acciones'],
         dataRows: data['lista']
       };
-      console.log(this.tableData1);
+      // console.log(this.tableData1);
     });
   }
 
@@ -124,12 +117,12 @@ export class PersonaPorDiaComponent implements OnInit {
         idPersona: null
       }
     };
-    $("#addModal").modal('hide');
+    $('#addModal').modal('hide');
   }
 
   openEdit(to_edit) {
-    this.edit_horario = JSON.parse(JSON.stringify(to_edit))
-    $("#editModal").modal('show');
+    this.edit_horario = JSON.parse(JSON.stringify(to_edit));
+    $('#editModal').modal('show');
   }
 
   closeEdit(send) {
@@ -148,19 +141,19 @@ export class PersonaPorDiaComponent implements OnInit {
         idPersona: null
       }
     };
-    $("#editModal").modal('hide');
+    $('#editModal').modal('hide');
   }
 
   openDelete(to_delete) {
-    this.delete_horario = JSON.parse(JSON.stringify(to_delete))
-    $("#deleteModal").modal('show');
+    this.delete_horario = JSON.parse(JSON.stringify(to_delete));
+    $('#deleteModal').modal('show');
   }
 
   closeDelete(send) {
     if (send) {
       this._doctorService.delete(this.delete_horario['idPersonaHorarioAgenda']).subscribe(() => {
         this.getData();
-      })
+      });
     }
     this.delete_horario = {
       idPersonaHorarioAgenda: null,
@@ -172,6 +165,6 @@ export class PersonaPorDiaComponent implements OnInit {
         idPersona: null
       }
     };
-    $("#deleteModal").modal('hide');
+    $('#deleteModal').modal('hide');
   }
 }

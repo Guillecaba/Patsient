@@ -7,17 +7,23 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title ">Horario de Excepciones</h4>
+            <h4 class="card-title ">Horario de excepciones</h4>
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-md-9">
                 <div class="btn-group">
                   <!-- <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Filtrar por día
                   </button> -->
                   <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado'
+                      placeholder="Inserte el ID del Doctor" aria-label="Search" name="empleado">
+                    <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarEmpleado()"
+                      type="submit">Buscar</button>
+                  </form>
+                  <form class="form-inline" style="margin-left: 10px">
                     <input class="form-control mr-sm-2" type="date" [(ngModel)]='fecha' placeholder="Inserte la fecha"
                       aria-label="Search" name="fecha">
                     <button class="btn btn-outline-success my-2 my-sm-0" (click)="filtrarFecha()"
@@ -36,13 +42,15 @@
                 </div>
                 <a style="margin-left: 10px"> {{this.dia}} </a>
               </div>
-              <div class="col-md-4">
-                <form class="form-inline">
-                  <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado'
-                    placeholder="Inserte el ID del Doctor" aria-label="Search" name="empleado">
-                  <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarEmpleado()"
-                    type="submit">Buscar</button>
-                </form>
+              <div class="col-md-3">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                    <i class="material-icons">
+                      add_circle_outline
+                    </i>
+                    Agregar Excepción
+                  </button>
+                </div>
               </div>
             </div>
             <div class="d-flex justify-content-end">
@@ -67,6 +75,23 @@
                     <td>{{row.idLocal.nombre}}</td>
                     <td>{{row.idEmpleado.idPersona}}</td>
                     <td>{{row.idEmpleado.nombreCompleto}}</td>
+                    <td>{{row.flagEsHabilitar}}</td>
+                    <td>
+                      <!-- <div class="btn-group"> -->
+                      <!-- <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
+                            <i class="material-icons">
+                              edit
+                            </i>
+                            Editar
+                          </button> -->
+                      <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(row)">
+                        <i class="material-icons">
+                          delete
+                        </i>
+                        Borrar
+                      </button>
+                      <!-- </div> -->
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -75,6 +100,110 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar horario de excepción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input class="form-control" placeholder="Fecha" [(ngModel)]="nueva_excepcion.fechaCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de apertura"
+            [(ngModel)]="nueva_excepcion.horaAperturaCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de cierre" [(ngModel)]="nueva_excepcion.horaCierreCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="¿Está habilitado?" [(ngModel)]="nueva_excepcion.flagEsHabilitar">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="ID del empleado" [(ngModel)]="nueva_excepcion.idEmpleado.idPersona">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Intérvalo minutos" [(ngModel)]="nueva_excepcion.intervaloMinutos">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="closeAdd(true)" [disabled]="nueva_excepcion.fechaCadena == null || nueva_excepcion.fechaCadena.length == 0 ||
+            nueva_excepcion.idEmpleado.idPersona == null || nueva_excepcion.idEmpleado.idPersona.length == 0 ||
+            nueva_excepcion.flagEsHabilitar == null || nueva_excepcion.flagEsHabilitar.length == 0">Guardar
+          Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar horario de excepción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEdit(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input class="form-control" placeholder="Fecha" [(ngModel)]="edit_excepcion.fechaCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de apertura" [(ngModel)]="edit_excepcion.horaAperturaCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Horario de cierre" [(ngModel)]="edit_excepcion.horaCierreCadena">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="¿Está habilitado?" [(ngModel)]="edit_excepcion.flagEsHabilitar">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="ID del empleado" [(ngModel)]="edit_excepcion.idEmpleado.idPersona">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Intérvalo minutos" [(ngModel)]="edit_excepcion.intervaloMinutos">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="closeAdd(true)" [disabled]="edit_excepcion.fechaCadena == null || edit_excepcion.fechaCadena.length == 0 ||
+            edit_excepcion.idEmpleado.idPersona == null || edit_excepcion.idEmpleado.idPersona.length == 0 ||
+            edit_excepcion.flagEsHabilitar == null || edit_excepcion.flagEsHabilitar.length == 0">Guardar
+          Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrar horario de excepción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          ¿Está seguro de querer borrar el horario de excepción {{delete_excepcion.idHorarioExcepcion}}?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Borrar</button>
       </div>
     </div>
   </div>
