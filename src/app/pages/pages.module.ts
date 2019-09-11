@@ -19,6 +19,7 @@ import { PacienteComponent } from './paciente/paciente.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
+import { ReservaComponent } from './reserva/reserva.component';
 
 
 
@@ -39,7 +40,8 @@ import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
     DashboardComponent,
     PagesComponent,
     PacienteComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    ReservaComponent
   ],
   providers: [
     {
