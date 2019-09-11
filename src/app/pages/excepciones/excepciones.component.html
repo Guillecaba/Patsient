@@ -53,6 +53,13 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-8">
+                <mat-paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                  (page)="get_page($event)">
+                </mat-paginator>
+              </div>
+            </div>
             <div class="d-flex justify-content-end">
 
 
@@ -63,7 +70,8 @@
               <table class="table">
                 <thead class="text-primary">
                   <tr>
-                    <th *ngFor="let cell of tableData1.headerRow" (click)="order($event)">{{ cell }}</th>
+                    <th *ngFor="let cell of tableData1.headerRow" (click)="ordernar($event.target['textContent'])">
+                      {{ cell }}</th>
                   </tr>
                 </thead>
                 <tbody>

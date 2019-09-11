@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TableData } from '../../md/md-table/md-table.component';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { PageEvent } from '@angular/material/paginator';
 
 declare const $: any;
 
@@ -12,7 +13,17 @@ declare const $: any;
 export class PersonaPorDiaComponent implements OnInit {
   public tableData1: TableData;
   public empleado = '';
-  public dia: String;
+  public dia = null;
+  public diaCadena: String;
+  public inicio = 0;
+  public cantidad = 10;
+  private orderBy = 'idPersonaHorarioAgenda';
+  private orderDir = 'asc';
+  count: Number = 0;
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageEvent: PageEvent;
   private nuevo_horario: any = {
     dia: null,
     horaAperturaCadena: null,
@@ -49,40 +60,68 @@ export class PersonaPorDiaComponent implements OnInit {
   }
 
   getData() {
-    this._doctorService.getPersona().subscribe(data => {
+    this._doctorService.getPersona(this.dia, this.empleado, this.inicio, this.cantidad, this.orderBy, this.orderDir).subscribe(data => {
       this.tableData1 = {
-        headerRow: ['ID', 'Dia', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado', 'Acciones'],
+        headerRow: ['ID', 'Día', 'Apertura', 'Cierre', 'Local', 'ID Empleado', 'Nombre empleado', 'Acciones'],
         dataRows: data['lista']
       };
-      // console.log(this.tableData1);
+      this.count = data['totalDatos'];
     });
   }
 
   mostrarDia(dia) {
-    this.dia = this.definirDia(dia);
-    this._doctorService.getPersona(dia, this.empleado).subscribe(data => {
+    this.diaCadena = this.definirDia(dia);
+    /* this._doctorService.getPersona(dia, this.empleado).subscribe(data => {
       this.tableData1.dataRows = data['lista'];
-    });
+    }); */
+    this.getData();
+  }
+
+  get_page(event) {
+    this.cantidad = event.pageSize;
+    this.inicio = event.pageSize * event.pageIndex;
+    this.getData();
+  }
+
+  ordernar(orderBy) {
+    const ordernarPor = this.orderBy;
+    if (orderBy === ' ID ') {
+      this.orderBy = 'idPersonaHorarioAgenda';
+    }
+    if (orderBy === ' Día ') {
+      this.orderBy = 'dia';
+    }
+    if (orderBy === ' Apertura ') {
+      this.orderBy = 'horaApertura';
+    }
+    if (orderBy === ' Cierre ') {
+      this.orderBy = 'horaCierre';
+    }
+    if (orderBy === ' ID Empleado ') {
+      this.orderBy = 'idEmpleado';
+    }
+    if (orderBy === ' Nombre empleado ' || orderBy === ' Local ' || orderBy === ' Acciones ') {
+      return;
+    }
+    if (this.orderBy !== ordernarPor || this.orderDir === 'null') {
+      this.orderDir = 'asc';
+    } else if (this.orderDir === 'asc') {
+      this.orderDir = 'desc';
+    } else if (this.orderDir === 'desc') {
+      this.orderDir = 'asc';
+    }
+    this.getData();
   }
 
   buscarEmpleado() {
-    console.log(this.empleado);
-    if (this.empleado.length > 0) {
-      this._doctorService.getPersona(null, this.empleado).subscribe(data => {
-        this.dia = null;
-        this.tableData1.dataRows = data['lista'];
-        console.log(data['lista']);
-      });
-    } else {
-      this._doctorService.getPersona(null, null).subscribe(data => {
-        this.dia = null;
-        this.tableData1.dataRows = data['lista'];
-        console.log(data['lista']);
-      });
+    if (this.empleado.length === 0) {
+      this.empleado = null;
     }
+    this.getData();
   }
 
   definirDia(idDia): String {
+    this.dia = idDia;
     if (idDia === 0) {
       return 'Domingo';
     } else if (idDia === 1) {
@@ -98,6 +137,7 @@ export class PersonaPorDiaComponent implements OnInit {
     } else if (idDia === 6) {
       return 'Sábado';
     } else {
+      this.dia = null;
       return '';
     }
   }
