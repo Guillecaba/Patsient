@@ -84,7 +84,7 @@ export class ExcepcionesComponent implements OnInit {
     const ordernarPor = this.orderBy;
     console.log(orderBy);
     if (orderBy === ' ID') {
-      this.orderBy = 'idPersonaHorarioAgenda';
+      this.orderBy = 'idHorarioExcepcion';
     }
     if (orderBy === ' Fecha') {
       this.orderBy = 'fecha';
