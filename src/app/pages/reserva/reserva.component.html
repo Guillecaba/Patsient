@@ -11,16 +11,45 @@
           </div>
           <div class="card-body">
             <div class="row mb-4">
-              <div class="col-md-6">
-                <input type="date" class="form-control" formControlName="fecha_inicio" />
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Fecha Inicial</label>
+                  <input type="date" class="form-control" />
+                </div>
               </div>
 
-              <div class="col-md-6">
-                <input type="date" class="form-control" formControlName="fecha_inicio" />
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Fecha Final</label>
+                  <input type="date" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Empleado
+                  </button>
+                  <div class="dropdown-menu">
+                    <!--<a *ngFor="let empleado of empleados" class="dropdown-item" (click)="ordenadoPor('nombre')" >Nombre</a>-->
+
+                  </div>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Cliente
+                  </button>
+                  <div class="dropdown-menu">
+                    <!--<a *ngFor="let empleado of empleados" class="dropdown-item" (click)="ordenadoPor('nombre')" >Nombre</a>-->
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="row mb-4">
+
+              <!-- alternativa con buscador (rompebolas, mejor un dropbar)
               <div class="col-md-6">
                 <form class="form-inline">
                   <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado' placeholder="Empleado"
@@ -37,12 +66,15 @@
                   <button class="btn btn-outline-primary my-2 my-sm-0" (click)="buscarCliente()"
                     type="submit">Buscar</button>
                 </form>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <button class="btn btn-success my-2 my-sm-0" (click)="buscarReservas()" type="submit">Buscar</button>
-                <button class="btn btn-primary my-2 my-sm-0" (click)="limpiarfiltros()" type="submit">Limpiar</button>
+              </div>-->
+
+              <div class="col-md-6">
+                <div class="btn-group">
+                  <button class="btn btn-success" (click)="buscarReservas()" type="submit">Buscar</button>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn-primary" (click)="limpiarfiltros()" type="submit">Limpiar</button>
+                </div>
               </div>
             </div>
             <div class="d-flex justify-content-end">
@@ -55,22 +87,36 @@
               <table class="table">
                 <thead class="text-primary">
                   <tr>
-                    <th *ngFor="let cell of tableData1.headerRow" (click)="order($event)">{{ cell }}</th>
+                    <!--<th (click)="order($event)">Fecha</th>-->
+                    <th>Fecha</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Profesional</th>
+                    <th>Cliente</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let row of tableData1.dataRows">
-                    <td>{{row.idPersona}}</td>
-                    <td>{{row.nombre}}</td>
-                    <td>{{row.apellido}}</td>
-                    <td>{{row.telefono}}</td>
-                    <td>{{row.email}}</td>
-                    <td>{{row.ruc}}</td>
-                    <td>{{row.cedula}}</td>
-                    <td>{{row.tipoPersona}}</td>
-                    <td>{{row.fechaNacimiento}}</td>
-
-
+                  <tr *ngFor="let reserva of reservas">
+                    <td>{{reserva.fecha}}</td>
+                    <td>{{reserva.horaInicio}}</td>
+                    <td>{{reserva.horaFin}} </td>
+                    <td>{{reserva.idEmpleado['nombre'] + ' ' + reserva.idEmpleado['apellido']}}</td>
+                    <td>{{reserva.idCliente['nombre'] + ' ' + reserva.idCliente['apellido']}}</td>
+                    <td>
+                      <span>
+                        <button class="btn btn-danger btn-sm my-2 my-sm-0"
+                          (click)="cancelarReserva(reserva)">Cancelar</button>
+                      </span>
+                      <span>
+                        <button class="btn btn-primary btn-sm my-2 my-sm-0"
+                          (click)="editarReserva(reserva)">Modificar</button>
+                      </span>
+                      <span>
+                        <button class="btn btn-primary btn-sm my-2 my-sm-0" (click)="nuevaFichaReserva(reserva)">Nueva
+                          Ficha</button>
+                      </span>
+                    </td>
 
                   </tr>
                 </tbody>
