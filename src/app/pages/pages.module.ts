@@ -21,12 +21,17 @@ import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginato
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 import { ReservaComponent } from './reserva/reserva.component';
 
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlCro } from './paciente/i18nPaginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 @NgModule({
   imports: [
     CommonModule,
     MatPaginatorModule,
+    MatCheckboxModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
