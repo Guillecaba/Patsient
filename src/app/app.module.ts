@@ -49,6 +49,7 @@ import { AppRoutes } from './app.routing';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
 import { ServicesModule } from './services/services.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   exports: [
@@ -109,6 +110,7 @@ export class MaterialModule { }
 
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [DatePipe]
 })
 export class AppModule { }
