@@ -20,10 +20,9 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 import { ReservaComponent } from './reserva/reserva.component';
-
-import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatPaginatorIntlCro } from './paciente/i18nPaginator';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
+import { MatAutocompleteModule } from '@angular/material';
 
 
 
@@ -39,6 +38,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FooterModule,
     FixedpluginModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MdModule
   ],
   declarations: [
@@ -46,7 +46,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     PagesComponent,
     PacienteComponent,
     CategoriaComponent,
-    ReservaComponent
+    ReservaComponent,
+    SubcategoriaComponent
   ],
   providers: [
     {
