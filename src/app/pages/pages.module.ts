@@ -17,11 +17,17 @@ import { SidebarModule } from '../shared/sidebar/sidebar.module';
 import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { PacienteComponent } from './paciente/paciente.component';
 
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlCro } from './paciente/i18nPaginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 @NgModule({
   imports: [
     CommonModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
@@ -35,6 +41,12 @@ import { PacienteComponent } from './paciente/paciente.component';
     DashboardComponent,
     PagesComponent,
     PacienteComponent
+  ],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: MatPaginatorIntlCro
+    },
   ]
 })
 

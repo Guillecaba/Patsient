@@ -7,70 +7,49 @@ import { JsonPipe } from '@angular/common';
   providedIn: 'root'
 })
 export class PacienteService {
-
-  URL ='https://gy7228.myfoscam.org:8443/stock-pwfe/persona';
-  urlActual;
-  ordenDir;
-  ordenPor;
-  nombre;
-
+  private url_base = "https://gy7228.myfoscam.org:8443/stock-pwfe/";
+  //URL ='https://gy7228.myfoscam.org:8443/stock-pwfe/persona';
+ 
   constructor(public  http: HttpClient) { 
-    this.ordenDir = null;
-    this.ordenPor = null;
     
 
    }
-
-
-  getPersona(ordenadoPor?,ordenadoDireccion?,nombre?) {
-    /* this.ordenDir=null
-    this.ordenPor=null */
-    this.nombre=null
-    if(ordenadoPor){
-      this.ordenPor =ordenadoPor;
-    }
-    if(ordenadoDireccion){
-      this.ordenDir= ordenadoDireccion;
-    }
-    if(nombre) {
-      this.nombre = nombre;
-    }
-    this.generarUrl();
-    return this.http.get(this.urlActual);
-
+   public all(){
+    let url = this.url_base + "persona"
+    return this.http.get(url)
   }
+
+  public get(filters){
+    let separator = '?'
+    let url = this.url_base + "persona"
+    for(let k in filters){
+      if(filters[k] == null) {
+        continue
+      }
+      url= url + separator + k + "=" +filters[k]
+      separator = "&"
+    }
+    return this.http.get(url)
+  }
+
+  
+
+  public post(data){
+    let url = this.url_base + "persona"
+    return this.http.post(url,data)
+  }
+
+  public put(data){
+    let url = this.url_base + "persona"
+    return this.http.put(url,data)
+  }
+
+  public delete(id){
+    let url = this.url_base + "persona/" + id
+    return this.http.delete(url)
+  }
+
 
  
-
-
-
-  generarUrl() {
-    if (
-      this.ordenPor != null ||
-      this.ordenDir != null ||
-      this.nombre != null && this.nombre !== ""
-    ) {
-      this.urlActual = this.URL + '/?';
-      if (this.ordenPor != null) {
-        this.urlActual = this.urlActual + '&orderBy=' + this.ordenPor;
-        console.log(this.urlActual)
-      }
-      if (this.ordenDir != null) {
-        this.urlActual = this.urlActual + '&orderDir=' + this.ordenDir;
-        console.log(this.urlActual)
-      }
-      if(this.nombre != null) {
-        let query= {nombre:this.nombre}
-        let convertido = JSON.stringify(query)
-        this.urlActual = this.urlActual + "ejemplo=" + encodeURIComponent(convertido) ;
-        console.log(this.urlActual);
-      }
-    } else {
-      this.urlActual = this.URL +'/' ;
-      console.log(this.urlActual)
-    }
-
-
-  }
   
 }
