@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PacienteService } from './paciente.service';
+import { ReservaService } from './reserva.service';
 
 @NgModule({
   declarations: [],
@@ -8,7 +9,8 @@ import { PacienteService } from './paciente.service';
     CommonModule
   ],
   providers: [
-    PacienteService
+    PacienteService,
+    ReservaService
   ]
 })
 export class ServiceModule { }
