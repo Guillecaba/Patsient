@@ -32,7 +32,16 @@ export class PacienteService {
     return this.http.get(url)
   }
 
-  
+  public getTodos() {
+    let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc';
+    return this.http.get(url);
+  }
+
+  public getTodosEmpleados() {
+    let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc&ejemplo=%7B"soloUsuariosDelSistema"%3Atrue%7D';
+    return this.http.get(url);
+  }
+
 
   public post(data){
     let url = this.url_base + "persona"
