@@ -27,13 +27,18 @@ export class ReservaComponent implements OnInit {
   constructor(public reservaService: ReservaService, public pacienteService: PacienteService, public datePipe: DatePipe) { }
 
   ngOnInit() {
+    let hoy: string;
     this.pacienteService.getTodos().subscribe((res: any) => (
       this.pacientes = res['lista']
     ));
     this.pacienteService.getTodosEmpleados().subscribe((res: any) => (
       this.empleados = res['lista']
     ));
-    this.reservaService.getTodasLasReservas().subscribe((res: any) => (
+    hoy = new Date().toJSON('yyyy/MM/dd').substr(0, 10);
+    hoy = hoy.substr(0, 4) + hoy.substr(5, 2) + hoy.substr(8, 2);
+    console.log(hoy);
+    // carga todas las reservas de hoy
+    this.reservaService.getReservas(hoy, hoy, null, null).subscribe((res: any) => (
       this.reservas = res['lista']
     ));
   }
