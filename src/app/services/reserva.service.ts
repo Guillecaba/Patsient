@@ -53,6 +53,17 @@ export class ReservaService {
         const URL = this.base_url + 'reserva/';
         return this.http.post(URL, datos, { headers });
     }
+    deleteReserva(id) {
+        const URL = this.base_url + 'reserva/' + id;
+        return this.http.delete(URL);
+    }
+    putReserva(datos) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+        const URL = this.base_url + 'reserva';
+        return this.http.put(URL, datos, { headers });
+    }
     crearURL() {
         this.urlActual = this.base_url + 'reserva';
         // si existe algun filtro

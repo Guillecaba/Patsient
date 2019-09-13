@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ReservaService } from 'src/app/services/reserva.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { DatePipe } from '@angular/common';
+import { Router } from "@angular/router";
+
+declare const $: any;
 
 @Component({
   selector: 'app-reserva',
@@ -14,7 +17,10 @@ export class ReservaComponent implements OnInit {
   // inputs
   fecha1;
   fecha2;
+  observacion: string;
+  asistio: boolean;
 
+  idReserva: number;
   reservas: any;
   pacientes: any;
   empleados: any;
@@ -24,7 +30,10 @@ export class ReservaComponent implements OnInit {
   actualClienteNombre: string;
   actualEmpleado: number;
   actualEmpleadoNombre: string;
-  constructor(public reservaService: ReservaService, public pacienteService: PacienteService, public datePipe: DatePipe) { }
+  constructor(public reservaService: ReservaService,
+    public pacienteService: PacienteService,
+    public datePipe: DatePipe,
+    private router: Router) { }
 
   ngOnInit() {
     let hoy: string;
@@ -77,5 +86,40 @@ export class ReservaComponent implements OnInit {
     this.reservaService.getReservas(this.fecha_inicio, this.fecha_fin, this.actualCliente, this.actualEmpleado).subscribe((res: any) => (
       this.reservas = res['lista']
     ));
+  }
+  cancelarReserva(reserv: any) {
+    const id = reserv.idReserva;
+    this.reservaService.deleteReserva(id).subscribe();
+  }
+  editarReserva(reserv: any) {
+    // limpia las entradas
+    this.observacion = null;
+    this.asistio = false;
+
+    $('#modificarReserva').modal('show');
+    const id = reserv.idReserva;
+    this.idReserva = id;
+    console.log(this.idReserva);
+  }
+  cerrar(guardar: boolean) {
+    $('#modificarReserva').modal('hide');
+    if (guardar) {
+      let datos = '{"idReserva":';
+      datos = datos + this.idReserva + ',"observacion":"';
+      datos = datos + this.observacion + '","flagAsistio":"';
+      if (this.asistio) {
+        datos = datos + 'S';
+      } else {
+        datos = datos + 'N';
+      }
+      datos = datos + '"}';
+      console.log(datos);
+      this.reservaService.putReserva(datos).subscribe(res => {
+        if (res) {
+          console.log('Reservación modificada con éxito!');
+          this.router.navigateByUrl('/');
+        }
+      });
+    }
   }
 }
