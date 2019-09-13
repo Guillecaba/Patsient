@@ -101,6 +101,10 @@ export class CrearReservaComponent implements OnInit {
     datos = datos + horaInicio + '","horaFinCadena":"' + horaFin + '",';
     datos = datos + '"idEmpleado":{"idPersona":' + this.empl + '},"idCliente":{"idPersona":';
     datos = datos + this.cli + '}}';
-    this.reservaService.postReserva(datos).subscribe
+    this.reservaService.postReserva(datos).subscribe(res => {
+      if (res) {
+        console.log('Reservación creada con éxito!');
+      }
+    });
   }
 }
