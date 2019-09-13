@@ -43,14 +43,20 @@ export const ROUTES: RouteInfo[] = [{
     title: 'Subcategorías',
     type: 'link',
     icontype: 'bookmarks'
-},{
+}, {
 
     path: '/reservas',
     title: 'Reservas',
     type: 'link',
     icontype: 'dashboard'
+}, {
+
+    path: '/servicios',
+    title: 'Servicios',
+    type: 'link',
+    icontype: 'dashboard'
 }
-    
+
 ];
 @Component({
     selector: 'app-sidebar-cmp',
