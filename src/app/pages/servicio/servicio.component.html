@@ -52,17 +52,17 @@
             </div>
 
             <div class="row mb-4">
-
+              <!--
               <div class="col-md-4">
                 <div class="btn-group">
                   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <span *ngIf="actualEmpleadoNombre">{{actualCategoriaNombre}}</span>
-                    <span *ngIf="!actualEmpleadoNombre">Categoria</span>
+                    <span *ngIf="actualCategoriaNombre">{{actualCategoriaNombre}}</span>
+                    <span *ngIf="!actualCategoriaNombre">Categoria</span>
                   </button>
                   <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
                     <a *ngFor="let categoria of categorias" class="dropdown-item"
-                      (click)="setCategoria(categoria)">{{categoria['nombre']}}</a>
+                      (click)="setCategoria(categoria)">{{categoria['descripcion']}}</a>
                   </div>
                 </div>
               </div>
@@ -71,16 +71,16 @@
                   <button style="max-width:150px; overflow-x: hidden;" type="button"
                     class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <span *ngIf="actualClienteNombre">{{actualSubcategoriaNombre}}</span>
-                    <span *ngIf="!actualClienteNombre">Subcategoría</span>
+                    <span *ngIf="actualSubcategoriaNombre">{{actualSubcategoriaNombre}}</span>
+                    <span *ngIf="!actualSubcategoriaNombre">Subcategoría</span>
                   </button>
                   <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
                     <a *ngFor="let subcat of subcategorias" class="dropdown-item"
-                      (click)="setSubCategoria(subcat)">{{subcat['nombre']}}</a>
+                      (click)="setSubcategoria(subcat)">{{subcat['descripcion']}}</a>
                   </div>
                 </div>
               </div>
-
+              -->
               <div class="col-md-4">
                 <div class="btn-group">
                   <button class="btn btn-success" (click)="buscar()" type="submit">Buscar</button>
@@ -102,20 +102,24 @@
                   <tr>
                     <!--<th (click)="order($event)">Fecha</th>-->
                     <th>Fecha</th>
-                    <th>Hora Inicio</th>
-                    <th>Hora Fin</th>
+                    <th>ID Ficha</th>
+                    <th>Fecha ficha</th>
                     <th>Profesional</th>
                     <th>Cliente</th>
+                    <th>Categoría</th>
+                    <th>Subcategoría</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let reserva of reservas">
-                    <td>{{reserva.fecha}}</td>
-                    <td>{{reserva.horaInicio}}</td>
-                    <td>{{reserva.horaFin}} </td>
-                    <td>{{reserva.idEmpleado['nombre'] + ' ' + reserva.idEmpleado['apellido']}}</td>
-                    <td>{{reserva.idCliente['nombre'] + ' ' + reserva.idCliente['apellido']}}</td>
+                  <tr *ngFor="let serv of servicios">
+                    <td>{{serv.fechaHora}}</td>
+                    <td>{{serv.idFichaClinica.idFichaClinica}}</td>
+                    <td>{{serv.idFichaClinica.fechaHora}} </td>
+                    <td>{{serv.idEmpleado['nombreCompleto']}}</td>
+                    <td>{{serv.idFichaClinica.idCliente['nombreCompleto']}}</td>
+                    <td>{{serv.idFichaClinica.idTipoProducto.idCategoria.descripcion}}</td>
+                    <td>{{serv.idFichaClinica.idTipoProducto.descripcion }}</td>
                     <td>
                       <span>
                         <button class="btn btn-danger btn-sm my-2 my-sm-0"
