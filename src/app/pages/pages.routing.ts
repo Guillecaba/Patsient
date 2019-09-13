@@ -5,6 +5,7 @@ import { PacienteComponent } from './paciente/paciente.component';
 import { PersonaPorDiaComponent } from './personapordia/personapordia.component';
 import { ExcepcionesComponent } from './excepciones/excepciones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -19,6 +20,7 @@ export const PagesRoutes: Routes = [
             { path: 'horarios', component: PersonaPorDiaComponent },
             { path: 'excepciones', component: ExcepcionesComponent },
             { path: 'categorias', component: CategoriaComponent },
+            { path: 'login', component: LoginComponent }
         ]
     },
 ];

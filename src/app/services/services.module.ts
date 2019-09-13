@@ -4,6 +4,7 @@ import { PacienteService } from './paciente.service';
 import { DoctorService } from './doctor.service';
 import { ExcepcionService } from './excepcion.service';
 import { CategoriaService } from './categoria.service';
+import { LoginService } from './login.service'
 
 @NgModule({
   declarations: [],
@@ -14,7 +15,8 @@ import { CategoriaService } from './categoria.service';
     PacienteService,
     DoctorService,
     ExcepcionService,
-    CategoriaService
+    CategoriaService,
+    LoginService
   ]
 })
 export class ServicesModule { }

@@ -21,6 +21,7 @@ import { ExcepcionesComponent } from './excepciones/excepciones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -43,7 +44,8 @@ import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
     PacienteComponent,
     PersonaPorDiaComponent,
     ExcepcionesComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    LoginComponent
   ],
   providers: [
     {
