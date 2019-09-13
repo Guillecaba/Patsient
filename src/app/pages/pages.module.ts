@@ -23,6 +23,8 @@ import { ReservaComponent } from './reserva/reserva.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { MatAutocompleteModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
+import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
 
 
 
@@ -39,7 +41,8 @@ import { MatAutocompleteModule } from '@angular/material';
     FixedpluginModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MdModule
+    MdModule,
+    MatRadioModule
   ],
   declarations: [
     DashboardComponent,
@@ -47,7 +50,8 @@ import { MatAutocompleteModule } from '@angular/material';
     PacienteComponent,
     CategoriaComponent,
     ReservaComponent,
-    SubcategoriaComponent
+    SubcategoriaComponent,
+    CrearReservaComponent
   ],
   providers: [
     {
