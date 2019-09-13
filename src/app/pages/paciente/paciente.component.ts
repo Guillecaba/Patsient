@@ -4,13 +4,15 @@ import { PacienteService } from 'src/app/services/paciente.service';
 import { PageEvent } from '@angular/material/paginator'; 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 declare const $: any;
 
 @Component({
   selector: 'app-paciente',
   templateUrl: './paciente.component.html',
-  styles: []
+  styles: [],
+  providers:[DatePipe]
 })
 export class PacienteComponent implements OnInit {
   /* public tableData1: TableData;
@@ -84,7 +86,7 @@ export class PacienteComponent implements OnInit {
 
   private forma = null;
 
-  constructor(public _pacienteService: PacienteService) { }
+  constructor(public _pacienteService: PacienteService,public datePipe: DatePipe) { }
 
   ngOnInit() {
     this.forma =  new FormGroup({
@@ -179,9 +181,8 @@ export class PacienteComponent implements OnInit {
 
   closeAdd(send){
     if(send){
-      this._pacienteService.post({
-        'descripcion' : this.nueva_paciente
-      }).subscribe(()=>{
+      console.log(this.forma.value)
+      this._pacienteService.post(this.forma.value).subscribe(()=>{
         this.getData();
       })
     }
@@ -190,13 +191,25 @@ export class PacienteComponent implements OnInit {
   }
 
   openEdit(to_edit){
+    this.forma.setValue({
+      nombre: to_edit.nombre,
+      apellido: to_edit.apellido,
+      email: to_edit.email,
+      telefono:to_edit.telefono,
+      ruc: to_edit.ruc,
+      cedula: to_edit.cedula,
+      tipoPersona:to_edit.tipoPersona,
+      fechaNacimiento: this.datePipe.transform(to_edit.fechaNacimiento, 'yyyy-MM-dd hh:mm:ss')
+    });
+    console.log(to_edit)
     this.edit_paciente = JSON.parse(JSON.stringify(to_edit))
     $("#editModal").modal('show');
   }
 
   closeEdit(send){
     if(send){
-      this._pacienteService.put(this.edit_paciente).subscribe(()=>{
+      let editado = {...this.forma.value,idPersona:this.edit_paciente.idPersona}
+      this._pacienteService.put(editado).subscribe(()=>{
         this.getData();
       })
     }
@@ -207,13 +220,15 @@ export class PacienteComponent implements OnInit {
   }
 
   openDelete(to_delete){
+    console.log(to_delete)
     this.delete_paciente = JSON.parse(JSON.stringify(to_delete))
     $("#deleteModal").modal('show');
+
   }
 
   closeDelete(send){
     if(send){
-      this._pacienteService.delete(this.delete_paciente['idCategoria']).subscribe(()=>{
+      this._pacienteService.delete(this.delete_paciente['idPersona']).subscribe(()=>{
         this.getData();
       })
     }
@@ -225,7 +240,16 @@ export class PacienteComponent implements OnInit {
 
  
   probar() {
-    console.log(this.busquedaExacta)
+    console.log(this.forma)
+  }
+
+  setFechaNacimiento(event){
+    let fecha = this.datePipe.transform(event.target.value, 'yyyy-MM-dd hh:mm:ss');
+    this.forma.patchValue({
+      fechaNacimiento: fecha, 
+      // formControlName2: myValue2 (can be omitted)
+    });
+    console.log(this.forma.value)
   }
 }
 

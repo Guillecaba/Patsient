@@ -125,18 +125,87 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-            <input class="form-control" placeholder="Descripcion" [(ngModel)]="nueva_categoria" >
+        
+            <form [formGroup] ='forma' >
+                <input class="form-control" type="text" placeholder="Nombre" formControlName='nombre'  >
+                <input class="form-control " type="text" placeholder="Apellido" formControlName='apellido'  >
+                <input class="form-control " type="email" placeholder="Correo Electrónico" formControlName='email'  >
+                <input class="form-control " type="number" placeholder="RUC" formControlName='ruc'  >
+                <input class="form-control " type="number" placeholder="Telefono" formControlName='telefono'  >
+                <input class="form-control " type="number" placeholder="C.I" formControlName='cedula'  >
+                <input type="date" (change)="setFechaNacimiento($event)"   class="form-control" />        
+            </form>
+            
           </div>
-      </div>
+     
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="closeAdd(true)" 
-          [disabled]="nueva_categoria == null || nueva_categoria.length == 0">Save changes</button>
+        [disabled]='!forma.valid' >Guardar</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1"
+  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrar Paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            Esta seguro que desea borrar al usuario {{delete_paciente.nombre  }}  {{delete_paciente.apellido}}
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" 
+  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+            <form [formGroup] ='forma' >
+                <input class="form-control" type="text" placeholder="Nombre" formControlName='nombre'  >
+                <input class="form-control " type="text" placeholder="Apellido" formControlName='apellido'  >
+                <input class="form-control " type="email" placeholder="Correo Electrónico" formControlName='email'  >
+                <input class="form-control " type="number" placeholder="RUC" formControlName='ruc'  >
+                <input class="form-control " type="number" placeholder="Telefono" formControlName='telefono'  >
+                <input class="form-control " type="number" placeholder="C.I" formControlName='cedula'  >
+                <!-- <input type="date" (change)="setFechaNacimiento($event)"   class="form-control" />  -->       
+            </form>
+            
+          </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="closeEdit(true)" 
+        [disabled]='!forma.valid' >Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 

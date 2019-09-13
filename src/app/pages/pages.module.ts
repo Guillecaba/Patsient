@@ -20,6 +20,24 @@ import { PacienteComponent } from './paciente/paciente.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './paciente/i18nPaginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+/* import { MAT_DATE_FORMATS } from '@angular/material';
+  import { MomentDateAdapter } from '@angular/material-moment-adapter'; */
+
+  export const MY_FORMATS = {
+    parse: {
+      dateInput: 'LL',
+    },
+    display: {
+      dateInput: 'YYYY-MM-DD',
+      monthYearLabel: 'YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'YYYY',
+    },
+  };
 
 
 
@@ -27,7 +45,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   imports: [
     CommonModule,
     MatPaginatorModule,
+    MatDatepickerModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
@@ -45,7 +66,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   providers: [
     {
       provide: MatPaginatorIntl,
-      useClass: MatPaginatorIntlCro
+      useClass: MatPaginatorIntlCro,
+
+     /*  {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}, */
     },
   ]
 })

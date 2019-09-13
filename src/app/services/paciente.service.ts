@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
 
 @Injectable({
@@ -35,13 +35,25 @@ export class PacienteService {
   
 
   public post(data){
+    const body = JSON.stringify(data);
     let url = this.url_base + "persona"
-    return this.http.post(url,data)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+     
+    });
+
+    return this.http.post(url,data, { headers })
   }
 
   public put(data){
-    let url = this.url_base + "persona"
-    return this.http.put(url,data)
+    const body = JSON.stringify(data);
+    let url = this.url_base + "persona/"
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+     
+    });
+
+    return this.http.put(url,data,{ headers })
   }
 
   public delete(id){
