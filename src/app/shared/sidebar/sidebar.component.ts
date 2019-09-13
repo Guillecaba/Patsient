@@ -55,6 +55,12 @@ export const ROUTES: RouteInfo[] = [{
     title: 'Servicios',
     type: 'link',
     icontype: 'dashboard'
+},
+{
+    path: '/ficha',
+    title: 'Ficha Medica',
+    type: 'link',
+    icontype: 'dashboard'
 }
 
 ];

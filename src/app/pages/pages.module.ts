@@ -27,6 +27,25 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
 import { ServicioComponent } from './servicio/servicio.component';
 import { EditorServicioComponent } from './editor-servicio/editor-servicio.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FichaComponent } from './ficha/ficha.component';
+
+/* import { MAT_DATE_FORMATS } from '@angular/material';
+  import { MomentDateAdapter } from '@angular/material-moment-adapter'; */
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 
 
@@ -34,7 +53,10 @@ import { EditorServicioComponent } from './editor-servicio/editor-servicio.compo
   imports: [
     CommonModule,
     MatPaginatorModule,
+    MatDatepickerModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
@@ -55,12 +77,16 @@ import { EditorServicioComponent } from './editor-servicio/editor-servicio.compo
     SubcategoriaComponent,
     CrearReservaComponent,
     ServicioComponent,
-    EditorServicioComponent
+    EditorServicioComponent,
+    FichaComponent
   ],
   providers: [
     {
       provide: MatPaginatorIntl,
-      useClass: MatPaginatorIntlCro
+      useClass: MatPaginatorIntlCro,
+
+      /*  {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}, */
     },
   ]
 })
