@@ -7,46 +7,51 @@ import { HttpClient } from '@angular/common/http';
 export class SubcategoriaService {
   private url_base = "https://gy7228.myfoscam.org:8443/stock-pwfe/";
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public all(){
+  public all() {
     let url = this.url_base + "tipoProducto"
     return this.http.get(url)
   }
 
-  public getCat(like){
+  public getCat(like) {
     let url = this.url_base + "categoria?like=S&inicio=0&cantidad=5";
-    if(like.length > 0){
+    if (like.length > 0) {
       url = url + "&ejemplo=" + encodeURIComponent(JSON.stringify({
-        descripcion:like
+        descripcion: like
       }))
     }
     return this.http.get(url)
   }
 
-  public get(filters){
+  public get(filters) {
     let separator = '?'
     let url = this.url_base + "tipoProducto"
-    for(let k in filters){
-      if(filters[k] == null)continue
-      url= url + separator + k + "=" +filters[k]
+    for (let k in filters) {
+      if (filters[k] == null) continue
+      url = url + separator + k + "=" + filters[k]
       separator = "&"
     }
     return this.http.get(url)
   }
 
-  public post(data){
+  public post(data) {
     let url = this.url_base + "tipoProducto"
-    return this.http.post(url,data)
+    return this.http.post(url, data)
   }
 
-  public put(data){
+  public put(data) {
     let url = this.url_base + "tipoProducto"
-    return this.http.put(url,data)
+    return this.http.put(url, data)
   }
 
-  public delete(id){
+  public delete(id) {
     let url = this.url_base + "tipoProducto/" + id
     return this.http.delete(url)
+  }
+
+  public getTodos() {
+    const url = this.url_base + 'tipoProducto/';
+    return this.http.get(url);
   }
 }
