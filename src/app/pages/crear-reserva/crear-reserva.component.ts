@@ -3,6 +3,7 @@ import { ReservaService } from 'src/app/services/reserva.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { DatePipe } from '@angular/common';
 import { AgendaService } from 'src/app/services/agenda.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-crear-reserva',
@@ -29,7 +30,8 @@ export class CrearReservaComponent implements OnInit {
   constructor(public reservaService: ReservaService,
     public pacienteService: PacienteService,
     public datePipe: DatePipe,
-    public agendaService: AgendaService
+    public agendaService: AgendaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -104,6 +106,7 @@ export class CrearReservaComponent implements OnInit {
     this.reservaService.postReserva(datos).subscribe(res => {
       if (res) {
         console.log('Reservación creada con éxito!');
+        this.router.navigateByUrl('/reservas');
       }
     });
   }
