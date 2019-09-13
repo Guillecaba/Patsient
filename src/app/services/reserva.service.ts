@@ -45,6 +45,14 @@ export class ReservaService {
         return this.http.get(this.urlActual, { headers });
     }
 
+    postReserva(datos) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'usuario': 'gustavo'
+        });
+        const URL = this.base_url + 'reserva/';
+        return this.http.post(URL, datos, { headers });
+    }
     crearURL() {
         this.urlActual = this.base_url + 'reserva';
         // si existe algun filtro
