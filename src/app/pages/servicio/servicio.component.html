@@ -122,16 +122,12 @@
                     <td>{{serv.idFichaClinica.idTipoProducto.descripcion }}</td>
                     <td>
                       <span>
-                        <button class="btn btn-danger btn-sm my-2 my-sm-0"
-                          (click)="cancelarReserva(reserva)">Cancelar</button>
+                        <a class="btn btn-success btn-sm my-2 my-sm-0"
+                          href="#/detalles/{{serv.idServicio}}">Detalles</a>
                       </span>
                       <span>
-                        <button class="btn btn-primary btn-sm my-2 my-sm-0"
-                          (click)="editarReserva(reserva)">Modificar</button>
-                      </span>
-                      <span>
-                        <button class="btn btn-primary btn-sm my-2 my-sm-0" (click)="nuevaFichaReserva(reserva)">Nueva
-                          Ficha</button>
+                        <a class="btn btn-primary btn-sm my-2 my-sm-0"
+                          href="#/editor-servicio/{{serv.idServicio}}">Editar</a>
                       </span>
                     </td>
 
@@ -142,7 +138,7 @@
             </div>
             <div class="row mt-4">
               <div class="col-md-12">
-                <button class="btn btn-primary" routerLink="/crear-reserva">Crear Reserva</button>
+                <button class="btn btn-primary" routerLink="/editor-servicio/">Crear Servicio</button>
               </div>
             </div>
           </div>

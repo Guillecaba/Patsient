@@ -112,4 +112,12 @@ export class ServicioComponent implements OnInit {
       ));
   }
 
+  verServicio(serv: any) {
+
+  }
+
+  editarServicio(serv: any) {
+
+  }
+
 }
