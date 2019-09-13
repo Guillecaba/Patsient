@@ -7,6 +7,7 @@ import { ReservaComponent } from './reserva/reserva.component';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
 import { ServicioComponent } from './servicio/servicio.component';
+import { EditorServicioComponent } from './editor-servicio/editor-servicio.component';
 
 
 
@@ -26,6 +27,8 @@ export const PagesRoutes: Routes = [
             { path: 'reservas', component: ReservaComponent },
             { path: 'crear-reserva', component: CrearReservaComponent },
             { path: 'servicios', component: ServicioComponent },
+            { path: 'editor-servicio', component: EditorServicioComponent },
+            { path: 'editor-servicio/:id', component: EditorServicioComponent },
         ]
     },
 
