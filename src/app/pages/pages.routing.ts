@@ -6,6 +6,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { ReservaComponent } from './reserva/reserva.component';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
+import { ServicioComponent } from './servicio/servicio.component';
 
 
 
@@ -24,7 +25,7 @@ export const PagesRoutes: Routes = [
             { path: 'subcategorias', component: SubcategoriaComponent },
             { path: 'reservas', component: ReservaComponent },
             { path: 'crear-reserva', component: CrearReservaComponent },
-
+            { path: 'servicios', component: ServicioComponent },
         ]
     },
 
