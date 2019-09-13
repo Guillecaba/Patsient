@@ -26,6 +26,7 @@ import { MatAutocompleteModule } from '@angular/material';
 import { MatRadioModule } from '@angular/material/radio';
 import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
 import { ServicioComponent } from './servicio/servicio.component';
+import { EditorServicioComponent } from './editor-servicio/editor-servicio.component';
 
 
 
@@ -53,7 +54,8 @@ import { ServicioComponent } from './servicio/servicio.component';
     ReservaComponent,
     SubcategoriaComponent,
     CrearReservaComponent,
-    ServicioComponent
+    ServicioComponent,
+    EditorServicioComponent
   ],
   providers: [
     {
