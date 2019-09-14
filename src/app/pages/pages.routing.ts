@@ -9,6 +9,7 @@ import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
 import { ServicioComponent } from './servicio/servicio.component';
 import { EditorServicioComponent } from './editor-servicio/editor-servicio.component';
 import { FichaComponent } from './ficha/ficha.component';
+import { DetallesServicioComponent } from './detalles-servicio/detalles-servicio.component';
 
 
 
@@ -30,7 +31,8 @@ export const PagesRoutes: Routes = [
             { path: 'servicios', component: ServicioComponent },
             { path: 'editor-servicio', component: EditorServicioComponent },
             { path: 'editor-servicio/:id', component: EditorServicioComponent },
-            { path: 'ficha', component: FichaComponent }
+            { path: 'ficha', component: FichaComponent },
+            { path: 'detalleservicio/:id', component: DetallesServicioComponent }
         ]
     },
 ];
