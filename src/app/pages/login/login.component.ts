@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
 declare var $: any;
@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private sidebarVisible: boolean;
     private nativeElement: Node;
     public user: String;
+    public returnURL;
 
-    constructor(private element: ElementRef, public _loginService: LoginService, public router: Router) {
+    constructor(private element: ElementRef, public _loginService: LoginService, public router: Router, private route: ActivatedRoute) {
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
@@ -32,7 +33,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             // after 1000 ms we add the class animated to the login/register card
             card.classList.remove('card-hidden');
         }, 700);
+        this.route.queryParams.subscribe(data => {
+            this.returnURL = data.returnUrl;
+        });
     }
+
     sidebarToggle() {
         var toggleButton = this.toggleButton;
         var body = document.getElementsByTagName('body')[0];
@@ -60,10 +65,17 @@ export class LoginComponent implements OnInit, OnDestroy {
             const coincidencias = res['totalDatos'];
             if (coincidencias > 0) {
                 localStorage.setItem('logged', 'true');
-                this.router.navigate(['']);
+                if (this.returnURL == null) {
+                    this.router.navigate(['']);
+                } else {
+                    this.router.navigate([this.returnURL]);
+                }
             } else {
-                // error
+                $('#errorModal').modal('show');
             }
         });
+    }
+    closeError() {
+        $('#errorModal').modal('hide');
     }
 }

@@ -6,7 +6,7 @@ import { PersonaPorDiaComponent } from './personapordia/personapordia.component'
 import { ExcepcionesComponent } from './excepciones/excepciones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { LoginComponent } from './login/login.component';
-
+import { AuthGuard } from './login/auth.guard';
 
 
 
@@ -15,7 +15,7 @@ export const PagesRoutes: Routes = [
         path: '',
         component: PagesComponent,
         children: [
-            { path: '', component: DashboardComponent },
+            { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
             { path: 'paciente', component: PacienteComponent },
             { path: 'horarios', component: PersonaPorDiaComponent },
             { path: 'excepciones', component: ExcepcionesComponent },
