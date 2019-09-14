@@ -44,6 +44,22 @@ export class ServicioService {
         const url = this.base_url + 'servicio';
         return this.http.get(url, { headers });
     }
+    post(body) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'usuario': 'gustavo'
+        });
+        const url = this.base_url + 'servicio';
+        return this.http.post(url, body, { headers });
+    }
+    put(body) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'usuario': 'gustavo'
+        });
+        const url = this.base_url + 'servicio';
+        return this.http.put(url, body, { headers });
+    }
     crearURL() {
         this.urlActual = this.base_url + 'servicio';
         // si existe algun filtro
