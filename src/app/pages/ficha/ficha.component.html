@@ -7,7 +7,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title ">Reservas</h4>
+            <h4 class="card-title ">Administracion de Fichas Medicas</h4>
           </div>
           <div class="card-body">
             <div class="row mb-4">
@@ -79,8 +79,190 @@
                   <button class="btn btn-primary" (click)="limpiarFiltros()" type="submit">Limpiar</button>
                 </div>
               </div>
+              <div class="col-md-6 text-right">
+                  <div class="btn-group">
+                      <button type="button" class="btn btn-primary" 
+                      data-toggle="modal" data-target="#addModal">
+                      <i class="material-icons">
+                          add_circle_outline
+                      </i>
+                      Agregar Ficha
+                  </button>  
+                  </div>
+                  
+                </div>
             </div>
+            
             <div class="d-flex justify-content-end">
+                <div class="table-responsive">
+                    <table id="datatables" class="table table-striped table-no-bordered table-hover dataTable" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let head of columns" (click)="sortBy(head.value)"
+                                    
+                                    [class]="'sorting' + (
+                                        head.value == orderBy && orderDir == 'asc' 
+                                        ? '_asc'
+                                        : head.value == orderBy && orderDir == 'desc'
+                                            ?  '_desc'
+                                            : '')">
+                                    {{ head.label }}
+                                </th>
+                                <th class="disabled-sorting text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th *ngFor="let foot of columns">
+                                    {{ foot.label}}
+                                </th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr *ngFor="let row of data; let i = index">
+                                <td *ngFor="let col of columns">
+                                  <span *ngIf="col.value2 && col.value && col.value3">{{ row[col.value][col.value2][col.value3]}} </span>
+                                  <span *ngIf="col.value2 && col.value && !col.value3">{{ row[col.value][col.value2]}} </span>
+                                  <span *ngIf="col.value && !col.value2">{{ row[col.value]}} </span>
+                                    
+                                </td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
+                                            <i class="material-icons">
+                                                edit
+                                            </i>
+                                           Crear Servicio
+                                        </button>
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
 
 
             </div>
+
+
+            <div class="modal fade" id="addModal" tabindex="-1" 
+            role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Nueva ficha medica</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  
+                      <form [formGroup] ='forma' >
+                        <div class='row'>
+                          <div class='col-md-6'>
+                              <input type="date" (change)="setFechaNacimiento($event)"   class="form-control" />
+                          </div>
+                        </div>
+                           
+                          <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary  dropdown-toggle" data-toggle="dropdown"
+                                      aria-haspopup="true" aria-expanded="false">
+                                      <span *ngIf="actualEmpleadoNombre">{{actualEmpleadoNombre}}</span>
+                                      <span *ngIf="!actualEmpleadoNombre">Empleado</span>
+                                    </button>
+                                    <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                                      <a *ngFor="let empleado of empleados" class="dropdown-item"
+                                        (click)="setEmpleado(empleado)">{{empleado['nombreCompleto']}}</a>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-md-6">
+                               
+                                  <div class="btn-group">
+                                    <button style="max-width:150px; overflow-x: hidden;" type="button"
+                                      class="btn btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                      aria-expanded="false">
+                                      <span *ngIf="actualClienteNombre">{{actualClienteNombre}}</span>
+                                      <span *ngIf="!actualClienteNombre">Cliente</span>
+                                    </button>
+                                    <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                                      <a *ngFor="let paciente of pacientes" class="dropdown-item"
+                                        (click)="setCliente(paciente)">{{paciente['nombreCompleto']}}</a>
+                                    </div>
+                              </div>
+                          </div>
+</div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="btn-group">
+                                      <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <span *ngIf="actualEmpleadoNombre">{{actualEmpleadoNombre}}</span>
+                                        <span *ngIf="!actualEmpleadoNombre">Categoria</span>
+                                      </button>
+                                      <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                                        <a *ngFor="let empleado of empleados" class="dropdown-item"
+                                          (click)="setEmpleado(empleado)">{{empleado['nombreCompleto']}}</a>
+                                      </div>
+                                    </div>
+                              </div>
+                              <div class="col-md-6">
+                                 
+                                    <div class="btn-group">
+                                      <button style="max-width:150px; overflow-x: hidden;" type="button"
+                                        class="btn btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <span *ngIf="actualClienteNombre">{{actualClienteNombre}}</span>
+                                        <span *ngIf="!actualClienteNombre">Subcategoria</span>
+                                      </button>
+                                      <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                                        <a *ngFor="let paciente of pacientes" class="dropdown-item"
+                                          (click)="setCliente(paciente)">{{paciente['nombreCompleto']}}</a>
+                                      </div>
+                                </div>
+                            </div>
+                          <!-- <input class="form-control" type="text" placeholder="Nombre" formControlName='nombre'  > -->
+                        </div>  
+
+                        <div class="row">
+                          <div class="col-md-12">
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">Motivo</span>
+                                  </div>
+                                  <textarea class="form-control" aria-label="With textarea"></textarea>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">Diagnostico</span>
+                                    </div>
+                                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                                  </div>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Observacion</span>
+                                      </div>
+                                      <textarea class="form-control" aria-label="With textarea"></textarea>
+                                    </div>
+                            </div>
+                          </div>
+                      </form>
+                      
+                    </div>
+               
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Cerrar</button>
+                  <button type="button" class="btn btn-primary" (click)="closeAdd(true)" 
+                  [disabled]='!forma.valid' >Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
