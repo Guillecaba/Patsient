@@ -6,7 +6,7 @@ import { JsonPipe } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class PacienteService {
+export class FichaService {
   private url_base = "https://gy7228.myfoscam.org:8443/stock-pwfe/";
   //URL ='https://gy7228.myfoscam.org:8443/stock-pwfe/persona';
  
@@ -15,13 +15,13 @@ export class PacienteService {
 
    }
    public all(){
-    let url = this.url_base + "persona"
+    let url = this.url_base + 'fichaClinica'
     return this.http.get(url)
   }
 
   public get(filters){
     let separator = '?'
-    let url = this.url_base + "persona"
+    let url = this.url_base + 'fichaClinica'
     for(let k in filters){
       if(filters[k] == null) {
         continue
@@ -36,7 +36,7 @@ export class PacienteService {
 
   public post(data){
     const body = JSON.stringify(data);
-    let url = this.url_base + "persona"
+    let url = this.url_base + 'fichaClinica'
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
      
@@ -47,7 +47,7 @@ export class PacienteService {
 
   public put(data){
     const body = JSON.stringify(data);
-    let url = this.url_base + "persona/"
+    let url = this.url_base + 'fichaClinica/'
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
      
@@ -57,22 +57,8 @@ export class PacienteService {
   }
 
   public delete(id){
-    let url = this.url_base + "persona/" + id
+    let url = this.url_base + "fichaClinica/" + id
     return this.http.delete(url)
   }
 
-
-  public getTodos() {
-    let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc';
-    return this.http.get(url);
   }
-
-  public getTodosEmpleados() {
-    let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc&ejemplo=%7B"soloUsuariosDelSistema"%3Atrue%7D';
-    return this.http.get(url);
-  }
-
-
- 
-  
-}

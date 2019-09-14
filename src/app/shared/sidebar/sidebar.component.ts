@@ -33,6 +33,12 @@ export const ROUTES: RouteInfo[] = [{
         type: 'link',
         icontype: 'dashboard'
     },
+    {
+        path:'/ficha',
+        title:'Ficha Medica',
+        type:'link',
+        icontype:'dashboard'
+    }
     
 ];
 @Component({

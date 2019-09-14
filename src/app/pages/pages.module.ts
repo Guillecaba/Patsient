@@ -23,6 +23,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { FichaComponent } from './ficha/ficha.component';
 
 /* import { MAT_DATE_FORMATS } from '@angular/material';
   import { MomentDateAdapter } from '@angular/material-moment-adapter'; */
@@ -61,7 +62,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   declarations: [
     DashboardComponent,
     PagesComponent,
-    PacienteComponent
+    PacienteComponent,
+    FichaComponent
   ],
   providers: [
     {
