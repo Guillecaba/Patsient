@@ -9,7 +9,7 @@
             </div>
             <h4 class="card-title ">{{ tituloPagina }}</h4>
           </div>
-          <div class="card-body">
+          <div *ngIf="!error" class="card-body">
             <div class="row mb-4">
               <div class="col-md-4">
                 <div class="form-group">
@@ -53,8 +53,8 @@
               </div>
 
               <div *ngIf="!nuevo">
-
-
+                <p><strong>Empleado: </strong>{{actualEmpleadoNombre}}</p>
+                <p><strong>Cliente: </strong>{{actualClienteNombre}}</p>
               </div>
             </div>
             <div class="d-flex justify-content-end">
@@ -62,7 +62,8 @@
 
             </div>
 
-            <h4>Seleccionar Ficha</h4>
+            <h4 *ngIf="nuevo">Seleccionar Ficha</h4>
+            <h4 *ngIf="!nuevo">Ficha</h4>
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
@@ -73,10 +74,10 @@
                     <th>SubCategoría</th>
                     <th>Profesional</th>
                     <th>Cliente</th>
-                    <th>Acciones</th>
+                    <th *ngIf="nuevo">Acciones</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="nuevo">
                   <tr *ngFor="let ficha of fichas">
                     <td>{{ficha.idFichaClinica}}</td>
                     <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
@@ -89,7 +90,15 @@
                         </mat-radio-button>
                       </mat-radio-group>
                     </td>
-
+                  </tr>
+                </tbody>
+                <tbody *ngIf="!nuevo">
+                  <tr>
+                    <td>{{actualFicha}}</td>
+                    <td>{{categoriaNombre}}</td>
+                    <td>{{subcategoriaNombre}}</td>
+                    <td>{{actualEmpleadoNombre}}</td>
+                    <td>{{actualClienteNombre}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -97,9 +106,13 @@
             </div>
             <div class="row mt-4">
               <div class="col-md-12">
-                <button class="btn btn-primary" (click)="guardarServicio()">Guardar</button>
+                <button class="btn btn-primary" (click)="guardarServicio()"
+                  [disabled]="fecha == null || actualFicha == null">Guardar</button>
               </div>
             </div>
+          </div>
+          <div *ngIf="error" class="card-body">
+            <h2>Error, este servicio no existe</h2>
           </div>
         </div>
       </div>
