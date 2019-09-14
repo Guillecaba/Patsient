@@ -13,9 +13,9 @@ export class FichaComponent implements OnInit {
   pacientes: any;
   empleados: any;
 
-   // inputs
-   fecha1;
-   fecha2;
+  // inputs
+  fecha1;
+  fecha2;
 
   fecha_inicio: string;
   fecha_fin: string;
@@ -27,8 +27,8 @@ export class FichaComponent implements OnInit {
 
   fichas;
 
-  
-  constructor( public _pacienteService: PacienteService,public _fichasService:FichaService,  public datePipe: DatePipe) { }
+
+  constructor(public _pacienteService: PacienteService, public _fichasService: FichaService, public datePipe: DatePipe) { }
 
   ngOnInit() {
 
@@ -63,7 +63,7 @@ export class FichaComponent implements OnInit {
     console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
   }
 
-  buscar() {
+  /*buscar() {
     this._fichasService.get({
       ejemplo:encodeURIComponent(JSON.stringify({
         fechaDesdeCadena: this.fecha_inicio,
@@ -76,5 +76,5 @@ export class FichaComponent implements OnInit {
       this.fichas = res['lista']
     ));
 
-}
+}*/
 }
