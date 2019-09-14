@@ -16,10 +16,10 @@ export const PagesRoutes: Routes = [
         component: PagesComponent,
         children: [
             { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
-            { path: 'paciente', component: PacienteComponent },
-            { path: 'horarios', component: PersonaPorDiaComponent },
-            { path: 'excepciones', component: ExcepcionesComponent },
-            { path: 'categorias', component: CategoriaComponent },
+            { path: 'paciente', component: PacienteComponent, canActivate: [AuthGuard] },
+            { path: 'horarios', component: PersonaPorDiaComponent, canActivate: [AuthGuard] },
+            { path: 'excepciones', component: ExcepcionesComponent, canActivate: [AuthGuard] },
+            { path: 'categorias', component: CategoriaComponent, canActivate: [AuthGuard] },
             { path: 'login', component: LoginComponent }
         ]
     },
