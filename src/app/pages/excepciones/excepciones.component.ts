@@ -14,7 +14,7 @@ declare const $: any;
 export class ExcepcionesComponent implements OnInit {
   public tableData1: TableData;
   public empleado = '';
-  public fecha: String;
+  public fecha: Date;
   public fechaCadena = null;
   public inicio = 0;
   public cantidad = 10;
@@ -148,8 +148,23 @@ export class ExcepcionesComponent implements OnInit {
   } */
 
   definirFecha(fecha): String {
-    const fechaCadena = fecha.substring(0, 4) + fecha.substring(5, 7) + fecha.substring(8);
-    console.log(fechaCadena);
+    const anho = fecha.getFullYear();
+    const mes = fecha.getMonth() + 1;
+    const dia = fecha.getDate();
+    const anhoCadena = anho.toString();
+    let mesCadena: String;
+    let diaCadena: String;
+    if (mes < 10) {
+      mesCadena = '0' + mes.toString();
+    } else {
+      mesCadena = mes.toString();
+    }
+    if (dia < 10) {
+      diaCadena = '0' + dia.toString();
+    } else {
+      diaCadena = dia.toString();
+    }
+    const fechaCadena = anhoCadena + mesCadena + diaCadena;
     return fechaCadena;
   }
 

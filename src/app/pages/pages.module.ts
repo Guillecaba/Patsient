@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-//import { MaterialModule } from '../md/md.module';
+// import { MaterialModule } from '../md/md.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PagesRoutes } from './pages.routing';
+
+// import { MaterialModule } from '../app.module';
 
 import { MdModule } from '../md/md.module';
 
@@ -22,6 +24,9 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 import { LoginComponent } from './login/login.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 
 
@@ -36,7 +41,9 @@ import { LoginComponent } from './login/login.component';
     FooterModule,
     FixedpluginModule,
     ReactiveFormsModule,
-    MdModule
+    MdModule,
+    MatDatepickerModule,
+    MatFormFieldModule
   ],
   declarations: [
     DashboardComponent,

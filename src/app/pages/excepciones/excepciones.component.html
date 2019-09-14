@@ -24,23 +24,16 @@
                       type="submit">Buscar</button>
                   </form>
                   <form class="form-inline" style="margin-left: 10px">
-                    <input class="form-control mr-sm-2" type="date" [(ngModel)]='fecha' placeholder="Inserte la fecha"
-                      aria-label="Search" name="fecha">
+                    <!-- <input class="form-control mr-sm-2" type="date" [(ngModel)]='fecha' placeholder="Inserte la fecha"
+                      aria-label="Search" name="fecha"> -->
+                    <input matInput class="form-control mr-sm-2" [matDatepicker]="picker" name="fecha"
+                      [(ngModel)]='fecha' placeholder="Buscar por fecha" (click)="picker.open()">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                     <button class="btn btn-outline-success my-2 my-sm-0" (click)="filtrarFecha()"
                       type="submit">Buscar</button>
                   </form>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" (click)="mostrarDia(null)">Todos</a>
-                    <a class="dropdown-item" (click)="mostrarDia(0)">Domingo</a>
-                    <a class="dropdown-item" (click)="mostrarDia(1)">Lunes</a>
-                    <a class="dropdown-item" (click)="mostrarDia(2)">Martes</a>
-                    <a class="dropdown-item" (click)="mostrarDia(3)">Miércoles</a>
-                    <a class="dropdown-item" (click)="mostrarDia(4)">Jueves</a>
-                    <a class="dropdown-item" (click)="mostrarDia(5)">Viernes</a>
-                    <a class="dropdown-item" (click)="mostrarDia(6)">Sábado</a>
-                  </div>
                 </div>
-                <a style="margin-left: 10px"> {{this.dia}} </a>
               </div>
               <div class="col-md-3">
                 <div class="btn-group">
