@@ -20,6 +20,7 @@ import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginato
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { MatAutocompleteModule } from '@angular/material';
+import { PresentacionComponent } from './presentacion/presentacion.component';
 
 
 
@@ -41,7 +42,8 @@ import { MatAutocompleteModule } from '@angular/material';
     DashboardComponent,
     PagesComponent,
     CategoriaComponent,
-    SubcategoriaComponent
+    SubcategoriaComponent,
+    PresentacionComponent
   ],
   providers:[
     { 

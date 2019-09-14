@@ -39,6 +39,12 @@ export const ROUTES: RouteInfo[] = [{
         type: 'link',
         icontype: 'bookmarks'
     },
+    {
+        path: '/presentacion',
+        title: 'Presentación',
+        type: 'link',
+        icontype: 'branding_watermark'
+    },
 ];
 @Component({
     selector: 'app-sidebar-cmp',
