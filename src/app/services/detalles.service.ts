@@ -25,4 +25,8 @@ export class DetallesService {
         const url = this.base_url + 'servicio/' + idSer + '/detalle';
         return this.http.post(url, body, { headers });
     }
+    delete(idSer: number, idSD: number) {
+        const url = this.base_url + 'servicio/' + idSer + '/detalle/' + idSD;
+        return this.http.delete(url);
+    }
 }

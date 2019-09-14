@@ -70,7 +70,9 @@
               </div>
               <div class="col-md-4">
                 <div class="btn-group">
-                  <button class="btn btn-primary" (click)="guardarDetalle()">Guardar Detalle</button>
+                  <button class="btn btn-primary" [disabled]="actualTipoServicio == null"
+                    (click)="guardarDetalle()">Guardar
+                    Detalle</button>
                 </div>
               </div>
 
@@ -103,7 +105,8 @@
                     <td>{{ det.idPresentacionProducto.existenciaProducto?.precioVenta * det.cantidad }}</td>
                     <td>
                       <span>
-                        <button class="btn btn-danger btn-sm my-2 my-sm-0">Borrar</button>
+                        <button (click)="borrarDetalle(det.idServicioDetalle)"
+                          class="btn btn-danger btn-sm my-2 my-sm-0">Borrar</button>
                       </span>
                     </td>
 
@@ -111,6 +114,9 @@
                 </tbody>
               </table>
 
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-success" routerLink="/servicios/">Atras</button>
             </div>
           </div>
           <div *ngIf="error" class="card-body">

@@ -121,5 +121,11 @@ export class DetallesServicioComponent implements OnInit {
       window.location.reload();
     });
   }
+  borrarDetalle(idSD: number) {
+    this.detallesService.delete(this.idServicio, idSD).subscribe(res => {
+      console.log('Detalle creado exitosamente');
+      window.location.reload();
+    });
+  }
 }
 

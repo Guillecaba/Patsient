@@ -111,13 +111,4 @@ export class ServicioComponent implements OnInit {
         this.servicios = res['lista']
       ));
   }
-
-  verServicio(serv: any) {
-
-  }
-
-  editarServicio(serv: any) {
-
-  }
-
 }
