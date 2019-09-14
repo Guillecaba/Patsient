@@ -49,7 +49,7 @@
                   </button>
                   <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
                     <a *ngFor="let tipoSer of tipoServicios" class="dropdown-item"
-                      (click)="setTipoServicio(tipoSer)">{{tipoSer['descripcion']}}</a>
+                      (click)="setTipoServicio(tipoSer)">{{tipoSer['nombre']}}</a>
                   </div>
                 </div>
 
@@ -57,7 +57,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Cantidad</label>
-                  <input type="number" class="form-control" min="1" [(ngModel)]="cantidad">
+                  <input type="number" class="form-control" min="1" [(ngModel)]="cantidad" (change)="cambiarPrecio()">
                 </div>
 
                 <div class="form-group">
@@ -103,7 +103,7 @@
                     <td>{{ det.idPresentacionProducto.existenciaProducto?.precioVenta * det.cantidad }}</td>
                     <td>
                       <span>
-                        <button class="btn btn-danger btn-sm my-2 my-sm-0">Editar</button>
+                        <button class="btn btn-danger btn-sm my-2 my-sm-0">Borrar</button>
                       </span>
                     </td>
 

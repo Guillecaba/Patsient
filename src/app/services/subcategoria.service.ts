@@ -54,4 +54,17 @@ export class SubcategoriaService {
     const url = this.url_base + 'tipoProducto/';
     return this.http.get(url);
   }
+
+  public getDeCategoria(idCat: number) {
+    let url = this.url_base + 'tipoProducto?ejemplo=%7B"idCategoria"%3A%7B"idCategoria"%3A';
+    url = url + idCat + '%7D%7D';
+    return this.http.get(url);
+  }
+
+  public getPresentacionDeSubcat(idSub: number) {
+    let url = this.url_base + 'presentacionProducto?ejemplo=%7B%22idProducto%22%3A';
+    url = url + '%7B%22idTipoProducto%22%3A%7B%22idTipoProducto%22%3A';
+    url = url + idSub + '%7D%7D%7D';
+    return this.http.get(url);
+  }
 }

@@ -16,4 +16,13 @@ export class DetallesService {
         const url = this.base_url + 'servicio/' + idSer + '/detalle';
         return this.http.get(url);
     }
+
+    post(idSer: number, body: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'usuario': 'gustavo'
+        });
+        const url = this.base_url + 'servicio/' + idSer + '/detalle';
+        return this.http.post(url, body, { headers });
+    }
 }

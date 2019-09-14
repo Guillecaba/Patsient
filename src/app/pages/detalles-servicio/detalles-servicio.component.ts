@@ -22,10 +22,16 @@ export class DetallesServicioComponent implements OnInit {
   precio: number = null;
 
   categorias;
+  subcategorias;
+  tipoServicios;
+  precioUnitario: number = null;
+
   actualCategoria: number;
   actualCategoriaNombre: string;
   actualSubcategoria: number;
   actualSubcategoriaNombre: string;
+  actualTipoServicio: number;
+  actualTipoServicioNombre: string;
 
   constructor(public detallesService: DetallesService,
     public servicioService: ServicioService,
@@ -66,9 +72,54 @@ export class DetallesServicioComponent implements OnInit {
     this.actualCategoriaNombre = categoria['descripcion'];
     this.actualSubcategoria = null;
     this.actualSubcategoriaNombre = null;
+    this.actualTipoServicio = null;
+    this.actualTipoServicioNombre = null;
     this.precio = null;
+    this.precioUnitario = null;
     this.cantidad = 1;
+    this.subcategoriaService.getDeCategoria(this.actualCategoria).subscribe((res: any) => (
+      this.subcategorias = res['lista']
+    ));
+    this.tipoServicios = null;
     console.log('Categoria: ' + this.actualCategoria + '\nSubcategoria: ' + this.actualSubcategoria);
   }
-
+  setSubcategoria(subcategoria: any) {
+    this.actualSubcategoria = subcategoria['idTipoProducto'];
+    this.actualSubcategoriaNombre = subcategoria['descripcion'];
+    this.actualTipoServicio = null;
+    this.actualTipoServicioNombre = null;
+    this.precio = null;
+    this.precioUnitario = null;
+    this.cantidad = 1;
+    this.subcategoriaService.getPresentacionDeSubcat(this.actualSubcategoria).subscribe((res: any) => (
+      this.tipoServicios = res['lista']
+    ));
+    console.log('Categoria: ' + this.actualCategoria + '\nSubcategoria: ' + this.actualSubcategoria);
+  }
+  setTipoServicio(tipoSer: any) {
+    this.actualTipoServicio = tipoSer.idPresentacionProducto;
+    this.actualTipoServicioNombre = tipoSer.nombre;
+    if (tipoSer.existenciaProducto && tipoSer.existenciaProducto.precioVenta) {
+      this.precioUnitario = tipoSer.existenciaProducto.precioVenta;
+    } else {
+      this.precioUnitario = 0;
+    }
+    this.precio = this.precioUnitario;
+    this.cantidad = 1;
+    console.log('Tipo Servicio o Presentacion: ' + this.actualTipoServicio);
+  }
+  cambiarPrecio() {
+    this.precio = this.cantidad * this.precioUnitario;
+  }
+  guardarDetalle() {
+    let body = '{"cantidad":' + this.cantidad + ',';
+    body = body + '"idPresentacionProducto":{"idPresentacionProducto":' + this.actualTipoServicio + '},';
+    body = body + '"idServicio":{"idServicio":' + this.idServicio + '}}';
+    console.log(body);
+    this.detallesService.post(this.idServicio, body).subscribe(resu => {
+      console.log('Detalle creado exitosamente');
+      window.location.reload();
+    });
+  }
 }
+
