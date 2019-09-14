@@ -190,7 +190,7 @@ export class ExcepcionesComponent implements OnInit {
         horas = this.nueva_excepcion.horaCierreCadena.toString().substring(0, 2);
         minutos = this.nueva_excepcion.horaCierreCadena.toString().substring(3, 5);
         this.nueva_excepcion.horaCierreCadena = horas + minutos;
-      } ¿
+      }
       this._excepcionService.post(this.nueva_excepcion).subscribe(() => {
         this.getData();
       });
