@@ -45,6 +45,16 @@ export const ROUTES: RouteInfo[] = [{
         type: 'link',
         icontype: 'branding_watermark'
     },
+
+
+
+
+    {
+        path: '/reportes',
+        title: 'Reportes',
+        type: 'link',
+        icontype: 'insert_chart'
+    },
 ];
 @Component({
     selector: 'app-sidebar-cmp',

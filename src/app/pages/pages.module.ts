@@ -19,8 +19,9 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule, MatTableModule, MatDatepickerModule } from '@angular/material';
 import { PresentacionComponent } from './presentacion/presentacion.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 
 
@@ -36,6 +37,8 @@ import { PresentacionComponent } from './presentacion/presentacion.component';
         FixedpluginModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    MatTableModule,
+    MatDatepickerModule,
     MdModule
   ],
   declarations: [
@@ -43,7 +46,8 @@ import { PresentacionComponent } from './presentacion/presentacion.component';
     PagesComponent,
     CategoriaComponent,
     SubcategoriaComponent,
-    PresentacionComponent
+    PresentacionComponent,
+    ReportesComponent
   ],
   providers:[
     { 
