@@ -3,7 +3,7 @@ import { ReservaService } from 'src/app/services/reserva.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { DatePipe } from '@angular/common';
 import { AgendaService } from 'src/app/services/agenda.service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-reserva',
