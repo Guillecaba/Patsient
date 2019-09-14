@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PacienteService } from './paciente.service';
 import { ReservaService } from './reserva.service';
 import { FichaService } from './fichas.service';
+import { DetallesService } from './detalles.service';
 
 @NgModule({
   declarations: [],
@@ -12,7 +13,8 @@ import { FichaService } from './fichas.service';
   providers: [
     PacienteService,
     ReservaService,
-    FichaService
+    FichaService,
+    DetallesService
   ]
 })
 export class ServiceModule { }
