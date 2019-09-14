@@ -57,6 +57,10 @@ export class DoctorService {
 
   }
 
+  getEmpleados() {
+    return this.http.get('https://gy7228.myfoscam.org:8443/stock-pwfe/persona?orderBy=idPersona&orderDir=asc');
+  }
+
   public post(datos) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

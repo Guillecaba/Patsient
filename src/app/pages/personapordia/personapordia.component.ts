@@ -11,7 +11,8 @@ declare const $: any;
   styles: []
 })
 export class PersonaPorDiaComponent implements OnInit {
-  public tableData1: TableData;
+  public tableData1: TableData = null;
+  public empleados: TableData = null;
   public empleado = '';
   public dia = null;
   public diaCadena: String;
@@ -23,7 +24,7 @@ export class PersonaPorDiaComponent implements OnInit {
   length = 100;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageEvent: PageEvent;
+  pageEvent: PageEvent = null;
   private nuevo_horario: any = {
     dia: null,
     horaAperturaCadena: null,
@@ -57,6 +58,9 @@ export class PersonaPorDiaComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
+    this._doctorService.getEmpleados().subscribe(data => {
+      this.empleados = data['lista'];
+    });
   }
 
   getData() {
@@ -167,6 +171,19 @@ export class PersonaPorDiaComponent implements OnInit {
 
   closeEdit(send) {
     if (send) {
+      let horas = this.edit_horario.horaAperturaCadena.toString().substring(0, 2);
+      let minutos = this.edit_horario.horaAperturaCadena.toString().substring(3, 5);
+      this.edit_horario.horaAperturaCadena = horas + minutos;
+      horas = this.edit_horario.horaCierreCadena.toString().substring(0, 2);
+      minutos = this.edit_horario.horaCierreCadena.toString().substring(3, 5);
+      this.edit_horario.horaCierreCadena = horas + minutos;
+      this.edit_horario.horaApertura = null;
+      this.edit_horario.horaCierre = null;
+      this.edit_horario.idLocal = null;
+      const idP = this.edit_horario.idEmpleado.idPersona;
+      this.edit_horario.idEmpleado = {
+        idPersona: idP,
+      }
       this._doctorService.put(this.edit_horario).subscribe(() => {
         this.getData();
       });

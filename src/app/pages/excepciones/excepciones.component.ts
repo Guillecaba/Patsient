@@ -12,9 +12,10 @@ declare const $: any;
   styles: []
 })
 export class ExcepcionesComponent implements OnInit {
-  public tableData1: TableData;
+  public tableData1: TableData = null;
+  public empleados: TableData = null;
   public empleado = '';
-  public fecha: Date;
+  public fecha: Date = null;
   public fechaCadena = null;
   public inicio = 0;
   public cantidad = 10;
@@ -24,7 +25,7 @@ export class ExcepcionesComponent implements OnInit {
   length = 100;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageEvent: PageEvent;
+  pageEvent: PageEvent = null;
   private nueva_excepcion: any = {
     fechaCadena: null,
     horaAperturaCadena: null,
@@ -61,6 +62,9 @@ export class ExcepcionesComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
+    this._excepcionService.getEmpleados().subscribe(data => {
+      this.empleados = data['lista'];
+    });
   }
 
   getData() {
@@ -82,7 +86,6 @@ export class ExcepcionesComponent implements OnInit {
 
   ordernar(orderBy) {
     const ordernarPor = this.orderBy;
-    console.log(orderBy);
     if (orderBy === ' ID') {
       this.orderBy = 'idHorarioExcepcion';
     }
@@ -121,9 +124,16 @@ export class ExcepcionesComponent implements OnInit {
     this.getData();
   }
 
-  filtrarFecha() {
-    const fecha = this.definirFecha(this.fecha);
-    this.fechaCadena = fecha;
+  filtrar() {
+    if (this.empleado !== null && this.empleado.length === 0) {
+      this.empleado = null;
+    }
+    if (this.fecha === null) {
+      this.fechaCadena = null;
+    } else {
+      const fecha = this.definirFecha(this.fecha);
+      this.fechaCadena = fecha;
+    }
     /* this._excepcionService.getPersona(fecha, this.empleado).subscribe(data => {
       this.tableData1.dataRows = data['lista'];
     }); */
@@ -170,6 +180,17 @@ export class ExcepcionesComponent implements OnInit {
 
   closeAdd(send) {
     if (send) {
+      this.nueva_excepcion.fechaCadena = this.definirFecha(this.nueva_excepcion.fechaCadena);
+      if (this.nueva_excepcion.flagEsHabilitar === 'S' &&
+        this.nueva_excepcion.horaAperturaCadena !== null &&
+        this.nueva_excepcion.horaCierreCadena !== null) {
+        let horas = this.nueva_excepcion.horaAperturaCadena.toString().substring(0, 2);
+        let minutos = this.nueva_excepcion.horaAperturaCadena.toString().substring(3, 5);
+        this.nueva_excepcion.horaAperturaCadena = horas + minutos;
+        horas = this.nueva_excepcion.horaCierreCadena.toString().substring(0, 2);
+        minutos = this.nueva_excepcion.horaCierreCadena.toString().substring(3, 5);
+        this.nueva_excepcion.horaCierreCadena = horas + minutos;
+      } ¿
       this._excepcionService.post(this.nueva_excepcion).subscribe(() => {
         this.getData();
       });
@@ -194,6 +215,25 @@ export class ExcepcionesComponent implements OnInit {
 
   closeEdit(send) {
     if (send) {
+      this.edit_excepcion.fechaCadena = this.definirFecha(this.edit_excepcion.fechaCadena);
+      if (this.edit_excepcion.flagEsHabilitar === 'S' &&
+        this.edit_excepcion.horaAperturaCadena !== null &&
+        this.edit_excepcion.horaCierreCadena !== null) {
+        let horas = this.edit_excepcion.horaAperturaCadena.toString().substring(0, 2);
+        let minutos = this.edit_excepcion.horaAperturaCadena.toString().substring(3, 5);
+        this.edit_excepcion.horaAperturaCadena = horas + minutos;
+        horas = this.edit_excepcion.horaCierreCadena.toString().substring(0, 2);
+        minutos = this.edit_excepcion.horaCierreCadena.toString().substring(3, 5);
+        this.edit_excepcion.horaCierreCadena = horas + minutos;
+      }
+      this.edit_excepcion.horaApertura = null;
+      this.edit_excepcion.horaCierre = null;
+      this.edit_excepcion.fecha = null;
+      this.edit_excepcion.idLocal = null;
+      const idP = this.edit_excepcion.idEmpleado.idPersona;
+      this.edit_excepcion.idEmpleado = {
+        idPersona: idP,
+      }
       this._excepcionService.put(this.edit_excepcion).subscribe(() => {
         this.getData();
       });

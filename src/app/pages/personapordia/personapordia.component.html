@@ -10,6 +10,7 @@
             <h4 class="card-title ">Horarios de doctores por día</h4>
           </div>
           <div class="card-body">
+
             <div class="row">
               <div class="col-md-9">
                 <div class="btn-group">
@@ -36,7 +37,14 @@
                 </div>
                 <a style="margin-left: 10px"> {{this.diaCadena}} </a>
               </div>
-              <div class="col-md-3">
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <mat-paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                  (page)="get_page($event)">
+                </mat-paginator>
+              </div>
+              <div class="col-md-4">
                 <div class="btn-group">
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
                     <i class="material-icons">
@@ -47,19 +55,8 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-8">
-                <mat-paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                  (page)="get_page($event)">
-                </mat-paginator>
-              </div>
-            </div>
             <div class="d-flex justify-content-end">
-
-
             </div>
-
-
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
@@ -79,20 +76,20 @@
                     <td>{{row.idEmpleado.idPersona}}</td>
                     <td>{{row.idEmpleado.nombreCompleto}}</td>
                     <td>
-                      <!-- <div class="btn-group"> -->
-                      <!-- <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
                           <i class="material-icons">
                             edit
                           </i>
                           Editar
-                        </button> -->
-                      <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(row)">
-                        <i class="material-icons">
-                          delete
-                        </i>
-                        Borrar
-                      </button>
-                      <!-- </div> -->
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(row)">
+                          <i class="material-icons">
+                            delete
+                          </i>
+                          Borrar
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -118,19 +115,45 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <input class="form-control" placeholder="Día" [(ngModel)]="nuevo_horario.dia">
+          <mat-form-field>
+            <mat-select placeholder="Día" [(ngModel)]="nuevo_horario.dia">
+              <mat-option value=0>Domingo</mat-option>
+              <mat-option value=1>Lunes</mat-option>
+              <mat-option value=2>Martes</mat-option>
+              <mat-option value=3>Miércoles</mat-option>
+              <mat-option value=4>Jueves</mat-option>
+              <mat-option value=5>Viernes</mat-option>
+              <mat-option value=6>Sábado</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Horario de apertura" [(ngModel)]="nuevo_horario.horaAperturaCadena">
+          <mat-form-field>
+            <input matInput type="time" placeholder="Horario de apertura" [(ngModel)]="nuevo_horario.horaAperturaCadena"
+              pattern="[0-9]{2}:[0-9]{2}">
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Horario de cierre" [(ngModel)]="nuevo_horario.horaCierreCadena">
+          <mat-form-field>
+            <input matInput type="time" placeholder="Horario de cierre" [(ngModel)]="nuevo_horario.horaCierreCadena"
+              pattern="[0-9]{2}:[0-9]{2}">
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Intérvalo minutos" [(ngModel)]="nuevo_horario.intervaloMinutos">
+          <mat-form-field>
+            <!-- <input matInput type="number" placeholder="ID del empleado"
+                [(ngModel)]="nuevo_horario.idEmpleado.idPersona"> -->
+            <mat-select placeholder="Empleado" [(ngModel)]="nuevo_horario.idEmpleado.idPersona">
+              <mat-option *ngFor="let empleado of empleados" [value]="empleado.idPersona">{{empleado.idPersona}}.
+                {{empleado.nombreCompleto}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="ID del empleado" [(ngModel)]="nuevo_horario.idEmpleado.idPersona">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Intérvalo minutos" [(ngModel)]="nuevo_horario.intervaloMinutos">
+          </mat-form-field>
         </div>
       </div>
       <div class="modal-footer">
@@ -157,19 +180,45 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <input class="form-control" placeholder="Día" [(ngModel)]="edit_horario.dia">
+          <mat-form-field>
+            <mat-select placeholder="Día" [(ngModel)]="edit_horario.dia">
+              <mat-option value=0>Domingo</mat-option>
+              <mat-option value=1>Lunes</mat-option>
+              <mat-option value=2>Martes</mat-option>
+              <mat-option value=3>Miércoles</mat-option>
+              <mat-option value=4>Jueves</mat-option>
+              <mat-option value=5>Viernes</mat-option>
+              <mat-option value=6>Sábado</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Horario de apertura" [(ngModel)]="edit_horario.horaAperturaCadena">
+          <mat-form-field>
+            <input matInput type="time" placeholder="Horario de apertura" [(ngModel)]="edit_horario.horaAperturaCadena"
+              pattern="[0-9]{2}:[0-9]{2}">
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Horario de cierre" [(ngModel)]="edit_horario.horaCierreCadena">
+          <mat-form-field>
+            <input matInput type="time" placeholder="Horario de cierre" [(ngModel)]="edit_horario.horaCierreCadena"
+              pattern="[0-9]{2}:[0-9]{2}">
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Intérvalo minutos" [(ngModel)]="edit_horario.intervaloMinutos">
+          <mat-form-field>
+            <!-- <input matInput type="number" placeholder="ID del empleado"
+                  [(ngModel)]="edit_horario.idEmpleado.idPersona"> -->
+            <mat-select placeholder="Empleado" [(ngModel)]="edit_horario.idEmpleado.idPersona">
+              <mat-option *ngFor="let empleado of empleados" [value]="empleado.idPersona">{{empleado.idPersona}}.
+                {{empleado.nombreCompleto}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="ID del empleado" [(ngModel)]="edit_horario.idEmpleado.idPersona">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Intérvalo minutos" [(ngModel)]="edit_horario.intervaloMinutos">
+          </mat-form-field>
         </div>
       </div>
       <div class="modal-footer">

@@ -26,6 +26,9 @@ export class ExcepcionService {
     this.orderDir = null;
   }
 
+  getEmpleados() {
+    return this.http.get('https://gy7228.myfoscam.org:8443/stock-pwfe/persona?orderBy=idPersona&orderDir=asc');
+  }
 
   getPersona(fecha?, empleado?, inicio?, cantidad?, orderBy?, orderDir?) {
     this.fecha = null;
