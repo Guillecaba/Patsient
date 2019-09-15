@@ -19,6 +19,10 @@ import { PacienteComponent } from './paciente/paciente.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
+import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
+import { MatAutocompleteModule, MatTableModule, MatDatepickerModule } from '@angular/material';
+import { PresentacionComponent } from './presentacion/presentacion.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 
 
@@ -33,13 +37,18 @@ import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
     FooterModule,
     FixedpluginModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatTableModule,
+    MatDatepickerModule,
     MdModule
   ],
   declarations: [
     DashboardComponent,
     PagesComponent,
-    PacienteComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    SubcategoriaComponent,
+    PresentacionComponent,
+    ReportesComponent
   ],
   providers: [
     {

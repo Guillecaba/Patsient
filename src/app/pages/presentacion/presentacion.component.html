@@ -7,16 +7,57 @@
                   <div class="card-icon">
                     <i class="material-icons">assignment</i>
                   </div>
-                  <h4 class="card-title">Categorías</h4>
+                  <h4 class="card-title">Presentaciones</h4>
                 </div>
                   <div class="card-body">
                       <div class="toolbar">
                           <!--        Here you can write extra buttons/actions for the toolbar              -->
                       </div>
                       <div class="material-datatables">
-                        <div class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row"> 
+                          <div class="col-md-3 col-sm-6">
+                            <label>
+                              Seleccione una categoría
+                            </label>
+                            <input type="text" placeholder="Elija una categoría" aria-label="Number" (input)="get_categorias()"
+                              class="form-control" 
+                              matInput [(ngModel)]="labelCategoria" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete"
+                              (optionSelected)="selectedCategoria = $event.option.value;
+                                labelCategoria = $event.option.value.descripcion;
+                                idProducto = null;
+                                labelSubCategoria = null;                                
+                                get_sub_categorias()">
+                              <mat-option *ngFor="let option of cat" [value]="option">
+                                {{option.descripcion}}
+                              </mat-option>
+                            </mat-autocomplete>                                                
+                          </div>
+                          <div class="col-md-3 col-sm-6" *ngIf="selectedCategoria.idCategoria != null">
+                            <label>
+                              Seleccione una subcategoría
+                            </label>
+                            <input type="text" placeholder="Elija una subcategoría" 
+                              aria-label="Number" (input)="get_sub_categorias()"
+                              class="form-control" 
+                              matInput [(ngModel)]="labelSubCategoria" [matAutocomplete]="autoTest">
+                            <mat-autocomplete #autoTest="matAutocomplete" 
+                              (optionSelected)="selectedSubCategoria = $event.option.value;
+                                labelSubCategoria = $event.option.value.descripcion;
+                                getData();
+                                get_producto();">
+                              <mat-option *ngFor="let option of sub" [value]="option">
+                                {{option.descripcion}}
+                              </mat-option>
+                            </mat-autocomplete>                                                
+                          </div>
+                        </div>
+                       
+
+                        <div *ngIf="idProducto != null"
+                          class="dataTables_wrapper dt-bootstrap4">
                             <div class="row">
-                                <div class="col-md-8 col-sm-12">
+                                <div class="col-md-8">
                                     <mat-paginator [length]="count"
                                         [pageSize]="pageSize"
                                         [pageSizeOptions]="pageSizeOptions"
@@ -24,14 +65,21 @@
                                     </mat-paginator>
                                     
                                 </div>
-                                <div class="col-md-4 col-sm-12">                                    
-                                    <button type="button" class="btn btn-primary" 
-                                            data-toggle="modal" data-target="#addModal">
-                                            <i class="material-icons">
-                                                add_circle_outline
-                                            </i>
-                                            Agregar Categoría
-                                        </button>                                
+                                <div class="col-md-4">                                    
+                                    <button type="button" class="btn btn-primary" *ngIf="idProducto>=0"
+                                        data-toggle="modal" data-target="#addModal">
+                                        <i class="material-icons">
+                                            add_circle_outline
+                                        </i>
+                                        Agregar Presentacion
+                                    </button>     
+                                    <button type="button" class="btn btn-primary" *ngIf="0>idProducto"
+                                      disabled>
+                                      <i class="material-icons">
+                                          add_circle_outline
+                                      </i>
+                                      No se encontro Producto
+                                  </button>                             
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -62,7 +110,7 @@
                                 <tbody>
                                     <tr *ngFor="let row of data; let i = index">
                                         <td *ngFor="let col of columns">
-                                            {{ row[col.value]}}
+                                            {{ row[col.value] }}
                                         </td>
                                         <td class="text-right">
                                             <div class="btn-group">
@@ -80,6 +128,11 @@
                                                 </button>
                                             </div>
                                         </td>
+                                    </tr>
+                                    <tr *ngIf="data.length == 0" >
+                                      <td class="text-center" colspan="4">
+                                          La subcategoría seleccionada carece de Presentaciones
+                                      </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -103,20 +156,26 @@
   <div class="modal-dialog modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Agregar Categoría</h5>
+        <h5 class="modal-title">Agregar Presentacion</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body">              
           <div class="form-group">
-            <input class="form-control" placeholder="Descripcion" [(ngModel)]="nueva_categoria" >
+            <label> Agregar a {{ selectedCategoria.descripcion }} -> {{ selectedSubCategoria.descripcion}} </label>
+            <input class="form-control" placeholder="Nombre" [(ngModel)]="nueva.nombre" >
+            <input class="form-control" placeholder="Descripcion" [(ngModel)]="nueva.descripcion" >
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Close</button>
         <button type="button" class="btn btn-primary" (click)="closeAdd(true)" 
-          [disabled]="nueva_categoria == null || nueva_categoria.length == 0">Save changes</button>
+          [disabled]="nueva.nombre == null 
+              || nueva.nombre.length == 0
+              || nueva.descripcion == null
+              || nueva.descripcion.length == 0
+            ">Save changes</button>
       </div>
     </div>
   </div>
@@ -127,20 +186,24 @@
   <div class="modal-dialog modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Editar Categoría</h5>
+        <h5 class="modal-title">Editar Subcategoría</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEdit(false)">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
           <div class="form-group">
-            <input class="form-control" placeholder="Descripcion" [(ngModel)]="edit_categoria.descripcion" >
+            <input class="form-control" placeholder="Nombre" [(ngModel)]="edit.nombre" >
+            <input class="form-control" placeholder="Descripcion" [(ngModel)]="edit.descripcion" >
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Close</button>
         <button type="button" class="btn btn-primary" (click)="closeEdit(true)" 
-          [disabled]="edit_categoria.descripcion == null || edit_categoria.descripcion.length == 0">Save changes</button>
+          [disabled]="edit.descripcion == null || edit.descripcion.length == 0
+            || edit.nombre == null || edit.nombre.length == 0"
+          >
+          Save changes</button>
       </div>
     </div>
   </div>
@@ -152,14 +215,14 @@
   <div class="modal-dialog modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Borrar Categoría</h5>
+        <h5 class="modal-title">Borrar Subcategoría</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
           <div class="form-group">
-            Esta seguro de querer borrar la categoría {{delete_categoria.descripcion}}
+            Esta seguro de querer borrar la presentación {{delete.descripcion}}
           </div>
       </div>
       <div class="modal-footer">

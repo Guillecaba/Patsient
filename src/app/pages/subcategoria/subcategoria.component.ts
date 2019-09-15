@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/services/categoria.service';
+import { SubcategoriaService } from 'src/app/services/subcategoria.service';
 import { PageEvent } from '@angular/material/paginator'; 
 
 declare const $: any;
 
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.css']
+  selector: 'app-subcategoria',
+  templateUrl: './subcategoria.component.html',
+  styleUrls: ['./subcategoria.component.css']
 })
-export class CategoriaComponent implements OnInit {
+export class SubcategoriaComponent implements OnInit {
 
+  private cat : any[] = [];
   private data : any[] = [];
   private count : Number = 0;
   
@@ -19,47 +20,63 @@ export class CategoriaComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
   pageEvent: PageEvent;
+
+  idCategoria = null;
+  labelCategoria = null;
+  selectedCategoria = {
+    idCategoria:null
+  };
+  
   private pagination = {
     inicio: 0,
     cantidad: 10,
   }
   private orderBy = null;
   private orderDir = null;
+
   private columns = [
     {
       label:'Id',
-      value:'idCategoria',
+      value:'idTipoProducto',
       width:'10%'
     },
     {
-      label:'Categoría',
+      label:'Descripcion',
       value:'descripcion',
-      width:'45%',
+      width:'40%'
     },
   ]
-  private nueva_categoria: String = null;
-  private edit_categoria: any = {
-    descripcion : null
+  private nueva: any = {
+    descripcion : null,
+    idCategoria : {
+      idCategoria : null
+    }
   };
-  private delete_categoria : any ={
-    descripcion : null
+  private edit: any = {
+    descripcion : null ,
+    idCategoria : {
+      idCategoria : null
+    }
   };
+  private delete: any = {};
 
-  constructor(private service:CategoriaService) { }
+  constructor(private service:SubcategoriaService) { }
 
   ngOnInit() {
     this.getData()
-    /*/let b = true;
-    setInterval(()=>{
-      $("#addModal").modal('show')
-    },3000)*/
+    this.get_categorias()
   }
+
+
 
   getData(){
     this.service.get({
       ...this.pagination,
       orderBy:this.orderBy,
       orderDir:this.orderDir,
+      ejemplo:encodeURIComponent(JSON.stringify({
+        idCategoria:this.selectedCategoria.idCategoria
+      }))
     })
     .subscribe((response)=>{
       this.data = response['lista']
@@ -73,6 +90,13 @@ export class CategoriaComponent implements OnInit {
     this.getData()
   }
 
+  get_categorias(){
+    let param = this.labelCategoria == null ? '' : this.labelCategoria;
+    this.service.getCat(param).subscribe((resp)=>{
+      this.cat = resp['lista']
+    })
+  }
+  
   sortBy(orderBy){
     if(this.orderBy != orderBy || this.orderDir == 'null'){
       this.orderBy = orderBy;
@@ -89,54 +113,59 @@ export class CategoriaComponent implements OnInit {
 
   closeAdd(send){
     if(send){
-      this.service.post({
-        'descripcion' : this.nueva_categoria
-      }).subscribe(()=>{
+      this.nueva.idCategoria = this.selectedCategoria
+      this.service.post(this.nueva)
+      .subscribe(()=>{
         this.getData();
-        this.showNotification('success','La categoría ha sido creada correctamente');
+        this.showNotification('success','La sub-categoría ha sido creada correctamente');
       },(error)=>{
-        this.showNotification('warning','No se ha podido crear la categoría');
+        this.showNotification('warning','No se ha podido crear la sub-categoría');
       })
     }
-    this.nueva_categoria = null
+    this.nueva = {
+      descripcion : null,
+      idCategoria : {
+        idCategoria : null
+      }
+    }
     $("#addModal").modal('hide');
   }
 
   openEdit(to_edit){
-    this.edit_categoria = JSON.parse(JSON.stringify(to_edit))
+    this.edit = JSON.parse(JSON.stringify(to_edit))
     $("#editModal").modal('show');
   }
 
   closeEdit(send){
     if(send){
-      this.service.put(this.edit_categoria).subscribe(()=>{
+      this.service.put(this.edit).subscribe(()=>{
         this.getData();
-        this.showNotification('success','La categoría ha sido editada correctamente');
+        this.showNotification('success','La sub-categoría ha sido editada correctamente');
       },(error)=>{
-        this.showNotification('warning','No se ha podido actualizar la categoría');
+        this.showNotification('warning','No se ha podido actualizar la sub-categoría');
       })
     }
-    this.edit_categoria = {
+    this.edit = {
       descripcion : null
     }
     $("#editModal").modal('hide');
   }
 
   openDelete(to_delete){
-    this.delete_categoria = JSON.parse(JSON.stringify(to_delete))
+    this.delete = JSON.parse(JSON.stringify(to_delete))
     $("#deleteModal").modal('show');
   }
 
   closeDelete(send){
     if(send){
-      this.service.delete(this.delete_categoria['idCategoria']).subscribe(()=>{
+      this.service.delete(this.delete['idTipoProducto']).subscribe(()=>{
         this.getData();
-        this.showNotification('success','La categoría ha sido eliminada correctamente');
+        this.showNotification('success','La sub-categoría ha sido eliminada correctamente');
       },(error)=>{
-        this.showNotification('warning','No se ha podido eliminar la categoría');
+        this.showNotification('warning','No se ha podido eliminar la sub-categoría');
       })
     }
-    this.delete_categoria = {
+    this.delete = {
       descripcion : null
     }
     $("#deleteModal").modal('hide');

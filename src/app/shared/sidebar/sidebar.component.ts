@@ -37,7 +37,29 @@ export const ROUTES: RouteInfo[] = [{
         path: '/categorias',
         title: 'Categorías',
         type: 'link',
-        icontype: 'dashboard'
+        icontype: 'bookmark'
+    },
+    {
+        path: '/subcategorias',
+        title: 'Subcategorías',
+        type: 'link',
+        icontype: 'bookmarks'
+    },
+    {
+        path: '/presentacion',
+        title: 'Presentación',
+        type: 'link',
+        icontype: 'branding_watermark'
+    },
+
+
+
+
+    {
+        path: '/reportes',
+        title: 'Reportes',
+        type: 'link',
+        icontype: 'insert_chart'
     },
 ];
 @Component({
