@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-//import { MaterialModule } from '../md/md.module';
+// import { MaterialModule } from '../md/md.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PagesRoutes } from './pages.routing';
+
+// import { MaterialModule } from '../app.module';
 
 import { MdModule } from '../md/md.module';
 
@@ -16,6 +18,8 @@ import { FooterModule } from '../shared/footer/footer.module';
 import { SidebarModule } from '../shared/sidebar/sidebar.module';
 import { FixedpluginModule } from '../shared/fixedplugin/fixedplugin.module';
 import { PacienteComponent } from './paciente/paciente.component';
+import { PersonaPorDiaComponent } from './personapordia/personapordia.component';
+import { ExcepcionesComponent } from './excepciones/excepciones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
@@ -23,6 +27,12 @@ import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { MatAutocompleteModule, MatTableModule, MatDatepickerModule } from '@angular/material';
 import { PresentacionComponent } from './presentacion/presentacion.component';
 import { ReportesComponent } from './reportes/reportes.component';
+import { LoginComponent } from './login/login.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+
 
 
 
@@ -40,7 +50,11 @@ import { ReportesComponent } from './reportes/reportes.component';
     MatAutocompleteModule,
     MatTableModule,
     MatDatepickerModule,
-    MdModule
+    MdModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
   ],
   declarations: [
     DashboardComponent,
@@ -49,6 +63,11 @@ import { ReportesComponent } from './reportes/reportes.component';
     SubcategoriaComponent,
     PresentacionComponent,
     ReportesComponent
+    PacienteComponent,
+    PersonaPorDiaComponent,
+    ExcepcionesComponent,
+    CategoriaComponent,
+    LoginComponent
   ],
   providers: [
     {

@@ -55,6 +55,24 @@ export const ROUTES: RouteInfo[] = [{
 
 
 
+{
+    path: '/paciente',
+    title: 'Paciente',
+    icontype: 'dashboard'
+    type: 'link',
+},
+{
+    path: '/horarios',
+    title: 'Horarios',
+    type: 'link',
+    icontype: 'dashboard'
+},
+    title: 'Excepciones',
+{
+    path: '/excepciones',
+    type: 'link',
+    icontype: 'dashboard'
+},
     {
         path: '/reportes',
         title: 'Reportes',
@@ -84,7 +102,7 @@ export class SidebarComponent implements OnInit {
             this.ps = new PerfectScrollbar(elemSidebar);
         }
     }
-    updatePS(): void  {
+    updatePS(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();
         }
