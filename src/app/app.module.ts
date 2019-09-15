@@ -50,6 +50,7 @@ import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component
 import { PagesModule } from './pages/pages.module';
 import { ServicesModule } from './services/services.module';
 import { AuthGuard } from './pages/login/auth.guard';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   exports: [
@@ -111,6 +112,7 @@ export class MaterialModule { }
 
   ],
   providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [DatePipe]
 })
 export class AppModule { }

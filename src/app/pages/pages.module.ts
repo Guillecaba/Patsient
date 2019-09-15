@@ -23,6 +23,8 @@ import { ExcepcionesComponent } from './excepciones/excepciones.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
+import { ReservaComponent } from './reserva/reserva.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { MatAutocompleteModule, MatTableModule } from '@angular/material';
 import { PresentacionComponent } from './presentacion/presentacion.component';
@@ -32,6 +34,27 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { CrearReservaComponent } from './crear-reserva/crear-reserva.component';
+import { ServicioComponent } from './servicio/servicio.component';
+import { EditorServicioComponent } from './editor-servicio/editor-servicio.component';
+import { FichaComponent } from './ficha/ficha.component';
+import { DetallesServicioComponent } from './detalles-servicio/detalles-servicio.component';
+
+/* import { MAT_DATE_FORMATS } from '@angular/material';
+  import { MomentDateAdapter } from '@angular/material-moment-adapter'; */
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 
 
@@ -40,6 +63,10 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     CommonModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     SidebarModule,
@@ -55,11 +82,11 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule
+    MatRadioModule
   ],
   declarations: [
     DashboardComponent,
     PagesComponent,
-    CategoriaComponent,
     SubcategoriaComponent,
     PresentacionComponent,
     ReportesComponent,
@@ -68,11 +95,20 @@ import { MatInputModule } from '@angular/material/input';
     ExcepcionesComponent,
     CategoriaComponent,
     LoginComponent
+    ReservaComponent,
+    CrearReservaComponent,
+    ServicioComponent,
+    EditorServicioComponent,
+    FichaComponent,
+    DetallesServicioComponent
   ],
   providers: [
     {
       provide: MatPaginatorIntl,
-      useClass: MatPaginatorIntlCro
+      useClass: MatPaginatorIntlCro,
+
+      /*  {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}, */
     },
   ]
 })

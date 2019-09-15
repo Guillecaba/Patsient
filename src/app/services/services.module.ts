@@ -4,6 +4,7 @@ import { PacienteService } from './paciente.service';
 import { DoctorService } from './doctor.service';
 import { ExcepcionService } from './excepcion.service';
 import { CategoriaService } from './categoria.service';
+import { ReservaService } from './reserva.service';
 import { SubcategoriaService } from './subcategoria.service';
 import { PresentacionService } from './presentacion.service';
 import { ReportesService } from './reportes.service';
@@ -14,8 +15,9 @@ import { LoginService } from './login.service'
   imports: [
     CommonModule
   ],
-  providers:[
+  providers: [
     CategoriaService,
+    ReservaService,
     SubcategoriaService,
     PresentacionService,
     ReportesService,
