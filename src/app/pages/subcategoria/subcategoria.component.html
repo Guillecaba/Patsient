@@ -1,0 +1,212 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                      <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title">Sub Categorías</h4>
+                  </div>
+                    <div class="card-body">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="material-datatables">
+                          <div>
+                              <label>
+                                Seleccione una categoría
+                              </label>
+                              <input type="text" placeholder="Elija una categoría" aria-label="Number" (input)="get_categorias()"
+                                class="form-control col-md-3 col-sm-6" 
+                                matInput [(ngModel)]="labelCategoria" [matAutocomplete]="auto">
+                              <mat-autocomplete #auto="matAutocomplete" 
+                                (optionSelected)="selectedCategoria = $event.option.value;
+                                  labelCategoria = $event.option.value.descripcion;
+                                  getData();">
+                                <mat-option *ngFor="let option of cat" [value]="option">
+                                  {{option.descripcion}}
+                                </mat-option>
+                              </mat-autocomplete>                                                
+                          </div>
+
+                          <div *ngIf="selectedCategoria.idCategoria != null"
+                            class="dataTables_wrapper dt-bootstrap4">
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <mat-paginator [length]="count"
+                                          [pageSize]="pageSize"
+                                          [pageSizeOptions]="pageSizeOptions"
+                                          (page)="get_page($event)">
+                                      </mat-paginator>
+                                      
+                                  </div>
+                                  <div class="col-md-4">                                    
+                                      <button type="button" class="btn btn-primary" 
+                                              data-toggle="modal" data-target="#addModal">
+                                              <i class="material-icons">
+                                                  add_circle_outline
+                                              </i>
+                                              Agregar Subcategoría
+                                          </button>                                
+                                  </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-7">
+                                </div>
+                                <div class="col-md-4">
+                                    <form class="form-inline">
+                                        <input class="form-control mr-sm-2" type="search" [(ngModel)]='search' placeholder="Search" aria-label="Search" name="nombre">
+                                        <button class="btn btn-primary my-2 my-sm-0" (click)="getData()" type="submit">Search</button>
+                                    </form>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" [(ngModel)]="isExacta"  (change)="getData()">
+                                            <span class="toggle"></span>
+                                            Búsqueda exacta
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="table-responsive">
+                              <table id="datatables" class="table table-striped table-no-bordered table-hover dataTable" cellspacing="0" width="100%" style="width:100%">
+                                  <thead>
+                                      <tr>
+                                          <th *ngFor="let head of columns" (click)="sortBy(head.value)"
+                                              [style.width]="head.width"
+                                              [class]="'sorting' + (
+                                                  head.value == orderBy && orderDir == 'asc' 
+                                                  ? '_asc'
+                                                  : head.value == orderBy && orderDir == 'desc'
+                                                      ?  '_desc'
+                                                      : '')">
+                                              {{ head.label }}
+                                          </th>
+                                          <th class="disabled-sorting text-right">Acciones</th>
+                                      </tr>
+                                  </thead>
+                                  <tfoot>
+                                      <tr>
+                                          <th *ngFor="let foot of columns">
+                                              {{ foot.label}}
+                                          </th>
+                                          <th class="text-right">Acciones</th>
+                                      </tr>
+                                  </tfoot>
+                                  <tbody>
+                                      <tr *ngFor="let row of data; let i = index">
+                                          <td *ngFor="let col of columns">
+                                              {{ row[col.value] }}
+                                          </td>
+                                          <td class="text-right">
+                                              <div class="btn-group">
+                                                  <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
+                                                      <i class="material-icons">
+                                                          edit
+                                                      </i>
+                                                      Editar
+                                                  </button>
+                                                  <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(row)">
+                                                      <i class="material-icons">
+                                                          delete
+                                                      </i>
+                                                      Borrar
+                                                  </button>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr *ngIf="data.length == 0" >
+                                        <td class="text-center" colspan="3">
+                                            La categoría seleccionada carece de subcategorías
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+  </div>
+  
+  
+  <div class="modal fade" id="addModal" tabindex="-1" 
+    role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Subcategoría</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeAdd(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">              
+            <div class="form-group">
+              <label> Agregar a {{ selectedCategoria.descripcion }} </label>
+              <input class="form-control" placeholder="Descripcion" [(ngModel)]="nueva.descripcion" >
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeAdd(false)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="closeAdd(true)" 
+            [disabled]="nueva.descripcion == null || nueva.descripcion.length == 0">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="editModal" tabindex="-1" 
+    role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Subcategoría</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEdit(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <input class="form-control" placeholder="Descripcion" [(ngModel)]="edit.descripcion" >
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="closeEdit(true)" 
+            [disabled]="edit.descripcion == null || edit.descripcion.length == 0">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="modal fade" id="deleteModal" tabindex="-1"
+    role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Borrar Subcategoría</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              Esta seguro de querer borrar la subcategoría {{delete.descripcion}}
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>

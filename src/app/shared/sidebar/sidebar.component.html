@@ -13,7 +13,7 @@
               </ul>
             </div>
             <ul class="nav">
-                <li routerLinkActive="active" *ngFor="let menuitem of menuItems" class="nav-item">
+                <li *ngFor="let menuitem of menuItems" class="nav-item">
                     <!--If is a single link-->
                     <a [routerLink]="[menuitem.path]" *ngIf="menuitem.type === 'link'" class="nav-link">
                         <i class="material-icons">{{menuitem.icontype}}</i>

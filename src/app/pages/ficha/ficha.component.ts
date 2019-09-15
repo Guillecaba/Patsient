@@ -57,9 +57,9 @@ export class FichaComponent implements OnInit {
   pacientes: any;
   empleados: any;
 
-   // inputs
-   fecha1;
-   fecha2;
+  // inputs
+  fecha1;
+  fecha2;
 
   fecha_inicio: string;
   fecha_fin: string;
@@ -73,6 +73,7 @@ export class FichaComponent implements OnInit {
 
   fichas;
 
+<<<<<<< HEAD
   forma;
 
   actualClienteForm: number;
@@ -88,6 +89,10 @@ export class FichaComponent implements OnInit {
 
   
   constructor( public _pacienteService: PacienteService,public _fichasService:FichaService,  public datePipe: DatePipe) { }
+=======
+
+  constructor(public _pacienteService: PacienteService, public _fichasService: FichaService, public datePipe: DatePipe) { }
+>>>>>>> bca20b0ef57c72702860a0290465a75adff2887c
 
   ngOnInit() {
     this.forma = new FormGroup({
@@ -152,6 +157,7 @@ export class FichaComponent implements OnInit {
     console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
   }
 
+<<<<<<< HEAD
   setClienteForm(cliente: any) {
     console.log(cliente)
     this.forma.patchValue({
@@ -188,6 +194,9 @@ export class FichaComponent implements OnInit {
     const json = {idPersona:this.actualEmpleado}
     console.log(json)
     
+=======
+  /*buscar() {
+>>>>>>> bca20b0ef57c72702860a0290465a75adff2887c
     this._fichasService.get({
       ejemplo:encodeURIComponent(JSON.stringify({
         fechaDesdeCadena: this.fecha_inicio,
@@ -203,6 +212,7 @@ export class FichaComponent implements OnInit {
      
     ;
 
+<<<<<<< HEAD
 }
 
 
@@ -230,4 +240,7 @@ closeAdd(send){
 
 
 
+=======
+}*/
+>>>>>>> bca20b0ef57c72702860a0290465a75adff2887c
 }

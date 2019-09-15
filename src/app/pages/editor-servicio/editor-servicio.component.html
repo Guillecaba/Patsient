@@ -1,0 +1,122 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title ">{{ tituloPagina }}</h4>
+          </div>
+          <div *ngIf="!error" class="card-body">
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Fecha</label>
+                  <input type="date" (change)="setFecha($event)" [value]="fecha1" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Observación</label>
+                  <input class="form-control" placeholder="¿Tiene algo que destacar?" [(ngModel)]="observacion">
+                </div>
+              </div>
+
+
+              <div *ngIf="nuevo" class="col-md-4">
+                <div><label>Filtros Fichas Médicas</label></div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span *ngIf="actualEmpleadoNombre">{{actualEmpleadoNombre}}</span>
+                    <span *ngIf="!actualEmpleadoNombre">Empleado</span>
+                  </button>
+                  <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                    <a *ngFor="let empleado of empleados" class="dropdown-item"
+                      (click)="setEmpleado(empleado)">{{empleado['nombreCompleto']}}</a>
+                  </div>
+                </div>
+                <div class="btn-group">
+                  <button style="max-width:150px; overflow-x: hidden;" type="button"
+                    class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span *ngIf="actualClienteNombre">{{actualClienteNombre}}</span>
+                    <span *ngIf="!actualClienteNombre">Cliente</span>
+                  </button>
+                  <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                    <a *ngFor="let paciente of pacientes" class="dropdown-item"
+                      (click)="setCliente(paciente)">{{paciente['nombreCompleto']}}</a>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="!nuevo">
+                <p><strong>Empleado: </strong>{{actualEmpleadoNombre}}</p>
+                <p><strong>Cliente: </strong>{{actualClienteNombre}}</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+
+
+            </div>
+
+            <h4 *ngIf="nuevo">Seleccionar Ficha</h4>
+            <h4 *ngIf="!nuevo">Ficha</h4>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <!--<th (click)="order($event)">Fecha</th>-->
+                    <th>ID</th>
+                    <th>Categoría</th>
+                    <th>SubCategoría</th>
+                    <th>Profesional</th>
+                    <th>Cliente</th>
+                    <th *ngIf="nuevo">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="nuevo">
+                  <tr *ngFor="let ficha of fichas">
+                    <td>{{ficha.idFichaClinica}}</td>
+                    <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
+                    <td>{{ficha.idTipoProducto.descripcion}} </td>
+                    <td>{{ficha.idEmpleado['nombreCompleto']}}</td>
+                    <td>{{ficha.idCliente['nombreCompleto']}}</td>
+                    <td>
+                      <mat-radio-group [(ngModel)]="actualFicha">
+                        <mat-radio-button class="example-radio-button" [value]="ficha.idFichaClinica">
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="!nuevo">
+                  <tr>
+                    <td>{{actualFicha}}</td>
+                    <td>{{categoriaNombre}}</td>
+                    <td>{{subcategoriaNombre}}</td>
+                    <td>{{actualEmpleadoNombre}}</td>
+                    <td>{{actualClienteNombre}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <button class="btn btn-success" routerLink="/servicios/">Atras</button>
+                <button class="btn btn-primary" (click)="guardarServicio()"
+                  [disabled]="fecha == null || actualFicha == null">Guardar</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="error" class="card-body">
+            <h2>Error, este servicio no existe</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

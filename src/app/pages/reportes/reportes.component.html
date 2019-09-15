@@ -1,0 +1,152 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Reportes de servicios</h4>
+            </div>
+            <div class="card-body">
+              <div class="toolbar">
+                <!--        Here you can write extra buttons/actions for the toolbar              -->
+              </div>
+              <div class="material-datatables">
+                <div class="dataTables_wrapper dt-bootstrap4">
+                  <div class="row">
+                    <div class="col-md-4 mr-auto">
+                        <label>Desde: </label>
+                        <input matInput [matDatepicker]="picker" placeholder="Elija una fecha" 
+                        class="form-control"
+                        [value]="since"
+                        (click)="picker.open()"
+                        (dateChange)="since=$event.value;getData();">
+                        <mat-datepicker #picker></mat-datepicker>                        
+                    </div>
+                    <div class="col-md-4 mr-auto">
+                        <label>Hasta: </label>
+                        <input matInput [matDatepicker]="picker2" placeholder="Elija una fecha" 
+                        class="form-control"
+                        [value]="until"
+                        (click)="picker2.open()"
+                        (dateChange)="until=$event.value;getData();">
+                        <mat-datepicker #picker2></mat-datepicker>                        
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-4">
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <span *ngIf="actualEmpleadoNombre">{{actualEmpleadoNombre}}</span>
+                              <span *ngIf="!actualEmpleadoNombre">Empleado</span>
+                            </button>
+                            <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                              <a *ngFor="let empleado of empleados" class="dropdown-item"
+                                (click)="setEmpleado(empleado)">{{empleado['nombreCompleto']}}</a>
+                            </div>
+                          </div>
+                          <div class="btn-group">
+                            <button style="max-width:150px; overflow-x: hidden;" type="button"
+                              class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                              aria-expanded="false">
+                              <span *ngIf="actualClienteNombre">{{actualClienteNombre}}</span>
+                              <span *ngIf="!actualClienteNombre">Cliente</span>
+                            </button>
+                            <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                              <a *ngFor="let paciente of pacientes" class="dropdown-item"
+                                (click)="setCliente(paciente)">{{paciente['nombreCompleto']}}</a>
+                            </div>
+                          </div>
+                      </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-6 togglebutton">
+                      <label>
+                        <input type="checkbox" [(ngModel)]="withDetalles"  (change)="getData()">
+                        <span class="toggle"></span>
+                        Incluir detalles
+                      </label>
+                    </div>
+                    <div class="col-3">
+                      <button type="button" class="btn btn-light btn-sm" (click)="generate_PDF()">
+                          <i class="material-icons">
+                              picture_as_pdf
+                          </i>
+                          Ver PDF
+                      </button>
+                    </div>
+                    <div class="col-3">
+                      <button type="button" class="btn btn-light btn-sm" (click)="generate_XLS()">
+                        <i class="material-icons">
+                            insert_drive_file
+                        </i>
+                        Ver Excel
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table mat-table
+                            [dataSource]="dataSource" multiTemplateDataRows
+                            class="table mat-elevation-z8 table-bordered">
+                      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                        <th mat-header-cell *matHeaderCellDef> {{column.substring(0,1).toUpperCase() + column.substring(1)}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                      </ng-container>
+                    
+                      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                      <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                          <div class="example-element-detail"
+                                [@detailExpand]="element == expandedElement && withDetalles ? 'expanded' : 'collapsed'">
+                            <div class="table-responsive">
+                              <table class="table custom-expanded-table">
+                                <thead>
+                                  <tr>
+                                    <th>Presentacion</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Sub total</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let detalle of element.detalles">
+                                    <td>{{detalle.presentacion}}</td>
+                                    <td>{{detalle.precio_unitario}}</td>
+                                    <td>{{detalle.cantidad}}</td>
+                                    <td>{{detalle.sub_total}}</td>
+                                  </tr>
+                                  <tr *ngIf="element.detalles.length <= 0">
+                                    <td colspan="4">
+                                      No posee detalles asociados
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </td>
+                      </ng-container>
+                    
+                      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                          class="example-element-row"
+                          [class.example-expanded-row]="expandedElement === element"
+                          (click)="expandedElement = expandedElement === element ? null : element">
+                      </tr>
+                      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    </table>               
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>      
+        </div>
+      </div>    
+    </div>
+</div>
+  

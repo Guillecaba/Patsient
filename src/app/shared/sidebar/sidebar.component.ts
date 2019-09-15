@@ -26,20 +26,62 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Dashboard',
         type: 'link',
         icontype: 'dashboard'
-    },
-    {
-        path: '/paciente',
-        title: 'Paciente',
-        type: 'link',
-        icontype: 'dashboard'
-    },
-    {
-        path:'/ficha',
-        title:'Ficha Medica',
-        type:'link',
-        icontype:'dashboard'
-    }
+    },{
     
+        path: '/categorias',
+        title: 'Categorías',
+        type: 'link',
+        icontype: 'bookmark'
+    },
+    {
+        path: '/subcategorias',
+        title: 'Subcategorías',
+        type: 'link',
+        icontype: 'bookmarks'
+    },
+    {
+        path: '/presentacion',
+        title: 'Presentación',
+        type: 'link',
+        icontype: 'branding_watermark'
+    },
+{
+    path: '/paciente',
+    title: 'Paciente',
+    icontype: 'dashboard',
+    type: 'link',
+},
+{
+    path: '/horarios',
+    title: 'Horarios',
+    type: 'link',
+    icontype: 'dashboard',
+},
+{
+    title: 'Excepciones',
+    path: '/excepciones',
+    type: 'link',
+    icontype: 'dashboard'
+},
+{
+
+    path: '/servicios',
+    type: 'link',
+    title: 'Servicios',
+    icontype: 'dashboard'
+},
+{
+    path: '/ficha',
+    title: 'Ficha Medica',
+    type: 'link',
+    icontype: 'dashboard'
+},
+{
+    path: '/reportes',
+    title: 'Reportes',
+    type: 'link',
+    icontype: 'insert_chart'
+},
 ];
 @Component({
     selector: 'app-sidebar-cmp',
@@ -63,7 +105,7 @@ export class SidebarComponent implements OnInit {
             this.ps = new PerfectScrollbar(elemSidebar);
         }
     }
-    updatePS(): void  {
+    updatePS(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();
         }
