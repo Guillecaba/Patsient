@@ -15,7 +15,7 @@ import { ExcepcionService } from './excepcion.service';
   providers: [
     PacienteService,
     DoctorService,
-    ExcepcionService
+    ExcepcionService,
     ReservaService,
     FichaService,
     DetallesService

@@ -26,12 +26,6 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Dashboard',
         type: 'link',
         icontype: 'dashboard'
-    },
-    {
-        path: '/paciente',
-        title: 'Paciente',
-        type: 'link',
-        icontype: 'dashboard'
     },{
     
         path: '/categorias',
@@ -51,10 +45,6 @@ export const ROUTES: RouteInfo[] = [{
         type: 'link',
         icontype: 'branding_watermark'
     },
-
-
-
-
 {
     path: '/paciente',
     title: 'Paciente',
@@ -73,13 +63,7 @@ export const ROUTES: RouteInfo[] = [{
     type: 'link',
     icontype: 'dashboard'
 },
-    {
-        path: '/reportes',
-        title: 'Reportes',
-        type: 'link',
-        icontype: 'insert_chart'
-    },
-}, {
+{
 
     path: '/servicios',
     type: 'link',
@@ -91,7 +75,13 @@ export const ROUTES: RouteInfo[] = [{
     title: 'Ficha Medica',
     type: 'link',
     icontype: 'dashboard'
-}
+},
+{
+    path: '/reportes',
+    title: 'Reportes',
+    type: 'link',
+    icontype: 'insert_chart'
+},
 ];
 @Component({
     selector: 'app-sidebar-cmp',

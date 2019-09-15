@@ -111,8 +111,10 @@ export class MaterialModule { }
 
 
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    DatePipe,
+  ],
   bootstrap: [AppComponent],
-  providers: [DatePipe]
 })
 export class AppModule { }

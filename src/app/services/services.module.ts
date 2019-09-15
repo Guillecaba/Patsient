@@ -17,6 +17,8 @@ import { LoginService } from './login.service'
   ],
   providers: [
     CategoriaService,
+    SubcategoriaService,
+    PresentacionService,    
     ReservaService,
     SubcategoriaService,
     PresentacionService,

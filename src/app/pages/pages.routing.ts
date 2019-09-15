@@ -40,7 +40,7 @@ export const PagesRoutes: Routes = [
             { path: 'editor-servicio', component: EditorServicioComponent },
             { path: 'editor-servicio/:id', component: EditorServicioComponent },
             { path: 'ficha', component: FichaComponent },
-            { path: 'detalleservicio/:id', component: DetallesServicioComponent }
+            { path: 'detalleservicio/:id', component: DetallesServicioComponent },
                 { path: 'reportes', component:ReportesComponent}
         ]
     },

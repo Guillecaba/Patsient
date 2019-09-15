@@ -81,7 +81,7 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
     MatRadioModule
   ],
   declarations: [
@@ -94,7 +94,7 @@ export const MY_FORMATS = {
     PersonaPorDiaComponent,
     ExcepcionesComponent,
     CategoriaComponent,
-    LoginComponent
+    LoginComponent,
     ReservaComponent,
     CrearReservaComponent,
     ServicioComponent,
