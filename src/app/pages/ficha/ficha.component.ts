@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { FichaService } from '../../services/fichas.service'
 import { DatePipe } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
+declare const $: any;
 
 @Component({
   selector: 'app-ficha',
@@ -62,6 +64,8 @@ export class FichaComponent implements OnInit {
   fecha_inicio: string;
   fecha_fin: string;
 
+  fecha_reserva:string;
+
   actualCliente: number;
   actualClienteNombre: string;
   actualEmpleado: number;
@@ -69,7 +73,15 @@ export class FichaComponent implements OnInit {
 
   fichas;
 
-  forma
+  forma;
+
+  actualClienteForm: number;
+  actualClienteNombreForm: string;
+  actualEmpleadoForm: number;
+  actualEmpleadoNombreForm: string;
+
+
+  
 
   private orderBy = null;
   private orderDir = null;
@@ -79,12 +91,14 @@ export class FichaComponent implements OnInit {
 
   ngOnInit() {
     this.forma = new FormGroup({
-      fecha: new FormControl('',),
-      empleado :new FormControl(''),
-      cliente:new FormControl(''),
-      categoria:new FormControl(''),
-      subcategoria: new FormControl(''),
-      motivo:new FormControl('')
+      
+      idEmpleado :new FormControl('',Validators.required),
+      idCliente:new FormControl('',Validators.required),
+     // categoria:new FormControl('',Validators.required),
+      idTipoProducto: new FormControl('',Validators.required),
+      motivoConsulta:new FormControl(''),
+      diagnostico: new FormControl(''),
+      observacion: new FormControl('')
     })
 
     this._pacienteService.getTodos().subscribe((res: any) => (
@@ -138,6 +152,38 @@ export class FichaComponent implements OnInit {
     console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
   }
 
+  setClienteForm(cliente: any) {
+    console.log(cliente)
+    this.forma.patchValue({
+      idCliente:{ idPersona: cliente.idPersona}
+        
+      }
+    )
+    console.log(this.forma.value)
+    this.actualClienteForm = cliente['idPersona'];
+    this.actualClienteNombreForm = cliente['nombre'];
+    //console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
+  }
+  setEmpleadoForm(empleado: any) {
+    
+    console.log(empleado)
+    this.forma.patchValue({
+      idEmpleado:{ idPersona:empleado.idPersona }
+    })
+    console.log(this.forma.value)
+    this.actualEmpleadoForm = empleado['idPersona'];
+    
+    this.actualEmpleadoNombreForm = empleado['nombre'];
+    console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
+  }
+
+  setFechaReserva(event: any) {
+    console.log(event.target.value)
+    this.fecha_reserva = event.target.value;
+    this.fecha_reserva = this.datePipe.transform(this.fecha_reserva, 'yyyyMMdd');
+    console.log('Fecha Reserva:' + this.fecha_reserva );
+  }
+
   buscar() {
     const json = {idPersona:this.actualEmpleado}
     console.log(json)
@@ -174,9 +220,9 @@ limpiarFiltros() {
 closeAdd(send){
   if(send){
     console.log(this.forma.value)
-    this._fichasService.post(this.forma.value).subscribe(()=>{
+   /*  this._fichasService.post(this.forma.value).subscribe(()=>{
       this.getData();
-    })
+    }) */
   }
   //this.nueva_ficha = null
   $("#addModal").modal('hide');
