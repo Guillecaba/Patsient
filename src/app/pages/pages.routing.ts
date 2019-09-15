@@ -25,7 +25,7 @@ export const PagesRoutes: Routes = [
             { path: 'categorias', component: CategoriaComponent, canActivate: [AuthGuard] },
                 { path: 'subcategorias', component:SubcategoriaComponent },
                 { path: 'presentacion', component:PresentacionComponent },
-            { path: 'login', component: LoginComponent }
+            { path: 'login', component: LoginComponent },
                 
                 { path: 'reportes', component:ReportesComponent}
         ]

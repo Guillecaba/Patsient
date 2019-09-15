@@ -58,17 +58,17 @@ export const ROUTES: RouteInfo[] = [{
 {
     path: '/paciente',
     title: 'Paciente',
-    icontype: 'dashboard'
+    icontype: 'dashboard',
     type: 'link',
 },
 {
     path: '/horarios',
     title: 'Horarios',
     type: 'link',
-    icontype: 'dashboard'
+    icontype: 'dashboard',
 },
-    title: 'Excepciones',
 {
+    title: 'Excepciones',
     path: '/excepciones',
     type: 'link',
     icontype: 'dashboard'

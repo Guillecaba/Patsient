@@ -24,7 +24,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from './categoria/i18nPaginator';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
-import { MatAutocompleteModule, MatTableModule, MatDatepickerModule } from '@angular/material';
+import { MatAutocompleteModule, MatTableModule } from '@angular/material';
 import { PresentacionComponent } from './presentacion/presentacion.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { LoginComponent } from './login/login.component';
@@ -62,7 +62,7 @@ import { MatInputModule } from '@angular/material/input';
     CategoriaComponent,
     SubcategoriaComponent,
     PresentacionComponent,
-    ReportesComponent
+    ReportesComponent,
     PacienteComponent,
     PersonaPorDiaComponent,
     ExcepcionesComponent,
