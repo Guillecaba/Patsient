@@ -13,6 +13,9 @@ export class CategoriaComponent implements OnInit {
 
   private data : any[] = [];
   private count : Number = 0;
+
+  private search:String = "";
+  private isExacta = false;
   
   length = 100;
   pageSize = 10;
@@ -60,6 +63,11 @@ export class CategoriaComponent implements OnInit {
       ...this.pagination,
       orderBy:this.orderBy,
       orderDir:this.orderDir,
+      like:this.isExacta || this.search.length == 0 ? null : 'S',
+      ejemplo:this.search.length == 0? null
+        : encodeURIComponent(JSON.stringify({
+          descripcion : this.search
+        }))
     })
     .subscribe((response)=>{
       this.data = response['lista']

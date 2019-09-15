@@ -16,6 +16,9 @@ export class PresentacionComponent implements OnInit {
   private sub : any[] = [];
   private data : any[] = [];
   private count : Number = 0;
+
+  private search:String = "";
+  private isExacta = false;
   
   length = 100;
   pageSize = 10;
@@ -90,6 +93,7 @@ export class PresentacionComponent implements OnInit {
       ...this.pagination,
       orderBy:this.orderBy,
       orderDir:this.orderDir,
+      like:this.isExacta || this.search.length == 0 ? null : 'S',
       ejemplo:encodeURIComponent(JSON.stringify({
         idProducto:{
           idTipoProducto:{
@@ -98,7 +102,8 @@ export class PresentacionComponent implements OnInit {
               idCategoria:this.selectedCategoria.idCategoria
             },
           }
-        }
+        },
+        nombre:this.search.length>0?this.search:null
       }))
     })
     .subscribe((response)=>{
