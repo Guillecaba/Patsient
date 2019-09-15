@@ -14,6 +14,9 @@ export class SubcategoriaComponent implements OnInit {
   private cat : any[] = [];
   private data : any[] = [];
   private count : Number = 0;
+
+  private search:String = "";
+  private isExacta = false;
   
   length = 100;
   pageSize = 10;
@@ -74,8 +77,10 @@ export class SubcategoriaComponent implements OnInit {
       ...this.pagination,
       orderBy:this.orderBy,
       orderDir:this.orderDir,
+      like:this.isExacta || this.search.length == 0 ? null : 'S',
       ejemplo:encodeURIComponent(JSON.stringify({
-        idCategoria:this.selectedCategoria.idCategoria
+        idCategoria:this.selectedCategoria.idCategoria,
+        descripcion:this.search.length>0?this.search:null
       }))
     })
     .subscribe((response)=>{
