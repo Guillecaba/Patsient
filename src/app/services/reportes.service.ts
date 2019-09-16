@@ -37,6 +37,19 @@ export class ReportesService {
     return this.http.get(url);
   }
 
+  public price(idPP){
+    let url = this.url_base + 'existenciaProducto?ejemplo='
+    let obj = {
+      idPresentacionProductoTransient : idPP
+    }
+    url= url + encodeURIComponent(JSON.stringify(obj))
+
+    return this.http.get(url,{
+      headers:{
+        usuario:'ana'
+      }
+    })
+  }
   public get_clientes(){
     let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc';
     return this.http.get(url);

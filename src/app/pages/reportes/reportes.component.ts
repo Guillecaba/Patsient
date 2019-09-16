@@ -224,21 +224,34 @@ export class ReportesComponent implements OnInit {
   }
   private get_detalle(i){
     this.service.detalle(this.dataSource[i].id).subscribe((response:any)=>{
-      let detalles:Detalle[] = []
+      
       for(let k in response){
         let d = response[k]
-        let p = Number(this.dataSource[i].presupuesto)
         let q = Number(d.cantidad)
-        detalles.push({
+        let id = d.idPresentacionProducto.idPresentacionProducto
+        this.dataSource[i].detalles.push({
           presentacion: d.idPresentacionProducto.nombre,
-          precio_unitario: p,
+          precio_unitario: null,
           cantidad : q,
-          sub_total : p*q
+          sub_total : null
         })
+        this.get_unit_price(i,this.dataSource[i].detalles.length - 1,id)
       }
-      this.dataSource[i].detalles = detalles
+      
     })
   }
+
+  private get_unit_price(i,j,id){
+    this.service.price(id).subscribe((response)=>{
+      if(response['lista'].length > 0){
+        let p = Number(response['lista'][0].precioVenta)
+        let q = this.dataSource[i].detalles[j].cantidad
+        this.dataSource[i].detalles[j].precio_unitario = p
+        this.dataSource[i].detalles[j].sub_total = p*q
+      }
+    })
+  }
+
 }
 
 interface Servicio {
