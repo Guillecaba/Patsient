@@ -11,7 +11,7 @@
           </div>
           <div class="card-body">
             <div class="row mb-4">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Fecha Inicial</label>
                   <input
@@ -23,7 +23,7 @@
                 </div>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Fecha Final</label>
                   <input
@@ -34,7 +34,7 @@
                   />
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="btn-group">
                   <button
                     type="button"
@@ -59,6 +59,33 @@
                       >{{ empleado["nombreCompleto"] }}</a
                     >
                   </div>
+                </div>
+                  <div class="btn-group">
+                  <button
+                  type="button"
+                  class="btn btn-outline-primary dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span *ngIf="actualCategoriaDescripcion">{{
+                    actualCategoriaDescripcion
+                  }}</span>
+                  <span *ngIf="!actualCategoriaDescripcion"
+                    >Categoria</span
+                  >
+                </button>
+                <div
+                  class="dropdown-menu"
+                  style="max-height: 450px; overflow-y: scroll"
+                >
+                  <a
+                    *ngFor="let categoria of categorias"
+                    class="dropdown-item"
+                    (click)="setCategoriaForm(categoria)"
+                    >{{ categoria["descripcion"] }}</a
+                  >
+                </div>
                 </div>
                 <div class="btn-group">
                   <button
@@ -85,6 +112,34 @@
                       >{{ paciente["nombreCompleto"] }}</a
                     >
                   </div>
+                </div>
+                <div class="btn-group">
+                  <button
+                  style="max-width:150px; overflow-x: hidden;"
+                  type="button"
+                  class="btn btn btn-outline-primary dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span *ngIf="actualSubCategoriaDescripcion">{{
+                    actualSubCategoriaDescripcion
+                  }}</span>
+                  <span *ngIf="!actualSubCategoriaDescripcion"
+                    >Subcategoria</span
+                  >
+                </button>
+                <div
+                  class="dropdown-menu"
+                  style="max-height: 450px; overflow-y: scroll"
+                >
+                  <a
+                    *ngFor="let subCategoria of subcategorias"
+                    class="dropdown-item"
+                    (click)="setSubcategoriaForm(subCategoria)"
+                    >{{ subCategoria["descripcion"] }}</a
+                  >
+                </div>
                 </div>
               </div>
             </div>
@@ -196,10 +251,30 @@
                       </td>
                       <td class="text-right">
                         <div class="btn-group">
+                            <button
+                            type="button"
+                            class="btn btn-outline-primary btn-sm m-1"
+                            (click)="openDetalle(row)"
+                          >
+                            <!-- <i class="material-icons">
+                              edit
+                            </i> -->
+                           Ver
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-outline-primary btn-sm"
+                            (click)="openEdit(row)"
+                          >
+                            <!-- <i class="material-icons">
+                              edit
+                            </i> -->
+                           Modificar
+                          </button>
                           <button
                             type="button"
                             class="btn btn-light btn-sm"
-                            (click)="openEdit(row)"
+                            (click)="openCrear(row)"
                           >
                             <i class="material-icons">
                               edit
@@ -214,222 +289,7 @@
               </div>
             </div>
 
-            <div
-              class="modal fade"
-              id="addModal"
-              tabindex="-1"
-              role="dialog"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Nueva ficha medica</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                      click="closeAdd(false)"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form [formGroup]="forma">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <!-- <input
-                            type="date"
-                            (change)="setFechaReserva($event)"
-                            class="form-control"
-                          /> -->
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="btn-group">
-                            <button
-                              type="button"
-                              class="btn btn-outline-primary  dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <span *ngIf="actualEmpleadoNombreForm">{{
-                                actualEmpleadoNombreForm
-                              }}</span>
-                              <span *ngIf="!actualEmpleadoNombreForm"
-                                >Empleado</span
-                              >
-                            </button>
-                            <div
-                              class="dropdown-menu"
-                              style="max-height: 450px; overflow-y: scroll"
-                            >
-                              <a
-                                *ngFor="let empleado of empleados"
-                                class="dropdown-item"
-                                (click)="setEmpleadoForm(empleado)"
-                                >{{ empleado["nombreCompleto"] }}</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="btn-group">
-                            <button
-                              style="max-width:150px; overflow-x: hidden;"
-                              type="button"
-                              class="btn btn btn-outline-primary dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <span *ngIf="actualClienteNombreForm">{{
-                                actualClienteNombreForm
-                              }}</span>
-                              <span *ngIf="!actualClienteNombreForm">Cliente</span>
-                            </button>
-                            <div
-                              class="dropdown-menu"
-                              style="max-height: 450px; overflow-y: scroll"
-                            >
-                              <a
-                                *ngFor="let paciente of pacientes"
-                                class="dropdown-item"
-                                (click)="setClienteForm(paciente)"
-                                >{{ paciente["nombreCompleto"] }}</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="btn-group">
-                            <button
-                              type="button"
-                              class="btn btn-outline-primary dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <span *ngIf="actualEmpleadoNombre">{{
-                                actualEmpleadoNombreForm
-                              }}</span>
-                              <span *ngIf="!actualEmpleadoNombre"
-                                >Categoria</span
-                              >
-                            </button>
-                            <div
-                              class="dropdown-menu"
-                              style="max-height: 450px; overflow-y: scroll"
-                            >
-                              <a
-                                *ngFor="let empleado of empleados"
-                                class="dropdown-item"
-                                (click)="setEmpleado(empleado)"
-                                >{{ empleado["nombreCompleto"] }}</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="btn-group">
-                            <button
-                              style="max-width:150px; overflow-x: hidden;"
-                              type="button"
-                              class="btn btn btn-outline-primary dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <span *ngIf="actualClienteNombre">{{
-                                actualClienteNombre
-                              }}</span>
-                              <span *ngIf="!actualClienteNombre"
-                                >Subcategoria</span
-                              >
-                            </button>
-                            <div
-                              class="dropdown-menu"
-                              style="max-height: 450px; overflow-y: scroll"
-                            >
-                              <a
-                                *ngFor="let paciente of pacientes"
-                                class="dropdown-item"
-                                (click)="setCliente(paciente)"
-                                >{{ paciente["nombreCompleto"] }}</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <!-- <input class="form-control" type="text" placeholder="Nombre" formControlName='nombre'  > -->
-                      </div>
-
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Motivo</span>
-                            </div>
-                            <textarea
-                              class="form-control"
-                              aria-label="With textarea"
-                              formControlName="motivoConsulta"
-                            ></textarea>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Diagnostico</span>
-                            </div>
-                            <textarea
-                              class="form-control"
-                              aria-label="With textarea"
-                              formControlName="diagnostico"
-                            ></textarea>
-                          </div>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Observacion</span>
-                            </div>
-                            <textarea
-                              class="form-control"
-                              aria-label="With textarea"
-                              formControlName="observacion"
-                            ></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      (click)="closeAdd(false)"
-                    >
-                      Cerrar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      (click)="closeAdd(true)"
-                    
-                    >
-                      Guardar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
@@ -437,4 +297,557 @@
   </div>
 </div>
 <!-- 
-[disabled]="!forma.valid" -->
+ -->
+
+
+
+
+<!-- Agregar ficha clinica -->
+
+ <div
+ class="modal fade"
+ id="addModal"
+ tabindex="-1"
+ role="dialog"
+ aria-hidden="true"
+>
+ <div class="modal-dialog modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title">Nueva ficha medica</h5>
+       <button
+         type="button"
+         class="close"
+         data-dismiss="modal"
+         aria-label="Close"
+         click="closeAdd(false)"
+       >
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <form [formGroup]="forma">
+         <div class="row">
+           <div class="col-md-6">
+             <!-- <input
+               type="date"
+               (change)="setFechaReserva($event)"
+               class="form-control"
+             /> -->
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-md-6">
+             <div class="btn-group">
+               <button
+                 type="button"
+                 class="btn btn-outline-primary  dropdown-toggle"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false"
+               >
+                 <span *ngIf="actualEmpleadoNombreForm">{{
+                   actualEmpleadoNombreForm
+                 }}</span>
+                 <span *ngIf="!actualEmpleadoNombreForm"
+                   >Empleado</span
+                 >
+               </button>
+               <div
+                 class="dropdown-menu"
+                 style="max-height: 450px; overflow-y: scroll"
+               >
+                 <a
+                   *ngFor="let empleado of empleados"
+                   class="dropdown-item"
+                   (click)="setEmpleadoForm(empleado)"
+                   >{{ empleado["nombreCompleto"] }}</a
+                 >
+               </div>
+             </div>
+           </div>
+           <div class="col-md-6">
+             <div class="btn-group">
+               <button
+                 style="max-width:150px; overflow-x: hidden;"
+                 type="button"
+                 class="btn btn btn-outline-primary dropdown-toggle"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false"
+               >
+                 <span *ngIf="actualClienteNombreForm">{{
+                   actualClienteNombreForm
+                 }}</span>
+                 <span *ngIf="!actualClienteNombreForm">Cliente</span>
+               </button>
+               <div
+                 class="dropdown-menu"
+                 style="max-height: 450px; overflow-y: scroll"
+               >
+                 <a
+                   *ngFor="let paciente of pacientes"
+                   class="dropdown-item"
+                   (click)="setClienteForm(paciente)"
+                   >{{ paciente["nombreCompleto"] }}</a
+                 >
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-md-6">
+             <div class="btn-group">
+               <button
+                 type="button"
+                 class="btn btn-outline-primary dropdown-toggle"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false"
+               >
+                 <span *ngIf="actualCategoriaDescripcion">{{
+                   actualCategoriaDescripcion
+                 }}</span>
+                 <span *ngIf="!actualCategoriaDescripcion"
+                   >Categoria</span
+                 >
+               </button>
+               <div
+                 class="dropdown-menu"
+                 style="max-height: 450px; overflow-y: scroll"
+               >
+                 <a
+                   *ngFor="let categoria of categorias"
+                   class="dropdown-item"
+                   (click)="setCategoriaForm(categoria)"
+                   >{{ categoria["descripcion"] }}</a
+                 >
+               </div>
+             </div>
+           </div>
+           <div class="col-md-6">
+             <div class="btn-group">
+               <button
+                 style="max-width:150px; overflow-x: hidden;"
+                 type="button"
+                 class="btn btn btn-outline-primary dropdown-toggle"
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded="false"
+               >
+                 <span *ngIf="actualSubCategoriaDescripcion">{{
+                   actualSubCategoriaDescripcion
+                 }}</span>
+                 <span *ngIf="!actualSubCategoriaDescripcion"
+                   >Subcategoria</span
+                 >
+               </button>
+               <div
+                 class="dropdown-menu"
+                 style="max-height: 450px; overflow-y: scroll"
+               >
+                 <a
+                   *ngFor="let subCategoria of subcategorias"
+                   class="dropdown-item"
+                   (click)="setSubcategoriaForm(subCategoria)"
+                   >{{ subCategoria["descripcion"] }}</a
+                 >
+               </div>
+             </div>
+           </div>
+           <!-- <input class="form-control" type="text" placeholder="Nombre" formControlName='nombre'  > -->
+         </div>
+
+         <div class="row">
+           <div class="col-md-12">
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <span class="input-group-text">Motivo</span>
+               </div>
+               <textarea
+                 class="form-control"
+                 aria-label="With textarea"
+                 formControlName="motivoConsulta"
+               ></textarea>
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-md-12">
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <span class="input-group-text">Diagnostico</span>
+               </div>
+               <textarea
+                 class="form-control"
+                 aria-label="With textarea"
+                 formControlName="diagnostico"
+               ></textarea>
+             </div>
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <span class="input-group-text">Observacion</span>
+               </div>
+               <textarea
+                 class="form-control"
+                 aria-label="With textarea"
+                 formControlName="observacion"
+               ></textarea>
+             </div>
+           </div>
+         </div>
+       </form>
+     </div>
+
+     <div class="modal-footer">
+       <button
+         type="button"
+         class="btn btn-secondary"
+         (click)="closeAdd(false)"
+       >
+         Cerrar
+       </button>
+       <button
+         type="button"
+         class="btn btn-primary"
+         (click)="closeAdd(true)"
+         [disabled]="!forma.valid"
+       >
+         Guardar
+       </button>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- Modal Ver ficha -->
+
+ <div
+ class="modal fade"
+ id="verModal"
+ tabindex="-1"
+ role="dialog"
+ aria-hidden="true"
+>
+ <div class="modal-dialog modal-dialog" role="document">
+   <div *ngIf="verDetalle" class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" >Ficha Clinica: {{ verDetalle.idFichaClinica}}</h5>
+       <button
+         type="button"
+         class="close"
+         data-dismiss="modal"
+         aria-label="Close"
+         click="closeDetalle(false)"
+       >
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <form [formGroup]="forma">
+         <div class="row">
+           <div class="col-md-6">
+             <!-- <input
+               type="date"
+               (change)="setFechaReserva($event)"
+               class="form-control"
+             /> -->
+           </div>
+         </div>
+
+       
+
+
+         <div class="row">
+           <div class="col-md-12">
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Cliente</span>
+                  </div>
+                  <input
+                    class="form-control"
+                    
+                    [disabled]="true"
+                    [value] = "verDetalle.idCliente.nombreCompleto"
+   
+                  >
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Empleado</span>
+                    </div>
+                    <input
+                      class="form-control"
+                      
+                      [disabled]="true"
+                      [value] = "verDetalle.idEmpleado.nombreCompleto"
+     
+                    >
+                  </div>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Categoria</span>
+                      </div>
+                      <input
+                        class="form-control"
+                        
+                        [disabled]="true"
+                        [value] = "verDetalle.idTipoProducto.idCategoria.descripcion"
+       
+                      >
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Subcategoria</span>
+                        </div>
+                        <input
+                          class="form-control"
+                          
+                          [disabled]="true"
+                          [value] = "verDetalle.idTipoProducto.descripcion"
+         
+                        >
+                      </div>
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Fecha-hora</span>
+                  </div>
+                  <input
+                    class="form-control"
+                    
+                    [disabled]="true"
+                    [value] = "verDetalle.fechaHora"
+   
+                  >
+                </div>
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <span class="input-group-text">Motivo</span>
+               </div>
+               <textarea
+                 class="form-control"
+                 aria-label="With textarea"
+                 [disabled]="true"
+                 [value] = "verDetalle.motivoConsulta"
+
+               ></textarea>
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-md-12">
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <span class="input-group-text">Diagnostico</span>
+               </div>
+               <textarea
+                 class="form-control"
+                 aria-label="With textarea"
+                 [disabled]="true"
+                 [value]="verDetalle.diagnostico"
+               ></textarea>
+             </div>
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <span class="input-group-text">Observacion</span>
+               </div>
+               <textarea
+                 class="form-control"
+                 aria-label="With textarea"
+                 [disabled]="true"
+                 [value]="verDetalle.observacion"
+               ></textarea>
+             </div>
+           </div>
+         </div>
+       </form>
+     </div>
+
+     <div class="modal-footer">
+       <button
+         type="button"
+         class="btn btn-secondary"
+         (click)="closeDetalle(false)"
+       >
+         Cerrar
+       </button>
+      
+     </div>
+   </div>
+ </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Editar modal -->
+
+
+
+<div
+class="modal fade"
+id="editarModal"
+tabindex="-1"
+role="dialog"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog" role="document">
+  <div *ngIf="verDetalle" class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Ficha Clinica: {{ verDetalle.idFichaClinica}}</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        click="closeDetalle(false)"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+        <div class="row">
+          <div class="col-md-6">
+            <!-- <input
+              type="date"
+              (change)="setFechaReserva($event)"
+              class="form-control"
+            /> -->
+          </div>
+        </div>
+
+      
+
+
+        <div class="row">
+          <div class="col-md-12">
+             <div class="input-group">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text">Cliente</span>
+                 </div>
+                 <input
+                   class="form-control"
+                   
+                   [disabled]="true"
+                   [value] = "verDetalle.idCliente.nombreCompleto"
+  
+                 >
+               </div>
+               <div class="input-group">
+                   <div class="input-group-prepend">
+                     <span class="input-group-text">Empleado</span>
+                   </div>
+                   <input
+                     class="form-control"
+                     
+                     [disabled]="true"
+                     [value] = "verDetalle.idEmpleado.nombreCompleto"
+    
+                   >
+                 </div>
+                 <div class="input-group">
+                     <div class="input-group-prepend">
+                       <span class="input-group-text">Categoria</span>
+                     </div>
+                     <input
+                       class="form-control"
+                       
+                       [disabled]="true"
+                       [value] = "verDetalle.idTipoProducto.idCategoria.descripcion"
+      
+                     >
+                   </div>
+                   <div class="input-group">
+                       <div class="input-group-prepend">
+                         <span class="input-group-text">Subcategoria</span>
+                       </div>
+                       <input
+                         class="form-control"
+                         
+                         [disabled]="true"
+                         [value] = "verDetalle.idTipoProducto.descripcion"
+        
+                       >
+                     </div>
+             <div class="input-group">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text">Fecha-hora</span>
+                 </div>
+                 <input
+                   class="form-control"
+                   
+                   [disabled]="true"
+                   [value] = "verDetalle.fechaHora"
+  
+                 >
+               </div>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Motivo</span>
+              </div>
+              <textarea
+                class="form-control"
+                aria-label="With textarea"
+                [disabled]="true"
+                [value] = "verDetalle.motivoConsulta"
+
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Diagnostico</span>
+              </div>
+              <textarea
+                class="form-control"
+                aria-label="With textarea"
+                [disabled]="true"
+                [value]="verDetalle.diagnostico"
+              ></textarea>
+            </div>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Observacion</span>
+              </div>
+              <textarea
+              [(ngModel)]="observacion"
+                class="form-control"
+                aria-label="With textarea"
+                
+                
+              ></textarea>
+            </div>
+          </div>
+        </div>
+     
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="closeDetalle(false)"
+      >
+        Cerrar
+      </button>
+      <button
+        type="button"
+        [disabled]="!observacion"
+        class="btn btn-outline-primary"
+        (click)="closeEdit(true)"
+      >
+        Guardar
+      </button>
+     
+    </div>
+  </div>
+</div>
+</div>

@@ -58,6 +58,12 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'dashboard',
 },
 {
+    path: '/reservas',
+    title: 'Reservas',
+    type: 'link',
+    icontype: 'dashboard',
+},
+{
     title: 'Excepciones',
     path: '/excepciones',
     type: 'link',
