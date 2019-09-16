@@ -47,7 +47,7 @@ export class ServicioService {
     post(body) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'usuario': 'gustavo'
+            'usuario': 'ana'
         });
         const url = this.base_url + 'servicio';
         return this.http.post(url, body, { headers });
@@ -55,7 +55,7 @@ export class ServicioService {
     put(body) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'usuario': 'gustavo'
+            'usuario': 'ana'
         });
         const url = this.base_url + 'servicio';
         return this.http.put(url, body, { headers });

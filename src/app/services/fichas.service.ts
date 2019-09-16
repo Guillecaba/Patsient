@@ -24,6 +24,7 @@ export class FichaService {
   }
 
   public get(filters) {
+    console.log(filters)
     let separator = '?'
     let url = this.url_base + 'fichaClinica'
     for (let k in filters) {
@@ -33,6 +34,8 @@ export class FichaService {
       url = url + separator + k + "=" + filters[k]
       separator = "&"
     }
+    console.log(url)
+    console.log()
     return this.http.get(url)
   }
 
@@ -50,13 +53,16 @@ export class FichaService {
 
   public post(data) {
     const body = JSON.stringify(data);
+    console.log(body)
     let url = this.url_base + 'fichaClinica'
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'usuario': 'ana',
 
     });
+    console.log(url)
 
-    return this.http.post(url, data, { headers })
+    return this.http.post(url, body, { headers })
   }
 
   public put(data) {
@@ -67,7 +73,7 @@ export class FichaService {
 
     });
 
-    return this.http.put(url, data, { headers })
+    return this.http.put(url, body, { headers })
   }
 
   public delete(id) {
