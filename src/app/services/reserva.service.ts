@@ -61,7 +61,9 @@ export class ReservaService {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
-        const URL = this.base_url + 'reserva';
+        const URL = this.base_url + 'reserva/';
+        /* const json = JSON.stringify(datos)
+        console.log(json) */
         return this.http.put(URL, datos, { headers });
     }
     crearURL() {

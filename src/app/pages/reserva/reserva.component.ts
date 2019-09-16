@@ -3,6 +3,10 @@ import { ReservaService } from 'src/app/services/reserva.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { DatePipe } from '@angular/common';
 import { Router } from "@angular/router";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SubcategoriaService } from 'src/app/services/subcategoria.service';
+import { CategoriaService } from 'src/app/services/categoria.service';
+import { FichaService } from 'src/app/services/fichas.service';
 
 declare const $: any;
 
@@ -30,13 +34,58 @@ export class ReservaComponent implements OnInit {
   actualClienteNombre: string;
   actualEmpleado: number;
   actualEmpleadoNombre: string;
+
+
+
+
+ /*  Para el modal de nueva ficha */
+  forma;
+
+  actualClienteForm: number;
+  actualClienteNombreForm: string;
+  actualEmpleadoForm: number;
+  actualEmpleadoNombreForm: string;
+
+
+  actualCategoriaDescripcion;
+  actualCategoria;
+
+  actualSubCategoria;
+  actualSubCategoriaDescripcion;
+
+  categorias;
+  subcategorias;
+  reservaFormID;
+
+
   constructor(public reservaService: ReservaService,
     public pacienteService: PacienteService,
     public datePipe: DatePipe,
-    private router: Router) { }
+    private router: Router,
+    private _categoriaService:CategoriaService,
+    private _subcategoriaService:SubcategoriaService,
+    private _fichasService:FichaService) { }
 
   ngOnInit() {
+
+    this.forma = new FormGroup({
+      
+      idEmpleado :new FormControl('',Validators.required),
+      idCliente:new FormControl('',Validators.required),
+     // categoria:new FormControl('',Validators.required),
+      idTipoProducto: new FormControl('',Validators.required),
+      motivoConsulta:new FormControl(''),
+      diagnostico: new FormControl(''),
+      observacion: new FormControl('')
+    })
+
+
     let hoy: string;
+
+    this._categoriaService.all().subscribe((res:any) => {
+      this.categorias = res['lista']
+      console.log(this.categorias)
+    });
     this.pacienteService.getTodos().subscribe((res: any) => (
       this.pacientes = res['lista']
     ));
@@ -122,4 +171,85 @@ export class ReservaComponent implements OnInit {
       });
     }
   }
+
+openNuevaFicha(reserva){
+  this.reservaFormID=reserva['idReserva']
+  this.setClienteForm(reserva.idCliente)
+  this.setEmpleadoForm(reserva.idEmpleado)
+  console.log(reserva)
+  $("#nuevaFicha").modal('show')
+  
+}
+
+closeAdd(send){
+  if(send){
+    console.log(this.forma.value)
+    this._fichasService.post(this.forma.value).subscribe((res)=>{
+      const reservaJSON = {idReserva:this.reservaFormID,flagAsistio:"S"};
+      this.reservaService.putReserva(reservaJSON).subscribe((res)=> {
+console.log(res)
+      })
+     console.log(res)
+    })
+  }
+  //this.nueva_ficha = null
+  $("#nuevaFicha").modal('hide');
+}
+
+
+
+
+
+setClienteForm(cliente: any) {
+  console.log(cliente)
+  this.forma.patchValue({
+    idCliente:{ idPersona: cliente.idPersona}
+      
+    }
+  )
+  console.log(this.forma.value)
+  this.actualClienteForm = cliente['idPersona'];
+  this.actualClienteNombreForm = cliente['nombre'];
+  //console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
+}
+setEmpleadoForm(empleado: any) {
+  
+  console.log(empleado)
+  this.forma.patchValue({
+    idEmpleado:{ idPersona:empleado.idPersona }
+  })
+  console.log(this.forma.value)
+  this.actualEmpleadoForm = empleado['idPersona'];
+  
+  this.actualEmpleadoNombreForm = empleado['nombre'];
+  console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
+}
+
+setCategoriaForm(categoria){
+  this.actualCategoria=categoria['idCategoria']
+  this.actualCategoriaDescripcion= categoria['descripcion'];
+  this._subcategoriaService.get({ejemplo:encodeURIComponent(JSON.stringify({
+    idCategoria:{idCategoria:this.actualCategoria}
+
+  }
+
+  ))}).subscribe(res => {
+    this.subcategorias = res['lista']
+    console.log(this.subcategorias)
+  })
+  
+  
+}
+
+
+setSubcategoriaForm(subCategoria) {
+  this.actualSubCategoria = subCategoria['idTipoProducto'];
+  this.actualSubCategoriaDescripcion = subCategoria['descripcion']
+  
+  this.forma.patchValue({
+    idTipoProducto:{idTipoProducto:this.actualSubCategoria}
+  })
+  console.log(this.forma.value)
+}
+
 }
