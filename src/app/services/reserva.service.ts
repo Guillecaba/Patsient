@@ -62,6 +62,8 @@ export class ReservaService {
             'Content-Type': 'application/json'
         });
         const URL = this.base_url + 'reserva/';
+        /* const json = JSON.stringify(datos)
+        console.log(json) */
         return this.http.put(URL, datos, { headers });
     }
     crearURL() {
