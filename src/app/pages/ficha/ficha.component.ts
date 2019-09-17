@@ -7,6 +7,7 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 import { SubcategoriaService } from 'src/app/services/subcategoria.service';
 import { ThrowStmt } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ServicioService } from 'src/app/services/servicio.service';
 
 
 declare const $: any;
@@ -97,6 +98,10 @@ export class FichaComponent implements OnInit {
 
   verDetalle;
 
+  servicios;
+
+  servicioDetalle;
+
 
   
 
@@ -104,7 +109,7 @@ export class FichaComponent implements OnInit {
   private orderDir = null;
 
   
-  constructor( public _pacienteService: PacienteService,public _fichasService:FichaService, public _categoriaService: CategoriaService, public _subcategoriaService:SubcategoriaService, public datePipe: DatePipe) { }
+  constructor( public _pacienteService: PacienteService,public _fichasService:FichaService, public _categoriaService: CategoriaService, public _subcategoriaService:SubcategoriaService,public _servicioService:ServicioService, public datePipe: DatePipe) { }
 
   ngOnInit() {
     this.forma = new FormGroup({
@@ -307,7 +312,18 @@ openDetalle(detalle){
 openEdit(detalle){
   this.observacion=detalle.observacion;
   this.verDetalle=detalle
-  $("#editarModal").modal('show');
+  console.log(this.verDetalle)
+  this._servicioService.get({ejemplo:encodeURIComponent(JSON.stringify({
+    idFichaClinica:{idFichaClinica:this.verDetalle['idFichaClinica']}
+
+  }
+
+  ))}).subscribe((res)=> {
+    this.servicios = res['lista']
+    console.log(this.servicios)
+    $("#editarModal").modal('show');
+  })
+ 
 }
 
 closeEdit(send){
@@ -326,6 +342,21 @@ closeEdit(send){
   this.verDetalle=null;
   this.observacion =null;
   $("#editarModal").modal('hide');
+}
+
+openServicioDetalle(servicio){
+  
+  console.log(servicio)
+  this.servicioDetalle = servicio;
+  console.log(this.servicioDetalle)
+  
+  $('#verServicioModal').modal('show');
+  
+}
+
+closeServicioDetalle(){
+  this.servicioDetalle =null;
+  $('#verServicioModal').modal('hide');
 }
 
 

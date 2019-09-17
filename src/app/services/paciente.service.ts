@@ -29,6 +29,7 @@ export class PacienteService {
       url = url + separator + k + "=" + filters[k]
       separator = "&"
     }
+    console.log(url)
     return this.http.get(url)
   }
 

@@ -60,6 +60,21 @@ export class ServicioService {
         const url = this.base_url + 'servicio';
         return this.http.put(url, body, { headers });
     }
+
+
+    public get(filters) {
+        let separator = '?'
+        let url = this.base_url + "servicio"
+        for (let k in filters) {
+          if (filters[k] == null) {
+            continue
+          }
+          url = url + separator + k + "=" + filters[k]
+          separator = "&"
+        }
+        return this.http.get(url)
+      }
+
     crearURL() {
         this.urlActual = this.base_url + 'servicio';
         // si existe algun filtro
