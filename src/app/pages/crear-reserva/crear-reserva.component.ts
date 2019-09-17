@@ -5,6 +5,8 @@ import { DatePipe } from '@angular/common';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { Router } from '@angular/router';
 
+declare const $: any;
+
 @Component({
   selector: 'app-crear-reserva',
   templateUrl: './crear-reserva.component.html',
@@ -26,6 +28,18 @@ export class CrearReservaComponent implements OnInit {
 
   soloDisponibles = false;
   sePuedeBuscar = false;
+
+  // Para el modal buscar empleado
+  empNombre: String = null;
+  empApellido: String = null;
+  empSeleccionado = null;
+  empCantidad: Number = 0;
+
+  // Para el modal buscar paciente
+  pacNombre: String = null;
+  pacApellido: String = null;
+  pacSeleccionado = null;
+  pacCantidad: Number = 0;
 
   constructor(public reservaService: ReservaService,
     public pacienteService: PacienteService,
@@ -109,5 +123,70 @@ export class CrearReservaComponent implements OnInit {
         this.router.navigateByUrl('/reservas');
       }
     });
+  }
+
+  openEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this.pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal').modal('show');
+    });
+  }
+
+  buscarEmpleado() {
+    this.pacienteService.filtrarEmpleados(this.empNombre, this.empApellido).subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+    });
+  }
+
+  selectEmpleado(empleado) {
+    this.empSeleccionado = empleado['idPersona'];
+    this.emplNombre = empleado['nombre'];
+    this.empl = this.empSeleccionado;
+    $('#empleadoModal').modal('hide');
+  }
+
+  closeEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    $('#empleadoModal').modal('hide');
+  }
+
+  openPaciente() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    this.pacienteService.filtrarPacientes().subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+      $('#pacienteModal').modal('show');
+    });
+  }
+
+  buscarPaciente() {
+    this.pacienteService.filtrarPacientes(this.pacNombre, this.pacApellido).subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+    });
+  }
+
+  selectPaciente(paciente) {
+    this.pacSeleccionado = paciente['idPersona'];
+    this.cliNombre = paciente['nombre'];
+    this.cli = this.pacSeleccionado;
+    this.pacSeleccionado = null;
+    $('#pacienteModal').modal('hide');
+  }
+
+  closePaciente() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    $('#pacienteModal').modal('hide');
   }
 }

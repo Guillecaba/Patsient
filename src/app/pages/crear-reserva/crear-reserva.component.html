@@ -20,15 +20,19 @@
 
               <div class="col-md-4">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                  <!-- <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <span *ngIf="emplNombre">{{emplNombre}}</span>
                     <span *ngIf="!emplNombre">Empleado</span>
+                  </button> -->
+                  <button type="button" class="btn btn-danger dropdown-toggle" (click)="openEmpleado()">
+                    <span *ngIf="emplNombre">{{emplNombre}}</span>
+                    <span *ngIf="!emplNombre">Empleado</span>
                   </button>
-                  <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                  <!-- <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
                     <a *ngFor="let empleado of empleados" class="dropdown-item"
                       (click)="setEmpleado(empleado)">{{empleado['nombreCompleto']}}</a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-md-4">
@@ -76,16 +80,20 @@
             <div class="row mt-4">
               <div class="col-md-12">
                 <div class="btn-group">
-                  <button style="max-width:150px; overflow-x: hidden;" type="button"
+                  <!-- <button style="max-width:150px; overflow-x: hidden;" type="button"
                     class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <span *ngIf="cliNombre">{{cliNombre}}</span>
                     <span *ngIf="!cliNombre">Cliente</span>
+                  </button> -->
+                  <button type="button" class="btn btn-danger dropdown-toggle" (click)="openPaciente()">
+                    <span *ngIf="cliNombre">{{cliNombre}}</span>
+                    <span *ngIf="!cliNombre">Cliente</span>
                   </button>
-                  <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
+                  <!-- <div class="dropdown-menu" style="max-height: 450px; overflow-y: scroll">
                     <a *ngFor="let paciente of pacientes" class="dropdown-item"
                       (click)="setCliente(paciente)">{{paciente['nombreCompleto']}}</a>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="btn-group">
                   <button *ngIf="elegido && cli && elegido.idCliente == null" class="btn btn-primary"
@@ -100,6 +108,92 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buscar Empleado -->
+
+<div class="modal fade" id="empleadoModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccionar empleado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEmpleado()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="buscarEmpleado()" type="submit">Buscar</button>
+        </div>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let empleado of empleados" (click)="selectEmpleado(empleado)">
+            {{ empleado["nombreCompleto"] }}</mat-list-item>
+        </mat-nav-list>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeEmpleado()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buscar Paciente -->
+
+<div class="modal fade" id="pacienteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccionar cliente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closePaciente()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="pacNombre">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="pacApellido">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="buscarPaciente()" type="submit">Buscar</button>
+        </div>
+        <mat-nav-list style="max-height: 300px; overflow-y: scroll">
+          <mat-list-item *ngFor="let paciente of pacientes" (click)="selectPaciente(paciente)">
+            {{ paciente["nombreCompleto"] }}</mat-list-item>
+        </mat-nav-list>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closePaciente()">Cerrar</button>
         </div>
       </div>
     </div>
