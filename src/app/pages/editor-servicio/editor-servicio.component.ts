@@ -6,6 +6,7 @@ import { FichaService } from 'src/app/services/fichas.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Router } from '@angular/router';
 
+declare const $: any;
 
 @Component({
   selector: 'app-editor-servicio',
@@ -31,6 +32,18 @@ export class EditorServicioComponent implements OnInit {
   actualClienteNombre: string;
   actualEmpleado: number;
   actualEmpleadoNombre: string;
+
+  // Para el modal buscar empleado
+  empNombre: String = null;
+  empApellido: String = null;
+  empSeleccionado = null;
+  empCantidad: Number = 0;
+
+  // Para el modal buscar paciente
+  pacNombre: String = null;
+  pacApellido: String = null;
+  pacSeleccionado = null;
+  pacCantidad: Number = 0;
 
   // solo para edicion
   categoriaNombre: string;
@@ -137,6 +150,79 @@ export class EditorServicioComponent implements OnInit {
       });
     }
 
+  }
+
+  openEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this.pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal').modal('show');
+    });
+  }
+
+  buscarEmpleado() {
+    this.pacienteService.filtrarEmpleados(this.empNombre, this.empApellido).subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+    });
+  }
+
+  selectEmpleado(empleado) {
+    this.empSeleccionado = empleado['idPersona'];
+    this.actualEmpleadoNombre = empleado['nombre'];
+    this.actualEmpleado = this.empSeleccionado;
+    this.actualFicha = null;
+    this.fichaService.getFichasR(this.actualCliente, this.actualEmpleado).subscribe((res: any) => (
+      this.fichas = res['lista']
+    ));
+    $('#empleadoModal').modal('hide');
+  }
+
+  closeEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    $('#empleadoModal').modal('hide');
+  }
+
+  openPaciente() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    this.pacienteService.filtrarPacientes().subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+      $('#pacienteModal').modal('show');
+    });
+  }
+
+  buscarPaciente() {
+    this.pacienteService.filtrarPacientes(this.pacNombre, this.pacApellido).subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+    });
+  }
+
+  selectPaciente(paciente) {
+    this.pacSeleccionado = paciente['idPersona'];
+    this.actualClienteNombre = paciente['nombre'];
+    this.actualCliente = this.pacSeleccionado;
+    this.pacSeleccionado = null;
+    this.actualFicha = null;
+    this.fichaService.getFichasR(this.actualCliente, this.actualEmpleado).subscribe((res: any) => (
+      this.fichas = res['lista']
+    ));
+    $('#pacienteModal').modal('hide');
+  }
+
+  closePaciente() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    $('#pacienteModal').modal('hide');
   }
 
 }
