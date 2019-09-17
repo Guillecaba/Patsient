@@ -16,14 +16,15 @@ export class LoginService {
 
   login(usuario) {
     let coincidencias;
-    const query = { email: usuario };
-    // const query = { email: usuario, soloUsuariosDelSistema: true };
+    // const query = { email: usuario };
+    const query = { usuarioLogin: usuario, soloUsuariosDelSistema: true };
     const convertido = JSON.stringify(query);
     return this.http.get(this.URL + '?ejemplo=' + encodeURIComponent(convertido));
   }
 
   logout() {
     localStorage.removeItem('logged');
+    localStorage.removeItem('currentUser');
   }
 
 }
