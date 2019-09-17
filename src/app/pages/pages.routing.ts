@@ -42,7 +42,7 @@ export const PagesRoutes: Routes = [
             { path: 'ficha', component: FichaComponent, canActivate: [AuthGuard] },
             { path: 'detalleservicio/:id', component: DetallesServicioComponent, canActivate: [AuthGuard] },
             { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard] },
-            { path: 'login', component: LoginComponent, canActivate: [AuthGuard] }
+            { path: 'login', component: LoginComponent }
         ]
     },
 ];
