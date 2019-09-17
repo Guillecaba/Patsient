@@ -35,10 +35,20 @@ export class ReservaComponent implements OnInit {
   actualEmpleado: number;
   actualEmpleadoNombre: string;
 
+  // Para el modal buscar empleado
+  empNombre: String = null;
+  empApellido: String = null;
+  empSeleccionado = null;
+  empCantidad: Number = 0;
+
+  // Para el modal buscar paciente
+  pacNombre: String = null;
+  pacApellido: String = null;
+  pacSeleccionado = null;
+  pacCantidad: Number = 0;
 
 
-
- /*  Para el modal de nueva ficha */
+  /*  Para el modal de nueva ficha */
   forma;
 
   actualClienteForm: number;
@@ -62,19 +72,19 @@ export class ReservaComponent implements OnInit {
     public pacienteService: PacienteService,
     public datePipe: DatePipe,
     private router: Router,
-    private _categoriaService:CategoriaService,
-    private _subcategoriaService:SubcategoriaService,
-    private _fichasService:FichaService) { }
+    private _categoriaService: CategoriaService,
+    private _subcategoriaService: SubcategoriaService,
+    private _fichasService: FichaService) { }
 
   ngOnInit() {
 
     this.forma = new FormGroup({
-      
-      idEmpleado :new FormControl('',Validators.required),
-      idCliente:new FormControl('',Validators.required),
-     // categoria:new FormControl('',Validators.required),
-      idTipoProducto: new FormControl('',Validators.required),
-      motivoConsulta:new FormControl(''),
+
+      idEmpleado: new FormControl('', Validators.required),
+      idCliente: new FormControl('', Validators.required),
+      // categoria:new FormControl('',Validators.required),
+      idTipoProducto: new FormControl('', Validators.required),
+      motivoConsulta: new FormControl(''),
       diagnostico: new FormControl(''),
       observacion: new FormControl('')
     })
@@ -82,16 +92,18 @@ export class ReservaComponent implements OnInit {
 
     let hoy: string;
 
-    this._categoriaService.all().subscribe((res:any) => {
-      this.categorias = res['lista']
-      console.log(this.categorias)
+    this._categoriaService.all().subscribe((res: any) => {
+      this.categorias = res['lista'];
+      console.log(this.categorias);
     });
-    this.pacienteService.getTodos().subscribe((res: any) => (
-      this.pacientes = res['lista']
-    ));
-    this.pacienteService.getTodosEmpleados().subscribe((res: any) => (
-      this.empleados = res['lista']
-    ));
+    this.pacienteService.getTodos().subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+    });
+    this.pacienteService.getTodosEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+    });
     hoy = new Date().toJSON('yyyy/MM/dd').substr(0, 10);
     hoy = hoy.substr(0, 4) + hoy.substr(5, 2) + hoy.substr(8, 2);
     console.log(hoy);
@@ -172,84 +184,148 @@ export class ReservaComponent implements OnInit {
     }
   }
 
-openNuevaFicha(reserva){
-  this.reservaFormID=reserva['idReserva']
-  this.setClienteForm(reserva.idCliente)
-  this.setEmpleadoForm(reserva.idEmpleado)
-  console.log(reserva)
-  $("#nuevaFicha").modal('show')
-  
-}
+  openNuevaFicha(reserva) {
+    this.reservaFormID = reserva['idReserva']
+    this.setClienteForm(reserva.idCliente)
+    this.setEmpleadoForm(reserva.idEmpleado)
+    console.log(reserva)
+    $("#nuevaFicha").modal('show')
 
-closeAdd(send){
-  if(send){
-    console.log(this.forma.value)
-    this._fichasService.post(this.forma.value).subscribe((res)=>{
-      const reservaJSON = {idReserva:this.reservaFormID,flagAsistio:"S"};
-      this.reservaService.putReserva(reservaJSON).subscribe((res)=> {
-console.log(res)
+  }
+
+  closeAdd(send) {
+    if (send) {
+      console.log(this.forma.value)
+      this._fichasService.post(this.forma.value).subscribe((res) => {
+        const reservaJSON = { idReserva: this.reservaFormID, flagAsistio: "S" };
+        this.reservaService.putReserva(reservaJSON).subscribe((res) => {
+          console.log(res)
+        })
+        console.log(res)
       })
-     console.log(res)
-    })
-  }
-  //this.nueva_ficha = null
-  $("#nuevaFicha").modal('hide');
-}
-
-
-
-
-
-setClienteForm(cliente: any) {
-  console.log(cliente)
-  this.forma.patchValue({
-    idCliente:{ idPersona: cliente.idPersona}
-      
     }
-  )
-  console.log(this.forma.value)
-  this.actualClienteForm = cliente['idPersona'];
-  this.actualClienteNombreForm = cliente['nombre'];
-  //console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
-}
-setEmpleadoForm(empleado: any) {
-  
-  console.log(empleado)
-  this.forma.patchValue({
-    idEmpleado:{ idPersona:empleado.idPersona }
-  })
-  console.log(this.forma.value)
-  this.actualEmpleadoForm = empleado['idPersona'];
-  
-  this.actualEmpleadoNombreForm = empleado['nombre'];
-  console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
-}
+    //this.nueva_ficha = null
+    $("#nuevaFicha").modal('hide');
+  }
 
-setCategoriaForm(categoria){
-  this.actualCategoria=categoria['idCategoria']
-  this.actualCategoriaDescripcion= categoria['descripcion'];
-  this._subcategoriaService.get({ejemplo:encodeURIComponent(JSON.stringify({
-    idCategoria:{idCategoria:this.actualCategoria}
+  openEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this.pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal').modal('show');
+    });
+  }
+
+  buscarEmpleado() {
+    this.pacienteService.filtrarEmpleados(this.empNombre, this.empApellido).subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+    });
+  }
+
+  selectEmpleado(empleado) {
+    this.empSeleccionado = empleado['idPersona'];
+    this.actualEmpleadoNombre = empleado['nombre'];
+    this.actualEmpleado = this.empSeleccionado;
+    $('#empleadoModal').modal('hide');
+  }
+
+  closeEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    $('#empleadoModal').modal('hide');
+  }
+
+  openPaciente() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    this.pacienteService.filtrarPacientes().subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+      $('#pacienteModal').modal('show');
+    });
+  }
+
+  buscarPaciente() {
+    this.pacienteService.filtrarPacientes(this.pacNombre, this.pacApellido).subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+    });
+  }
+
+  selectPaciente(paciente) {
+    this.pacSeleccionado = paciente['idPersona'];
+    this.actualClienteNombre = paciente['nombre'];
+    this.actualCliente = this.pacSeleccionado;
+    this.pacSeleccionado = null;
+    $('#pacienteModal').modal('hide');
+  }
+
+  closePaciente() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    $('#pacienteModal').modal('hide');
+  }
+
+
+  setClienteForm(cliente: any) {
+    console.log(cliente)
+    this.forma.patchValue({
+      idCliente: { idPersona: cliente.idPersona }
+
+    }
+    )
+    console.log(this.forma.value)
+    this.actualClienteForm = cliente['idPersona'];
+    this.actualClienteNombreForm = cliente['nombre'];
+    //console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
+  }
+  setEmpleadoForm(empleado: any) {
+
+    console.log(empleado)
+    this.forma.patchValue({
+      idEmpleado: { idPersona: empleado.idPersona }
+    })
+    console.log(this.forma.value)
+    this.actualEmpleadoForm = empleado['idPersona'];
+
+    this.actualEmpleadoNombreForm = empleado['nombre'];
+    console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
+  }
+
+  setCategoriaForm(categoria) {
+    this.actualCategoria = categoria['idCategoria']
+    this.actualCategoriaDescripcion = categoria['descripcion'];
+    this._subcategoriaService.get({
+      ejemplo: encodeURIComponent(JSON.stringify({
+        idCategoria: { idCategoria: this.actualCategoria }
+
+      }
+
+      ))
+    }).subscribe(res => {
+      this.subcategorias = res['lista']
+      console.log(this.subcategorias)
+    })
+
 
   }
 
-  ))}).subscribe(res => {
-    this.subcategorias = res['lista']
-    console.log(this.subcategorias)
-  })
-  
-  
-}
 
+  setSubcategoriaForm(subCategoria) {
+    this.actualSubCategoria = subCategoria['idTipoProducto'];
+    this.actualSubCategoriaDescripcion = subCategoria['descripcion']
 
-setSubcategoriaForm(subCategoria) {
-  this.actualSubCategoria = subCategoria['idTipoProducto'];
-  this.actualSubCategoriaDescripcion = subCategoria['descripcion']
-  
-  this.forma.patchValue({
-    idTipoProducto:{idTipoProducto:this.actualSubCategoria}
-  })
-  console.log(this.forma.value)
-}
+    this.forma.patchValue({
+      idTipoProducto: { idTipoProducto: this.actualSubCategoria }
+    })
+    console.log(this.forma.value)
+  }
 
 }

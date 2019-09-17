@@ -40,6 +40,7 @@ import { ServicioComponent } from './servicio/servicio.component';
 import { EditorServicioComponent } from './editor-servicio/editor-servicio.component';
 import { FichaComponent } from './ficha/ficha.component';
 import { DetallesServicioComponent } from './detalles-servicio/detalles-servicio.component';
+import { MatListModule } from '@angular/material/list';
 
 /* import { MAT_DATE_FORMATS } from '@angular/material';
   import { MomentDateAdapter } from '@angular/material-moment-adapter'; */
@@ -82,7 +83,8 @@ export const MY_FORMATS = {
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    MatListModule
   ],
   declarations: [
     DashboardComponent,

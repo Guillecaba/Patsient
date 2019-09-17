@@ -43,6 +43,45 @@ export class PacienteService {
     return this.http.get(url);
   }
 
+  public filtrarEmpleados(nombre?, apellido?) {
+    let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc&like=S&ejemplo=';
+    if (nombre !== null && apellido !== null) {
+      const query = { soloUsuariosDelSistema: true, nombre: nombre, apellido: apellido };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    } else if (nombre !== null && apellido === null) {
+      const query = { soloUsuariosDelSistema: true, nombre: nombre };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    } else if (nombre === null && apellido !== null) {
+      const query = { soloUsuariosDelSistema: true, apellido: apellido };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    } else {
+      const query = { soloUsuariosDelSistema: true };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    }
+    return this.http.get(url);
+  }
+
+  public filtrarPacientes(nombre?, apellido?) {
+    let url = this.url_base + 'persona?orderBy=apellido&orderDir=asc&like=S&ejemplo=';
+    if (nombre !== null && apellido !== null) {
+      const query = { nombre: nombre, apellido: apellido };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    } else if (nombre !== null && apellido === null) {
+      const query = { nombre: nombre };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    } else if (nombre === null && apellido !== null) {
+      const query = { apellido: apellido };
+      const convertido = JSON.stringify(query);
+      url = url + encodeURIComponent(convertido);
+    }
+    return this.http.get(url);
+  }
 
   public post(data) {
     const body = JSON.stringify(data);
