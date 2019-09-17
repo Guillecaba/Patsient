@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toggleButton: any;
     private sidebarVisible: boolean;
     private nativeElement: Node;
-    public user: String;
+    public user: string;
     public returnURL;
 
     constructor(private element: ElementRef, public _loginService: LoginService, public router: Router, private route: ActivatedRoute) {
@@ -65,6 +65,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             const coincidencias = res['totalDatos'];
             if (coincidencias > 0) {
                 localStorage.setItem('logged', 'true');
+                localStorage.setItem('currentUser', res['lista'][0].nombreCompleto);
+
                 if (this.returnURL == null) {
                     this.router.navigate(['']);
                 } else {

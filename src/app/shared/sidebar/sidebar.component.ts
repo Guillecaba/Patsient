@@ -22,29 +22,28 @@ export interface ChildrenItems {
 
 //Menu Items
 export const ROUTES: RouteInfo[] = [{
-        path: '/',
-        title: 'Reserva',
-        type: 'link',
-        icontype: 'dashboard'
-    },{
-    
-        path: '/categorias',
-        title: 'Categorías',
-        type: 'link',
-        icontype: 'bookmark'
-    },
-    {
-        path: '/subcategorias',
-        title: 'Subcategorías',
-        type: 'link',
-        icontype: 'bookmarks'
-    },
-    {
-        path: '/presentacion',
-        title: 'Presentación',
-        type: 'link',
-        icontype: 'branding_watermark'
-    },
+    path: '/',
+    title: 'Reserva',
+    type: 'link',
+    icontype: 'dashboard'
+}, {
+    path: '/categorias',
+    title: 'Categorías',
+    type: 'link',
+    icontype: 'bookmark'
+},
+{
+    path: '/subcategorias',
+    title: 'Subcategorías',
+    type: 'link',
+    icontype: 'bookmarks'
+},
+{
+    path: '/presentacion',
+    title: 'Presentación',
+    type: 'link',
+    icontype: 'branding_watermark'
+},
 {
     path: '/paciente',
     title: 'Paciente',
@@ -96,6 +95,7 @@ export const ROUTES: RouteInfo[] = [{
 
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
+    public usuario: string;
     ps: any;
     isMobileMenu() {
         if ($(window).width() > 991) {
@@ -106,6 +106,7 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit() {
         this.menuItems = ROUTES.filter(menuItem => menuItem);
+        this.usuario = localStorage.getItem('currentUser');
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);
