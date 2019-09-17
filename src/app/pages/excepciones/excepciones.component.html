@@ -35,10 +35,12 @@
                         Filtrar por día
                       </button> -->
                   <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado'
-                      placeholder="Inserte el ID del Doctor" aria-label="Search" name="empleado">
-                    <!-- <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscarEmpleado()"
-                          type="submit">Buscar</button> -->
+                    <!-- <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado'
+                      placeholder="Inserte el ID del Doctor" aria-label="Search" name="empleado"> -->
+                    <button type="button" class="btn btn-danger dropdown-toggle" (click)="openEmpleado()">
+                      <span *ngIf="empleado">{{empleadoNombre}}</span>
+                      <span *ngIf="!empleado">Filtrar por Empleado</span>
+                    </button>
                   </form>
                   <form class="form-inline" style="margin-left: 10px">
                     <!-- <input class="form-control mr-sm-2" type="date" [(ngModel)]='fecha' placeholder="Inserte la fecha"
@@ -49,6 +51,9 @@
                     <mat-datepicker #picker></mat-datepicker>
                     <button class="btn btn-outline-success my-2 my-sm-0" (click)="filtrar()"
                       type="submit">Buscar</button>
+                    <div class="btn-group">
+                      <button class="btn btn-primary" (click)="limpiarFiltros()" type="submit">Limpiar</button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -150,15 +155,19 @@
           </mat-form-field>
         </div>
         <div class="form-group">
-          <mat-form-field>
-            <!-- <input matInput type="number" placeholder="ID del empleado"
-              [(ngModel)]="nueva_excepcion.idEmpleado.idPersona"> -->
+          <!-- <mat-form-field>
             <mat-select placeholder="Empleado" [(ngModel)]="nueva_excepcion.idEmpleado.idPersona">
               <mat-option *ngFor="let empleado of empleados" [value]="empleado.idPersona">{{empleado.idPersona}}.
                 {{empleado.nombreCompleto}}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
+          <!-- <input class="form-control mr-sm-2" type="search" [(ngModel)]='empleado'
+                placeholder="Inserte el ID del Doctor" aria-label="Search" name="empleado"> -->
+          <button type="button" class="btn btn-danger dropdown-toggle" (click)="openEmpleado2()">
+            <span *ngIf="nueva_excepcion.idEmpleado.idPersona">{{empNuevo}}</span>
+            <span *ngIf="!nueva_excepcion.idEmpleado.idPersona">Seleccione Empleado</span>
+          </button>
         </div>
         <div class="form-group">
           <mat-form-field>
@@ -219,15 +228,19 @@
           </mat-form-field>
         </div>
         <div class="form-group">
-          <mat-form-field>
-            <!-- <input matInput type="number" placeholder="ID del empleado"
+          <!-- <mat-form-field> -->
+          <!-- <input matInput type="number" placeholder="ID del empleado"
                 [(ngModel)]="edit_excepcion.idEmpleado.idPersona"> -->
-            <mat-select placeholder="Empleado" [(ngModel)]="edit_excepcion.idEmpleado.idPersona">
+          <!-- <mat-select placeholder="Empleado" [(ngModel)]="edit_excepcion.idEmpleado.idPersona">
               <mat-option *ngFor="let empleado of empleados" [value]="empleado.idPersona">{{empleado.idPersona}}.
                 {{empleado.nombreCompleto}}
               </mat-option>
-            </mat-select>
-          </mat-form-field>
+            </mat-select> -->
+          <!-- </mat-form-field> -->
+          <button type="button" class="btn btn-danger dropdown-toggle" (click)="openEmpleado3()">
+            <span *ngIf="edit_excepcion.idEmpleado.idPersona">{{empEdit}}</span>
+            <span *ngIf="!edit_excepcion.idEmpleado.idPersona">Seleccione Empleado</span>
+          </button>
         </div>
         <div class="form-group">
           <mat-form-field>
@@ -265,6 +278,135 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Cerrar</button>
         <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buscar empleado -->
+
+<div class="modal fade" id="empleadoModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccionar empleado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEmpleado()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="buscarEmpleadoModal()" type="submit">Buscar</button>
+        </div>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let empleado of empleados" (click)="selectEmpleado(empleado)">
+            {{ empleado["nombreCompleto"] }}</mat-list-item>
+        </mat-nav-list>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeEmpleado()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buscar empleado para nuevo -->
+
+<div class="modal fade" id="empleadoModal2" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccionar empleado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEmpleado2()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="buscarEmpleadoModal()" type="submit">Buscar</button>
+        </div>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let empleado of empleados" (click)="selectEmpleado2(empleado)">
+            {{ empleado["nombreCompleto"] }}</mat-list-item>
+        </mat-nav-list>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeEmpleado2()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buscar empleado para edit -->
+
+<div class="modal fade" id="empleadoModal3" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccionar empleado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEmpleado3()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="buscarEmpleadoModal()" type="submit">Buscar</button>
+        </div>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let empleado of empleados" (click)="selectEmpleado3(empleado)">
+            {{ empleado["nombreCompleto"] }}</mat-list-item>
+        </mat-nav-list>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeEmpleado3()">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>

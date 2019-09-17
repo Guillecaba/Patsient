@@ -3,6 +3,7 @@ import { TableData } from '../../md/md-table/md-table.component';
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ExcepcionService } from 'src/app/services/excepcion.service';
 import { PageEvent } from '@angular/material/paginator';
+import { PacienteService } from 'src/app/services/paciente.service';
 
 declare const $: any;
 
@@ -13,8 +14,11 @@ declare const $: any;
 })
 export class ExcepcionesComponent implements OnInit {
   public tableData1: TableData = null;
-  public empleados: TableData = null;
-  public empleado = '';
+  public empleados;
+  public empleado = null;
+  public empleadoNombre = '';
+  public empNuevo = null;
+  public empEdit = null;
   public fecha: Date = null;
   public fechaCadena = null;
   public inicio = 0;
@@ -58,7 +62,20 @@ export class ExcepcionesComponent implements OnInit {
     },
     intervaloMinutos: null,
   };
-  constructor(public _excepcionService: ExcepcionService) { }
+
+  // Para el modal buscar empleado
+  empNombre: String = null;
+  empApellido: String = null;
+  empSeleccionado = null;
+  empCantidad: Number = 0;
+
+  // Para el modal buscar paciente
+  pacNombre: String = null;
+  pacApellido: String = null;
+  pacSeleccionado = null;
+  pacCantidad: Number = 0;
+
+  constructor(public _excepcionService: ExcepcionService, public _pacienteService: PacienteService) { }
 
   ngOnInit() {
     this.getData();
@@ -210,6 +227,7 @@ export class ExcepcionesComponent implements OnInit {
 
   openEdit(to_edit) {
     this.edit_excepcion = JSON.parse(JSON.stringify(to_edit));
+    this.empEdit = this.edit_excepcion.idEmpleado.nombreCompleto;
     $('#editModal').modal('show');
   }
 
@@ -275,5 +293,100 @@ export class ExcepcionesComponent implements OnInit {
       intervaloMinutos: null,
     };
     $('#deleteModal').modal('hide');
+  }
+
+  openEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this._pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal').modal('show');
+    });
+  }
+
+  openEmpleado2() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this.empNuevo = null;
+    this._pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal2').modal('show');
+    });
+  }
+
+  openEmpleado3() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this._pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal3').modal('show');
+    });
+  }
+
+  buscarEmpleadoModal() {
+    this._pacienteService.filtrarEmpleados(this.empNombre, this.empApellido).subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+    });
+  }
+
+  selectEmpleado(empleado) {
+    this.empSeleccionado = empleado['idPersona'];
+    this.empleadoNombre = empleado['nombreCompleto'];
+    this.empleado = this.empSeleccionado;
+    /* this.nueva_excepcion.idEmpleado.idPersona = this.empSeleccionado;
+    this.edit_excepcion.idEmpleado.idPersona = this.empSeleccionado; */
+    this.getData();
+    $('#empleadoModal').modal('hide');
+  }
+
+  selectEmpleado2(empleado) {
+    this.nueva_excepcion.idEmpleado.idPersona = empleado['idPersona'];
+    this.empNuevo = empleado['nombreCompleto'];
+    $('#empleadoModal2').modal('hide');
+  }
+
+  selectEmpleado3(empleado) {
+    this.edit_excepcion.idEmpleado.idPersona = empleado['idPersona'];
+    this.empEdit = empleado['nombreCompleto'];
+    $('#empleadoModal3').modal('hide');
+  }
+
+  closeEmpleado() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    $('#empleadoModal').modal('hide');
+  }
+
+  closeEmpleado2() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this.empNuevo = null;
+    $('#empleadoModal2').modal('hide');
+  }
+
+  closeEmpleado3() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this.empEdit = null;
+    $('#empleadoModal3').modal('hide');
+  }
+
+  limpiarFiltros() {
+    this.empSeleccionado = null;
+    this.empleadoNombre = null;
+    this.empleado = null;
+    this.fecha = null;
+    this.fechaCadena = null;
+    this.getData();
   }
 }
