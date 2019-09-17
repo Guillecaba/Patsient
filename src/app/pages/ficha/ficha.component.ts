@@ -8,6 +8,7 @@ import { SubcategoriaService } from 'src/app/services/subcategoria.service';
 import { ThrowStmt } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ServicioService } from 'src/app/services/servicio.service';
+import {Router} from '@angular/router';
 
 
 declare const $: any;
@@ -109,7 +110,7 @@ export class FichaComponent implements OnInit {
   private orderDir = null;
 
   
-  constructor( public _pacienteService: PacienteService,public _fichasService:FichaService, public _categoriaService: CategoriaService, public _subcategoriaService:SubcategoriaService,public _servicioService:ServicioService, public datePipe: DatePipe) { }
+  constructor(public router:Router, public _pacienteService: PacienteService,public _fichasService:FichaService, public _categoriaService: CategoriaService, public _subcategoriaService:SubcategoriaService,public _servicioService:ServicioService, public datePipe: DatePipe) { }
 
   ngOnInit() {
     this.forma = new FormGroup({
@@ -357,6 +358,13 @@ openServicioDetalle(servicio){
 closeServicioDetalle(){
   this.servicioDetalle =null;
   $('#verServicioModal').modal('hide');
+}
+
+openEditarServicio(servicio){
+  $('#editarModal').modal('hide');
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove()
+ this.router.navigate(['editor-servicio', servicio.idServicio]);
 }
 
 
