@@ -10,19 +10,19 @@ declare const $: any;
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
- 
+
   public ngOnInit() {
-     
-   
-console.log('Dashboard mounted')
-      
-      
+    console.log(localStorage.getItem('logged'));
 
-      
+    console.log('Dashboard mounted')
 
-      
-   }
-   ngAfterViewInit() {
-       
-   }
+
+
+
+
+
+  }
+  ngAfterViewInit() {
+
+  }
 }

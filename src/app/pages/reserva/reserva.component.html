@@ -97,6 +97,7 @@
                     <th>Hora Fin</th>
                     <th>Profesional</th>
                     <th>Cliente</th>
+                    <th>Asistencia</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -107,6 +108,7 @@
                     <td>{{reserva.horaFin}} </td>
                     <td>{{reserva.idEmpleado['nombre'] + ' ' + reserva.idEmpleado['apellido']}}</td>
                     <td>{{reserva.idCliente['nombre'] + ' ' + reserva.idCliente['apellido']}}</td>
+                    <td>{{reserva.flagAsistio? reserva.flagAsistio : 'Sin Marcar'}}</td>
                     <td>
                       <span>
                         <button class="btn btn-danger btn-sm my-2 my-sm-0"

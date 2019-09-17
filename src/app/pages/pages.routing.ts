@@ -27,21 +27,22 @@ export const PagesRoutes: Routes = [
         component: PagesComponent,
 
         children: [
-            { path: '', component: DashboardComponent },
-            { path: 'categorias', component: CategoriaComponent },
-            { path: 'subcategorias', component: SubcategoriaComponent },
-                { path: 'presentacion', component:PresentacionComponent },
-            { path: 'paciente', component: PacienteComponent },
+            { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+            { path: 'categorias', component: CategoriaComponent, canActivate: [AuthGuard] },
+            { path: 'subcategorias', component: SubcategoriaComponent, canActivate: [AuthGuard] },
+            { path: 'presentacion', component: PresentacionComponent, canActivate: [AuthGuard] },
+            { path: 'paciente', component: PacienteComponent, canActivate: [AuthGuard] },
             { path: 'horarios', component: PersonaPorDiaComponent, canActivate: [AuthGuard] },
             { path: 'excepciones', component: ExcepcionesComponent, canActivate: [AuthGuard] },
-            { path: 'reservas', component: ReservaComponent },
-            { path: 'crear-reserva', component: CrearReservaComponent },
-            { path: 'servicios', component: ServicioComponent },
-            { path: 'editor-servicio', component: EditorServicioComponent },
-            { path: 'editor-servicio/:id', component: EditorServicioComponent },
-            { path: 'ficha', component: FichaComponent },
-            { path: 'detalleservicio/:id', component: DetallesServicioComponent },
-                { path: 'reportes', component:ReportesComponent}
+            { path: 'reservas', component: ReservaComponent, canActivate: [AuthGuard] },
+            { path: 'crear-reserva', component: CrearReservaComponent, canActivate: [AuthGuard] },
+            { path: 'servicios', component: ServicioComponent, canActivate: [AuthGuard] },
+            { path: 'editor-servicio', component: EditorServicioComponent, canActivate: [AuthGuard] },
+            { path: 'editor-servicio/:id', component: EditorServicioComponent, canActivate: [AuthGuard] },
+            { path: 'ficha', component: FichaComponent, canActivate: [AuthGuard] },
+            { path: 'detalleservicio/:id', component: DetallesServicioComponent, canActivate: [AuthGuard] },
+            { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard] },
+            { path: 'login', component: LoginComponent, canActivate: [AuthGuard] }
         ]
     },
 ];

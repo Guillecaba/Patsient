@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { SubcategoriaService } from 'src/app/services/subcategoria.service';
+import { ServicioService } from 'src/app/services/servicio.service';
 import { ThrowStmt } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ServicioService } from 'src/app/services/servicio.service';
@@ -17,13 +18,13 @@ declare const $: any;
   selector: 'app-ficha',
   templateUrl: './ficha.component.html',
   styles: [],
-  providers:[DatePipe]
+  providers: [DatePipe]
 })
 export class FichaComponent implements OnInit {
 
 
-  private data : any[] = [];
-  private count : Number = 0;
+  private data: any[] = [];
+  private count: Number = 0;
 
   private pagination = {
     inicio: 0,
@@ -32,32 +33,32 @@ export class FichaComponent implements OnInit {
 
   private columns = [
     {
-      label:'Fecha',
-      value:'fechaHora',
+      label: 'Fecha',
+      value: 'fechaHora',
       //width:'10%'
     },
     {
-      label:'Profesional',
-      value:'idEmpleado',
-      value2:'nombreCompleto'
+      label: 'Profesional',
+      value: 'idEmpleado',
+      value2: 'nombreCompleto'
       //width:'45%',
     },
     {
-      label:'Cliente',
-      value:'idCliente',
-      value2:'nombreCompleto',
-    },{
-      label:'Categoria',
-      value:'idTipoProducto',
-      value2:'idCategoria',
-      value3:'descripcion'
+      label: 'Cliente',
+      value: 'idCliente',
+      value2: 'nombreCompleto',
+    }, {
+      label: 'Categoria',
+      value: 'idTipoProducto',
+      value2: 'idCategoria',
+      value3: 'descripcion'
     },
     {
-      label:'Subcategoria',
-      value:'idTipoProducto',
-      value2:'descripcion'
+      label: 'Subcategoria',
+      value: 'idTipoProducto',
+      value2: 'descripcion'
     }
-  
+
   ]
 
   pacientes: any;
@@ -70,7 +71,7 @@ export class FichaComponent implements OnInit {
   fecha_inicio: string;
   fecha_fin: string;
 
-  fecha_reserva:string;
+  fecha_reserva: string;
 
   actualCliente: number;
   actualClienteNombre: string;
@@ -81,7 +82,7 @@ export class FichaComponent implements OnInit {
 
   forma;
   editarForm;
-  observacion=null;
+  observacion = null;
 
   actualClienteForm: number;
   actualClienteNombreForm: string;
@@ -102,9 +103,18 @@ export class FichaComponent implements OnInit {
   servicios;
 
   servicioDetalle;
+  // para crear servicio
+
+  sFecha: string;
+  sObservacion: string;
+  sEmpleado: string;
+  sCliente: string;
+  sCategoria: string;
+  sSubcategoria: string;
+  sID: number;
 
 
-  
+
 
   private orderBy = null;
   private orderDir = null;
@@ -114,12 +124,12 @@ export class FichaComponent implements OnInit {
 
   ngOnInit() {
     this.forma = new FormGroup({
-      
-      idEmpleado :new FormControl('',Validators.required),
-      idCliente:new FormControl('',Validators.required),
-     // categoria:new FormControl('',Validators.required),
-      idTipoProducto: new FormControl('',Validators.required),
-      motivoConsulta:new FormControl(''),
+
+      idEmpleado: new FormControl('', Validators.required),
+      idCliente: new FormControl('', Validators.required),
+      // categoria:new FormControl('',Validators.required),
+      idTipoProducto: new FormControl('', Validators.required),
+      motivoConsulta: new FormControl(''),
       diagnostico: new FormControl(''),
       observacion: new FormControl('')
     })
@@ -130,35 +140,35 @@ export class FichaComponent implements OnInit {
     this._pacienteService.getTodosEmpleados().subscribe((res: any) => (
       this.empleados = res['lista']
     ));
-    this._categoriaService.all().subscribe((res:any) => {
+    this._categoriaService.all().subscribe((res: any) => {
       this.categorias = res['lista']
-      console.log(this.categorias) 
+      console.log(this.categorias)
     }
-     
-      
+
+
     )
     this.getData()
-    
-    
+
+
   }
 
 
-  getData(){
-    
-    
-      this._fichasService.get({
-        ...this.pagination,
-        orderBy:this.orderBy,
-        orderDir:this.orderDir,
-      })
-      .subscribe((response)=>{
+  getData() {
+
+
+    this._fichasService.get({
+      ...this.pagination,
+      orderBy: this.orderBy,
+      orderDir: this.orderDir,
+    })
+      .subscribe((response) => {
         this.data = response['lista']
         this.count = response['totalDatos']
         console.log(this.data)
       })
-    }
-    
-  
+  }
+
+
 
 
   setFechaInicio(event: any) {
@@ -186,9 +196,9 @@ export class FichaComponent implements OnInit {
   setClienteForm(cliente: any) {
     console.log(cliente)
     this.forma.patchValue({
-      idCliente:{ idPersona: cliente.idPersona}
-        
-      }
+      idCliente: { idPersona: cliente.idPersona }
+
+    }
     )
     console.log(this.forma.value)
     this.actualClienteForm = cliente['idPersona'];
@@ -196,41 +206,43 @@ export class FichaComponent implements OnInit {
     //console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
   }
   setEmpleadoForm(empleado: any) {
-    
+
     console.log(empleado)
     this.forma.patchValue({
-      idEmpleado:{ idPersona:empleado.idPersona }
+      idEmpleado: { idPersona: empleado.idPersona }
     })
     console.log(this.forma.value)
     this.actualEmpleadoForm = empleado['idPersona'];
-    
+
     this.actualEmpleadoNombreForm = empleado['nombre'];
     console.log('Cliente: ' + this.actualCliente + '\nEmpleado: ' + this.actualEmpleado);
   }
 
-  setCategoriaForm(categoria){
-    this.actualCategoria=categoria['idCategoria']
-    this.actualCategoriaDescripcion= categoria['descripcion'];
-    this._subcategoriaService.get({ejemplo:encodeURIComponent(JSON.stringify({
-      idCategoria:{idCategoria:this.actualCategoria}
+  setCategoriaForm(categoria) {
+    this.actualCategoria = categoria['idCategoria']
+    this.actualCategoriaDescripcion = categoria['descripcion'];
+    this._subcategoriaService.get({
+      ejemplo: encodeURIComponent(JSON.stringify({
+        idCategoria: { idCategoria: this.actualCategoria }
 
-    }
+      }
 
-    ))}).subscribe(res => {
+      ))
+    }).subscribe(res => {
       this.subcategorias = res['lista']
       console.log(this.subcategorias)
     })
-    
-    
+
+
   }
 
 
   setSubcategoriaForm(subCategoria) {
     this.actualSubCategoria = subCategoria['idTipoProducto'];
     this.actualSubCategoriaDescripcion = subCategoria['descripcion']
-    
+
     this.forma.patchValue({
-      idTipoProducto:{idTipoProducto:this.actualSubCategoria}
+      idTipoProducto: { idTipoProducto: this.actualSubCategoria }
     })
     console.log(this.forma.value)
   }
@@ -241,74 +253,61 @@ export class FichaComponent implements OnInit {
     console.log(event.target.value)
     this.fecha_reserva = event.target.value;
     this.fecha_reserva = this.datePipe.transform(this.fecha_reserva, 'yyyyMMdd');
-    console.log('Fecha Reserva:' + this.fecha_reserva );
+    console.log('Fecha Reserva:' + this.fecha_reserva);
   }
 
-  
+
 
   buscar() {
-    const json = {idPersona:this.actualEmpleado}
+    const json = { idPersona: this.actualEmpleado }
     console.log(json)
     console.log(this.actualSubCategoria)
-    
+
     this._fichasService.get({
-      ejemplo:encodeURIComponent(JSON.stringify({
+      ejemplo: encodeURIComponent(JSON.stringify({
         fechaDesdeCadena: this.fecha_inicio,
-        fechaHastaCadena:this.fecha_fin,
-        idEmpleado:{idPersona:this.actualEmpleado},
-        idCliente:{idPersona:this.actualCliente},
-        idTipoProducto:{idTipoProducto:this.actualSubCategoria},
-    }))}).subscribe((response)=>{
+        fechaHastaCadena: this.fecha_fin,
+        idEmpleado: { idPersona: this.actualEmpleado },
+        idCliente: { idPersona: this.actualCliente },
+        idTipoProducto: { idTipoProducto: this.actualSubCategoria },
+      }))
+    }).subscribe((response) => {
       this.data = response['lista']
       this.count = response['totalDatos']
     })
-      
-     
-     
-    ;
-
-}
 
 
-limpiarFiltros() {
-  this.fecha_inicio = null;
-  this.fecha_fin = null;
-  this.actualEmpleado = null;
-  this.actualEmpleadoNombre = null;
-  this.actualCliente = null;
-  this.actualClienteNombre = null;
-  this.fecha1 = null;
-  this.fecha2 = null;
-  this.actualSubCategoria=null
-  this.actualSubCategoriaDescripcion=null
-  this.actualCategoriaDescripcion=null
-  this.actualCategoria=null;
-}
 
-closeAdd(send){
-  if(send){
-    console.log(this.forma.value)
-    this._fichasService.post(this.forma.value).subscribe(()=>{
-      this.getData();
-    })
+      ;
+
   }
-  //this.nueva_ficha = null
-  $("#addModal").modal('hide');
-}
 
-closeDetalle(send){
-  this.verDetalle = null
-  //this.nueva_ficha = null
-  $("#verModal").modal('hide');
-}
 
-openDetalle(detalle){
-  console.log(detalle)
-  this.verDetalle = detalle;
-  //this.detalle = JSON.parse(JSON.stringify(to_delete))
-  $("#verModal").modal('show');
+  limpiarFiltros() {
+    this.fecha_inicio = null;
+    this.fecha_fin = null;
+    this.actualEmpleado = null;
+    this.actualEmpleadoNombre = null;
+    this.actualCliente = null;
+    this.actualClienteNombre = null;
+    this.fecha1 = null;
+    this.fecha2 = null;
+    this.actualSubCategoria = null
+    this.actualSubCategoriaDescripcion = null
+    this.actualCategoriaDescripcion = null
+    this.actualCategoria = null;
+  }
 
-}
+  closeAdd(send) {
+    if (send) {
+      console.log(this.forma.value)
+      this._fichasService.post(this.forma.value).subscribe(() => {
+        this.getData();
+      })
+    }
+    //this.nueva_ficha = null
+    $("#addModal").modal('hide');
+  }
 
 openEdit(detalle){
   this.observacion=detalle.observacion;
@@ -326,24 +325,19 @@ openEdit(detalle){
   })
  
 }
-
-closeEdit(send){
-  if(send){
-    const data = {
-      idFichaClinica:this.verDetalle.idFichaClinica
-    ,observacion:this.observacion}
-    console.log(data)
-
-    this._fichasService.put(data).subscribe(()=>{
-      this.getData();
-      
-      
-    })
+  closeDetalle(send) {
+    this.verDetalle = null
+    //this.nueva_ficha = null
+    $("#verModal").modal('hide');
   }
-  this.verDetalle=null;
-  this.observacion =null;
-  $("#editarModal").modal('hide');
-}
+
+  openDetalle(detalle) {
+    console.log(detalle)
+    this.verDetalle = detalle;
+    //this.detalle = JSON.parse(JSON.stringify(to_delete))
+    $("#verModal").modal('show');
+
+  }
 
 openServicioDetalle(servicio){
   
@@ -367,5 +361,56 @@ openEditarServicio(servicio){
  this.router.navigate(['editor-servicio', servicio.idServicio]);
 }
 
+  /* openEdit(detalle) {
+    this.observacion = detalle.observacion;
+    this.verDetalle = detalle
+    $("#editarModal").modal('show');
+  } */
+
+  closeEdit(send) {
+    if (send) {
+      const data = {
+        idFichaClinica: this.verDetalle.idFichaClinica
+        , observacion: this.observacion
+      }
+      console.log(data)
+
+      this._fichasService.put(data).subscribe(() => {
+        this.getData();
+
+
+      })
+    }
+    this.verDetalle = null;
+    this.observacion = null;
+    $("#editarModal").modal('hide');
+  }
+  openCrearServicio(detalle) {
+    console.log('Cliente:' + detalle.idCliente.idPersona);
+    console.log('Empleado:' + detalle.idEmpleado.idPersona);
+    console.log('ID:' + detalle.idFichaClinica);
+    const fechaHoy = new Date();
+    this.sFecha = this.datePipe.transform(fechaHoy, 'yyyy-MM-dd HH:mm');
+    this.sEmpleado = detalle.idEmpleado.nombreCompleto;
+    this.sCliente = detalle.idCliente.nombreCompleto;
+    this.sCategoria = detalle.idTipoProducto.idCategoria.descripcion;
+    this.sSubcategoria = detalle.idTipoProducto.descripcion;
+    this.sID = detalle.idFichaClinica;
+    $('#crearServicioModal').modal('show');
+  }
+  closeCrearServicio(guardar: boolean) {
+    if (guardar) {
+      let body = '{';
+      body = body + '"idFichaClinica":{"idFichaClinica":' + this.sID + '}';
+      body = body + ',"observacion":"' + this.sObservacion + '"}';
+      console.log(body);
+      this._servicioService.post(body).subscribe((res: any) => {
+        this.getData();
+        console.log('Servicio Creado Exitosamente!');
+      });
+    }
+    this.sObservacion = null;
+    $('#crearServicioModal').modal('hide');
+  }
 
 }

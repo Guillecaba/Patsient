@@ -12,8 +12,8 @@ import { NavItem, NavItemType } from '../md/md.module';
 declare const $: any;
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './pages.component.html'
+    selector: 'app-layout',
+    templateUrl: './pages.component.html'
 })
 
 export class PagesComponent implements OnInit, AfterViewInit {
@@ -24,33 +24,33 @@ export class PagesComponent implements OnInit, AfterViewInit {
     url: string;
     location: Location;
 
-    @ViewChild('sidebar', {static: false}) sidebar: any;
-    @ViewChild(NavbarComponent, {static: false}) navbar: NavbarComponent;
-    constructor( private router: Router, location: Location ) {
-      this.location = location;
+    @ViewChild('sidebar', { static: false }) sidebar: any;
+    @ViewChild(NavbarComponent, { static: false }) navbar: NavbarComponent;
+    constructor(private router: Router, location: Location) {
+        this.location = location;
     }
     ngOnInit() {
         const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
         const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-        this.location.subscribe((ev:PopStateEvent) => {
+        this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
-         this.router.events.subscribe((event:any) => {
+        this.router.events.subscribe((event: any) => {
             if (event instanceof NavigationStart) {
-               if (event.url != this.lastPoppedUrl)
-                   this.yScrollStack.push(window.scrollY);
-           } else if (event instanceof NavigationEnd) {
-               if (event.url == this.lastPoppedUrl) {
-                   this.lastPoppedUrl = undefined;
-                   window.scrollTo(0, this.yScrollStack.pop());
-               }
-               else
-                   window.scrollTo(0, 0);
-           }
+                if (event.url != this.lastPoppedUrl)
+                    this.yScrollStack.push(window.scrollY);
+            } else if (event instanceof NavigationEnd) {
+                if (event.url == this.lastPoppedUrl) {
+                    this.lastPoppedUrl = undefined;
+                    window.scrollTo(0, this.yScrollStack.pop());
+                }
+                else
+                    window.scrollTo(0, 0);
+            }
         });
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-             elemMainPanel.scrollTop = 0;
-             elemSidebar.scrollTop = 0;
+            elemMainPanel.scrollTop = 0;
+            elemSidebar.scrollTop = 0;
         });
         const html = document.getElementsByTagName('html')[0];
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
@@ -62,11 +62,11 @@ export class PagesComponent implements OnInit, AfterViewInit {
             html.classList.add('perfect-scrollbar-off');
         }
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-          this.navbar.sidebarClose();
+            this.navbar.sidebarClose();
         });
 
         this.navItems = [
-         
+
         ];
     }
     ngAfterViewInit() {
@@ -80,13 +80,13 @@ export class PagesComponent implements OnInit, AfterViewInit {
         }
     }
     runOnRouteChange(): void {
-      if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-        const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-        const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-        let ps = new PerfectScrollbar(elemMainPanel);
-        ps = new PerfectScrollbar(elemSidebar);
-        ps.update();
-      }
+        if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+            const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
+            const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
+            let ps = new PerfectScrollbar(elemMainPanel);
+            ps = new PerfectScrollbar(elemSidebar);
+            ps.update();
+        }
     }
     isMac(): boolean {
         let bool = false;

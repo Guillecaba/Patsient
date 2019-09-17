@@ -48,7 +48,7 @@ export class ReservaService {
     postReserva(datos) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'usuario': 'gustavo'
+            'usuario': 'ana'
         });
         const URL = this.base_url + 'reserva/';
         return this.http.post(URL, datos, { headers });

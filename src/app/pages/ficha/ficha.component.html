@@ -274,7 +274,7 @@
                           <button
                             type="button"
                             class="btn btn-light btn-sm"
-                            (click)="openCrear(row)"
+                            (click)="openCrearServicio(row)"
                           >
                             <i class="material-icons">
                               edit
@@ -892,99 +892,243 @@ role="dialog"
 aria-hidden="true"
 >
 <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog" role="document">
+        <div *ngIf="servicioDetalle" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Servicio: {{ servicioDetalle.idServicio}}</h5>
+            <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            click="closeServicioDetalle(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Fecha y Hora</span>
+                            </div>
+                            <span
+                              class="form-control"
+                             
+             
+                            >{{ servicioDetalle.fechaHora}}</span>
+                          </div>
+                       <div class="input-group">
+                           <div class="input-group-prepend">
+                             <span class="input-group-text">Cliente</span>
+                           </div>
+                           <span
+                             class="form-control"
+                            
+            
+                           >{{ servicioDetalle.usuario.nombreCompleto}}</span>
+                         </div>
+                         <div class="input-group">
+                             <div class="input-group-prepend">
+                               <span class="input-group-text">Profesional</span>
+                             </div>
+                             <span
+                               class="form-control"
+                               
+                              
+              
+                             >{{servicioDetalle.idEmpleado.nombreCompleto}}</span>
+                           </div>
+                           <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">Observacion</span>
+                              </div>
+                              <span
+                                class=""
+                                
+                               
+               
+                              >{{servicioDetalle.observacion}}</span>
+                            </div>
+                         
+                             </div>
+      
+                             
+                            
+                  
+      
+      
+      
+      
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary" (click)="closeServicioDetalle(false)"
+                    >
+                      Cerrar
+                    </button>
+                    <!-- <button
+                      type="button"
+                      [disabled]="!observacion"
+                      class="btn btn-outline-primary"
+                      (click)="closeEdit(true)"
+                    >
+                      Guardar
+                    </button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+<!-- Crear Servicio Modal -->
+
+
+
+<div
+class="modal fade"
+id="crearServicioModal"
+tabindex="-1"
+role="dialog"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog" role="document">
   <div *ngIf="servicioDetalle" class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">Servicio: {{ servicioDetalle.idServicio}}</h5>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Crear Servicio</h5>
       <button
         type="button"
         class="close"
         data-dismiss="modal"
         aria-label="Close"
-        click="closeServicioDetalle(false)"
+        
+        click="closeCrearServicio(false)"
       >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-12">
-                  <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">Fecha y Hora</span>
-                      </div>
-                      <span
-                        class="form-control"
-                       
-       
-                      >{{ servicioDetalle.fechaHora}}</span>
-                    </div>
-                 <div class="input-group">
-                     <div class="input-group-prepend">
-                       <span class="input-group-text">Cliente</span>
-                     </div>
-                     <span
-                       class="form-control"
-                      
       
-                     >{{ servicioDetalle.usuario.nombreCompleto}}</span>
-                   </div>
-                   <div class="input-group">
-                       <div class="input-group-prepend">
-                         <span class="input-group-text">Profesional</span>
-                       </div>
-                       <span
-                         class="form-control"
-                         
-                        
-        
-                       >{{servicioDetalle.idEmpleado.nombreCompleto}}</span>
-                     </div>
-                     <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Observacion</span>
-                        </div>
-                        <span
-                          class=""
-                          
-                         
-         
-                        >{{servicioDetalle.observacion}}</span>
-                      </div>
-                   
-                       </div>
-
-                       
-                      
-            
-
-
-
-
+        <div class="row">
+          <div class="col-md-6">
+            <!-- <input
+              type="date"
+              (change)="setFechaReserva($event)"
+              class="form-control"
+            /> -->
           </div>
         </div>
 
+      
 
-     
-        
+
+        <div class="row">
+          <div class="col-md-12">
+             <div class="input-group">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text">Cliente</span>
+                 </div>
+                 <input
+                   class="form-control"
+                   
+                   [disabled]="true"
+                   [value] = "sCliente"
+  
+                 >
+               </div>
+               <div class="input-group">
+                   <div class="input-group-prepend">
+                     <span class="input-group-text">Empleado</span>
+                   </div>
+                   <input
+                     class="form-control"
+                     
+                     [disabled]="true"
+                     [value] = "sEmpleado"
+    
+                   >
+                 </div>
+                 
+                   
+             <div class="input-group">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text">Fecha y Hora</span>
+                 </div>
+                 <input
+                   class="form-control"
+                   
+                   [disabled]="true"
+                   [value] = "sFecha"
+  
+                 >
+               </div>
+
+
+               <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Observacion</span>
+                </div>
+                <input
+                  class="form-control"
+                  [(ngModel)]="sObservacion"
+ 
+                >
+              </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class=col-md-12>
+            <h5>Ficha Médica</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class=col-md-12>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <!--<th (click)="order($event)">Fecha</th>-->
+                    <th>ID Ficha</th>
+                    <th>Categoría</th>
+                    <th>Subcategoría</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{sID}}</td>
+                    <td>{{sCategoria}}</td>
+                    <td>{{sSubcategoria}} </td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            </div>
+          </div>
+        </div>
+    </div>
 
     <div class="modal-footer">
       <button
         type="button"
         class="btn btn-secondary"
-        (click)="closeServicioDetalle(false)"
+        (click)="closeCrearServicio(false)"
       >
         Cerrar
       </button>
-      <!-- <button
+      <button
         type="button"
-        [disabled]="!observacion"
+        [disabled]="!sObservacion"
         class="btn btn-outline-primary"
-        (click)="closeEdit(true)"
+        (click)="closeCrearServicio(true)"
       >
         Guardar
-      </button> -->
+      </button>
      
     </div>
   </div>
