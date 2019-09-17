@@ -361,7 +361,7 @@
          <div class="row">
            <div class="col-md-6">
              <div class="btn-group">
-               <button
+               <!-- <button
                  type="button"
                  class="btn btn-outline-primary  dropdown-toggle"
                  data-toggle="dropdown"
@@ -374,8 +374,20 @@
                  <span *ngIf="!actualEmpleadoNombreForm"
                    >Empleado</span
                  >
+               </button> -->
+               <button
+                 type="button"
+                 class="btn btn-outline-primary  dropdown-toggle"
+                 (click)="openEmpleado2()"
+               >
+                 <span *ngIf="actualEmpleadoNombreForm">{{
+                   actualEmpleadoNombreForm
+                 }}</span>
+                 <span *ngIf="!actualEmpleadoNombreForm"
+                   >Empleado</span
+                 >
                </button>
-               <div
+               <!-- <div
                  class="dropdown-menu"
                  style="max-height: 450px; overflow-y: scroll"
                >
@@ -385,12 +397,12 @@
                    (click)="setEmpleadoForm(empleado)"
                    >{{ empleado["nombreCompleto"] }}</a
                  >
-               </div>
+               </div> -->
              </div>
            </div>
            <div class="col-md-6">
              <div class="btn-group">
-               <button
+               <!-- <button
                  style="max-width:150px; overflow-x: hidden;"
                  type="button"
                  class="btn btn btn-outline-primary dropdown-toggle"
@@ -402,8 +414,19 @@
                    actualClienteNombreForm
                  }}</span>
                  <span *ngIf="!actualClienteNombreForm">Cliente</span>
+               </button> -->
+               <button
+                 style="max-width:150px; overflow-x: hidden;"
+                 type="button"
+                 class="btn btn btn-outline-primary dropdown-toggle"
+                 (click)="openPaciente2()"
+               >
+                 <span *ngIf="actualClienteNombreForm">{{
+                   actualClienteNombreForm
+                 }}</span>
+                 <span *ngIf="!actualClienteNombreForm">Cliente</span>
                </button>
-               <div
+               <!-- <div
                  class="dropdown-menu"
                  style="max-height: 450px; overflow-y: scroll"
                >
@@ -413,7 +436,7 @@
                    (click)="setClienteForm(paciente)"
                    >{{ paciente["nombreCompleto"] }}</a
                  >
-               </div>
+               </div> -->
              </div>
            </div>
          </div>
@@ -1247,4 +1270,90 @@ aria-hidden="true"
       </div>
     </div>
   </div>
+</div>
+
+<!-- Buscar Empleado para Nueva ficha -->
+
+<div class="modal fade" id="empleadoModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Seleccionar empleado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEmpleado2()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success" (click)="buscarEmpleado()" type="submit">Buscar</button>
+          </div>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let empleado of empleados" (click)="selectEmpleado2(empleado)">
+              {{ empleado["nombreCompleto"] }}</mat-list-item>
+          </mat-nav-list>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeEmpleado2()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  
+<!-- Buscar Paciente para nueva ficha-->
+  
+<div class="modal fade" id="pacienteModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Seleccionar cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closePaciente2()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="pacNombre">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="pacApellido">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success" (click)="buscarPaciente()" type="submit">Buscar</button>
+          </div>
+          <mat-nav-list style="max-height: 300px; overflow-y: scroll">
+            <mat-list-item *ngFor="let paciente of pacientes" (click)="selectPaciente2(paciente)">
+              {{ paciente["nombreCompleto"] }}</mat-list-item>
+          </mat-nav-list>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closePaciente2()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>

@@ -435,6 +435,17 @@ export class FichaComponent implements OnInit {
     });
   }
 
+  openEmpleado2() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    this._pacienteService.filtrarEmpleados().subscribe((res: any) => {
+      this.empleados = res['lista'];
+      this.empCantidad = res['totalDatos'];
+      $('#empleadoModal2').modal('show');
+    });
+  }
+
   buscarEmpleado() {
     this._pacienteService.filtrarEmpleados(this.empNombre, this.empApellido).subscribe((res: any) => {
       this.empleados = res['lista'];
@@ -449,11 +460,25 @@ export class FichaComponent implements OnInit {
     $('#empleadoModal').modal('hide');
   }
 
+  selectEmpleado2(empleado) {
+    this.empSeleccionado = empleado['idPersona'];
+    this.actualEmpleadoNombreForm = empleado['nombre'];
+    this.actualEmpleadoForm = this.empSeleccionado;
+    $('#empleadoModal2').modal('hide');
+  }
+
   closeEmpleado() {
     this.empNombre = null;
     this.empApellido = null;
     this.empSeleccionado = null;
     $('#empleadoModal').modal('hide');
+  }
+
+  closeEmpleado2() {
+    this.empNombre = null;
+    this.empApellido = null;
+    this.empSeleccionado = null;
+    $('#empleadoModal2').modal('hide');
   }
 
   openPaciente() {
@@ -464,6 +489,17 @@ export class FichaComponent implements OnInit {
       this.pacientes = res['lista'];
       this.pacCantidad = res['totalDatos'];
       $('#pacienteModal').modal('show');
+    });
+  }
+
+  openPaciente2() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    this._pacienteService.filtrarPacientes().subscribe((res: any) => {
+      this.pacientes = res['lista'];
+      this.pacCantidad = res['totalDatos'];
+      $('#pacienteModal2').modal('show');
     });
   }
 
@@ -482,11 +518,26 @@ export class FichaComponent implements OnInit {
     $('#pacienteModal').modal('hide');
   }
 
+  selectPaciente2(paciente) {
+    this.pacSeleccionado = paciente['idPersona'];
+    this.actualClienteNombreForm = paciente['nombre'];
+    this.actualClienteForm = this.pacSeleccionado;
+    this.pacSeleccionado = null;
+    $('#pacienteModal2').modal('hide');
+  }
+
   closePaciente() {
     this.pacNombre = null;
     this.pacApellido = null;
     this.pacSeleccionado = null;
     $('#pacienteModal').modal('hide');
+  }
+
+  closePaciente2() {
+    this.pacNombre = null;
+    this.pacApellido = null;
+    this.pacSeleccionado = null;
+    $('#pacienteModal2').modal('hide');
   }
 
 }
