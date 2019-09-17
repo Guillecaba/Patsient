@@ -27,7 +27,7 @@ export const PagesRoutes: Routes = [
         component: PagesComponent,
 
         children: [
-            { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+            { path: '', component: ReservaComponent, canActivate: [AuthGuard] },
             { path: 'categorias', component: CategoriaComponent, canActivate: [AuthGuard] },
             { path: 'subcategorias', component: SubcategoriaComponent, canActivate: [AuthGuard] },
             { path: 'presentacion', component: PresentacionComponent, canActivate: [AuthGuard] },
@@ -42,7 +42,7 @@ export const PagesRoutes: Routes = [
             { path: 'ficha', component: FichaComponent, canActivate: [AuthGuard] },
             { path: 'detalleservicio/:id', component: DetallesServicioComponent, canActivate: [AuthGuard] },
             { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard] },
-            { path: 'login', component: LoginComponent, canActivate: [AuthGuard] }
+            { path: 'login', component: LoginComponent }
         ]
     },
 ];
