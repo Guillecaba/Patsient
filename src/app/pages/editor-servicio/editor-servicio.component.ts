@@ -123,11 +123,11 @@ export class EditorServicioComponent implements OnInit {
 
   guardarServicio() {
     let body = '{';
-    body = body + '"fechaHoraCadena":"' + this.fecha + '"';
+    // body = body + '"fechaHoraCadena":"' + this.fecha + '"';
     if (this.nuevo) {
-      body = body + ',"idFichaClinica":{"idFichaClinica":' + this.actualFicha + '}';
+      body = body + '"idFichaClinica":{"idFichaClinica":' + this.actualFicha + '}';
     } else if (!this.nuevo) {
-      body = body + ',"idServicio":' + this.idServicio;
+      body = body + '"idServicio":' + this.idServicio;
     }
     if (this.observacion) {
       body = body + ',"observacion":"' + this.observacion + '"';

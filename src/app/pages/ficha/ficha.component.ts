@@ -312,9 +312,10 @@ export class FichaComponent implements OnInit {
       console.log(this.forma.value)
       this._fichasService.post(this.forma.value).subscribe(() => {
         this.getData();
-      })
+      });
     }
-    //this.nueva_ficha = null
+    // this.nueva_ficha = null
+    // this.forma = null;
     $("#addModal").modal('hide');
   }
 
@@ -464,6 +465,10 @@ export class FichaComponent implements OnInit {
     this.empSeleccionado = empleado['idPersona'];
     this.actualEmpleadoNombreForm = empleado['nombre'];
     this.actualEmpleadoForm = this.empSeleccionado;
+    this.forma.patchValue({
+      idEmpleado: { idPersona: this.empSeleccionado }
+
+    })
     $('#empleadoModal2').modal('hide');
   }
 
@@ -522,7 +527,12 @@ export class FichaComponent implements OnInit {
     this.pacSeleccionado = paciente['idPersona'];
     this.actualClienteNombreForm = paciente['nombre'];
     this.actualClienteForm = this.pacSeleccionado;
+    this.forma.patchValue({
+      idCliente: { idPersona: this.pacSeleccionado }
+
+    });
     this.pacSeleccionado = null;
+
     $('#pacienteModal2').modal('hide');
   }
 
